@@ -5,3 +5,4 @@ User=root
 Password=your_password_here
 SmtpEmail=yourgmail@gmail.com
 SmtpPassword=your16charapppassword
+WebBaseUrl=http://localhost:5000
