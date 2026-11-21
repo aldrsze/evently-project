@@ -33,6 +33,25 @@ namespace Evently.Forms
             reviewsDataGridView.DataSource = table;
             int count = table.Rows.Count;
             resultLabel.Text = count == 0 ? "No reviews yet for this event." : $"{count} review(s)";
+
+            UpdateSelectedComment();
+        }
+
+        private void ReviewsDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            UpdateSelectedComment();
+        }
+
+        private void UpdateSelectedComment()
+        {
+            if (reviewsDataGridView.CurrentRow != null && reviewsDataGridView.CurrentRow.Cells["commentColumn"] != null)
+            {
+                selectedCommentTextBox.Text = Convert.ToString(reviewsDataGridView.CurrentRow.Cells["commentColumn"].Value) ?? "";
+            }
+            else
+            {
+                selectedCommentTextBox.Text = "";
+            }
         }
 
         private void eventComboBox_SelectedIndexChanged(object sender, EventArgs e)

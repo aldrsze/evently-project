@@ -26,6 +26,9 @@ namespace Evently.Forms
             this.ratingColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commentColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.submittedAtColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.commentPreviewPanel = new System.Windows.Forms.Panel();
+            this.commentPreviewGroupBox = new System.Windows.Forms.GroupBox();
+            this.selectedCommentTextBox = new System.Windows.Forms.TextBox();
             this.reviewFormWrapperPanel = new System.Windows.Forms.Panel();
             this.reviewFormGroupBox = new System.Windows.Forms.GroupBox();
             this.urlLabel = new System.Windows.Forms.Label();
@@ -43,6 +46,8 @@ namespace Evently.Forms
             this.topPanel.SuspendLayout();
             this.gridHostPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reviewsDataGridView)).BeginInit();
+            this.commentPreviewPanel.SuspendLayout();
+            this.commentPreviewGroupBox.SuspendLayout();
             this.reviewFormWrapperPanel.SuspendLayout();
             this.reviewFormGroupBox.SuspendLayout();
             this.resultPanel.SuspendLayout();
@@ -83,6 +88,7 @@ namespace Evently.Forms
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;
             this.contentPanel.Controls.Add(this.gridHostPanel);
+            this.contentPanel.Controls.Add(this.commentPreviewPanel);
             this.contentPanel.Controls.Add(this.reviewFormWrapperPanel);
             this.contentPanel.Controls.Add(this.resultPanel);
             this.contentPanel.Controls.Add(this.actionPanel);
@@ -162,6 +168,7 @@ namespace Evently.Forms
             this.reviewsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.reviewsDataGridView.Size = new System.Drawing.Size(1254, 400);
             this.reviewsDataGridView.TabIndex = 0;
+            this.reviewsDataGridView.SelectionChanged += new System.EventHandler(this.ReviewsDataGridView_SelectionChanged);
             // attendeeNameColumn
             this.attendeeNameColumn.DataPropertyName = "attendee_name";
             this.attendeeNameColumn.FillWeight = 50F;
@@ -186,6 +193,38 @@ namespace Evently.Forms
             this.submittedAtColumn.HeaderText = "Submitted";
             this.submittedAtColumn.Name = "submittedAtColumn";
             this.submittedAtColumn.ReadOnly = true;
+            // commentPreviewPanel
+            this.commentPreviewPanel.BackColor = System.Drawing.Color.White;
+            this.commentPreviewPanel.Controls.Add(this.commentPreviewGroupBox);
+            this.commentPreviewPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.commentPreviewPanel.Location = new System.Drawing.Point(12, 364);
+            this.commentPreviewPanel.Name = "commentPreviewPanel";
+            this.commentPreviewPanel.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.commentPreviewPanel.Size = new System.Drawing.Size(1256, 90);
+            this.commentPreviewPanel.TabIndex = 5;
+            // commentPreviewGroupBox
+            this.commentPreviewGroupBox.BackColor = System.Drawing.Color.White;
+            this.commentPreviewGroupBox.Controls.Add(this.selectedCommentTextBox);
+            this.commentPreviewGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.commentPreviewGroupBox.Location = new System.Drawing.Point(0, 10);
+            this.commentPreviewGroupBox.Name = "commentPreviewGroupBox";
+            this.commentPreviewGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
+            this.commentPreviewGroupBox.Size = new System.Drawing.Size(1256, 80);
+            this.commentPreviewGroupBox.TabIndex = 0;
+            this.commentPreviewGroupBox.TabStop = false;
+            this.commentPreviewGroupBox.Text = "Review Comment Details";
+            // selectedCommentTextBox
+            this.selectedCommentTextBox.BackColor = System.Drawing.Color.FromArgb(249, 249, 249);
+            this.selectedCommentTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.selectedCommentTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectedCommentTextBox.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.selectedCommentTextBox.Location = new System.Drawing.Point(8, 24);
+            this.selectedCommentTextBox.Multiline = true;
+            this.selectedCommentTextBox.Name = "selectedCommentTextBox";
+            this.selectedCommentTextBox.ReadOnly = true;
+            this.selectedCommentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.selectedCommentTextBox.Size = new System.Drawing.Size(1240, 48);
+            this.selectedCommentTextBox.TabIndex = 0;
             // reviewFormWrapperPanel
             this.reviewFormWrapperPanel.BackColor = System.Drawing.Color.White;
             this.reviewFormWrapperPanel.Controls.Add(this.reviewFormGroupBox);
@@ -326,6 +365,9 @@ namespace Evently.Forms
             this.reviewFormWrapperPanel.ResumeLayout(false);
             this.reviewFormGroupBox.ResumeLayout(false);
             this.reviewFormGroupBox.PerformLayout();
+            this.commentPreviewGroupBox.ResumeLayout(false);
+            this.commentPreviewGroupBox.PerformLayout();
+            this.commentPreviewPanel.ResumeLayout(false);
             this.resultPanel.ResumeLayout(false);
             this.actionPanel.ResumeLayout(false);
             this.actionPanel.PerformLayout();
@@ -346,6 +388,9 @@ namespace Evently.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn ratingColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn commentColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn submittedAtColumn;
+        private System.Windows.Forms.Panel commentPreviewPanel;
+        private System.Windows.Forms.GroupBox commentPreviewGroupBox;
+        private System.Windows.Forms.TextBox selectedCommentTextBox;
         private System.Windows.Forms.Panel reviewFormWrapperPanel;
         private System.Windows.Forms.GroupBox reviewFormGroupBox;
         private System.Windows.Forms.Label urlLabel;
