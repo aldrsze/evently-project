@@ -11,6 +11,7 @@ namespace Evently.Core.Services
         {
             using var conn = DatabaseConnection.GetConnection();
             string query = @"SELECT 
+                                t.ticket_id,
                                 a.attendee_id,
                                 a.first_name,
                                 a.last_name,
@@ -20,7 +21,9 @@ namespace Evently.Core.Services
                                     WHEN a.birthdate IS NOT NULL THEN TIMESTAMPDIFF(YEAR, a.birthdate, CURDATE())
                                     ELSE NULL
                                 END AS age,
-                                a.email
+                                a.email,
+                                CASE WHEN t.ticket_emailed = TRUE THEN 'Yes' ELSE 'No' END AS ticket_emailed,
+                                CASE WHEN t.review_emailed = TRUE THEN 'Yes' ELSE 'No' END AS review_emailed
                              FROM tickets t
                              INNER JOIN attendees a ON t.attendee_id = a.attendee_id
                              WHERE t.event_id = @eventId;";
@@ -188,6 +191,29 @@ namespace Evently.Core.Services
             DataTable table = new();
             adapter.Fill(table);
             return table;
+        }
+
+        public static DataRow? GetTicketDetails(string ticketId)
+        {
+            using var conn = DatabaseConnection.GetConnection();
+            string query = @"SELECT 
+                                t.ticket_id,
+                                a.email,
+                                CONCAT(a.first_name, ' ', a.last_name) AS attendee_name,
+                                e.name AS event_name,
+                                e.venue,
+                                e.event_date
+                             FROM tickets t
+                             INNER JOIN attendees a ON t.attendee_id = a.attendee_id
+                             INNER JOIN events e ON t.event_id = e.event_id
+                             WHERE t.ticket_id = @ticketId;";
+
+            using MySqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@ticketId", ticketId);
+            MySqlDataAdapter adapter = new(cmd);
+            DataTable table = new();
+            adapter.Fill(table);
+            return table.Rows.Count > 0 ? table.Rows[0] : null;
         }
 
         public static bool MarkTicketAsEmailed(string ticketId)

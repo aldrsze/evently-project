@@ -174,7 +174,66 @@ namespace Evently.Forms
 
         private void ImportCsvButton_Click(object sender, EventArgs e) { /* TODO: Import CSV logic */ }
 
-        private void SendTicketsButton_Click(object sender, EventArgs e)
+        private void SendTicketButton_Click(object sender, EventArgs e)
+        {
+            if (attendeesDataGridView.CurrentRow == null)
+            {
+                MessageBox.Show("Select an attendee in the list first.", "Send Ticket", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string ticketId = Convert.ToString(attendeesDataGridView.CurrentRow.Cells["ticketIdColumn"].Value) ?? "";
+            if (ticketId.Length == 0)
+            {
+                MessageBox.Show("Could not find ticket ID for selected attendee.", "Send Ticket", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string isEmailed = Convert.ToString(attendeesDataGridView.CurrentRow.Cells["ticketEmailedColumn"].Value) ?? "No";
+            if (isEmailed == "Yes")
+            {
+                DialogResult resend = MessageBox.Show(
+                    "Ticket has already been sent to this attendee. Resend anyway?",
+                    "Resend Ticket",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (resend != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
+            DataRow? ticketRow = TicketService.GetTicketDetails(ticketId);
+            if (ticketRow == null)
+            {
+                MessageBox.Show("Ticket details not found.", "Send Ticket", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string recipientEmail = ticketRow["email"].ToString() ?? "";
+            string attendeeName = ticketRow["attendee_name"].ToString() ?? "";
+            string eventName = ticketRow["event_name"].ToString() ?? "";
+            string venue = ticketRow["venue"].ToString() ?? "";
+            DateTime eventDate = Convert.ToDateTime(ticketRow["event_date"]);
+
+            bool success = EmailService.SendTicketEmail(recipientEmail, attendeeName, eventName, venue, eventDate, ticketId);
+            if (success)
+            {
+                TicketService.MarkTicketAsEmailed(ticketId);
+                MessageBox.Show($"Ticket sent to {attendeeName} ({recipientEmail}).", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (eventComboBox.SelectedValue != null && int.TryParse(eventComboBox.SelectedValue.ToString(), out int eventId))
+                {
+                    LoadAttendees(eventId);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Failed to send ticket. Please check your SMTP settings in db.config.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SendToAllButton_Click(object sender, EventArgs e)
         {
             if (eventComboBox.SelectedValue == null || !int.TryParse(eventComboBox.SelectedValue.ToString(), out int eventId))
             {
@@ -221,6 +280,7 @@ namespace Evently.Forms
 
             resultLabel.Text = resultMsg;
             MessageBox.Show(resultMsg, "Send Tickets", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoadAttendees(eventId);
         }
 
         private void ExportCsvButton_Click(object sender, EventArgs e) { /* TODO: Export CSV */ }
