@@ -1,6 +1,8 @@
 using System;
 using System.Data;
+using System.IO;
 using System.Windows.Forms;
+using Evently.Core.Helpers;
 using Evently.Core.Services;
 
 namespace Evently.Forms
@@ -354,6 +356,178 @@ namespace Evently.Forms
 
             resultLabel.Text = resultMsg;
             MessageBox.Show(resultMsg, "Send Tickets", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoadAttendees(eventId);
+        }
+
+        private string GetWebBaseUrl()
+        {
+            string configPath = Path.Combine(AppContext.BaseDirectory, "db.config");
+            if (File.Exists(configPath))
+            {
+                string[] lines = File.ReadAllLines(configPath);
+                string val = DatabaseConnection.ReadValue(lines, "WebBaseUrl");
+                if (!string.IsNullOrEmpty(val))
+                {
+                    return val.TrimEnd('/');
+                }
+            }
+            return "http://localhost:5000";
+        }
+
+        private void SendReviewButton_Click(object sender, EventArgs e)
+        {
+            if (attendeesDataGridView.CurrentRow == null)
+            {
+                MessageBox.Show("Select an attendee in the list first.", "Send Review", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string ticketId = Convert.ToString(attendeesDataGridView.CurrentRow.Cells["ticketIdColumn"].Value) ?? "";
+            if (ticketId.Length == 0)
+            {
+                MessageBox.Show("Could not find ticket ID for selected attendee.", "Send Review", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DataRow? ticketRow = ReviewService.GetTicketForReview(ticketId);
+            if (ticketRow == null)
+            {
+                MessageBox.Show("Ticket details not found.", "Send Review", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (ticketRow["checked_in_at"] == DBNull.Value)
+            {
+                MessageBox.Show("This attendee has not checked in yet. Reviews can only be sent to checked-in attendees.", "Not Checked In", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (Convert.ToInt32(ticketRow["has_review"]) > 0)
+            {
+                MessageBox.Show("This attendee has already submitted a review.", "Review Already Submitted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string isReviewEmailed = Convert.ToString(attendeesDataGridView.CurrentRow.Cells["reviewEmailedColumn"].Value) ?? "No";
+            if (isReviewEmailed == "Yes")
+            {
+                DialogResult resend = MessageBox.Show(
+                    "Review request has already been sent to this attendee. Resend anyway?",
+                    "Resend Review",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (resend != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
+            string recipientEmail = Convert.ToString(attendeesDataGridView.CurrentRow.Cells["emailColumn"].Value) ?? "";
+            string attendeeName = ticketRow["attendee_name"].ToString() ?? "";
+            string eventName = ticketRow["event_name"].ToString() ?? "";
+            string reviewUrl = $"{GetWebBaseUrl()}/Review/{ticketId}";
+
+            sendReviewButton.Enabled = false;
+            sendReviewsAllButton.Enabled = false;
+            Cursor = Cursors.WaitCursor;
+            resultLabel.Text = $"Sending review request to {attendeeName}...";
+            Application.DoEvents();
+
+            bool success = false;
+            try
+            {
+                success = EmailService.SendReviewRequestEmail(recipientEmail, attendeeName, eventName, reviewUrl);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+                sendReviewButton.Enabled = true;
+                sendReviewsAllButton.Enabled = true;
+                resultLabel.Text = "";
+            }
+
+            if (success)
+            {
+                ReviewService.MarkReviewAsEmailed(ticketId);
+                MessageBox.Show($"Review request sent to {attendeeName} ({recipientEmail}).", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (eventComboBox.SelectedValue != null && int.TryParse(eventComboBox.SelectedValue.ToString(), out int eventId))
+                {
+                    LoadAttendees(eventId);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Failed to send review request. Please check your SMTP settings in db.config.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SendReviewsAllButton_Click(object sender, EventArgs e)
+        {
+            if (eventComboBox.SelectedValue == null || !int.TryParse(eventComboBox.SelectedValue.ToString(), out int eventId))
+            {
+                MessageBox.Show("Please select an event first.", "Send Reviews", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DataTable unemailedTickets = ReviewService.GetUnemailedCheckedInTickets(eventId);
+            if (unemailedTickets.Rows.Count == 0)
+            {
+                MessageBox.Show("No checked-in attendees are waiting for review requests.", "Send Reviews", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            int sentCount = 0;
+            int failedCount = 0;
+            int total = unemailedTickets.Rows.Count;
+            string baseUrl = GetWebBaseUrl();
+
+            sendReviewButton.Enabled = false;
+            sendReviewsAllButton.Enabled = false;
+            Cursor = Cursors.WaitCursor;
+
+            try
+            {
+                for (int i = 0; i < total; i++)
+                {
+                    DataRow row = unemailedTickets.Rows[i];
+                    string ticketId = row["ticket_id"].ToString() ?? "";
+                    string recipientEmail = row["email"].ToString() ?? "";
+                    string attendeeName = row["attendee_name"].ToString() ?? "";
+                    string eventName = row["event_name"].ToString() ?? "";
+                    string reviewUrl = $"{baseUrl}/Review/{ticketId}";
+
+                    resultLabel.Text = $"Sending review request {i + 1} of {total} to {attendeeName}...";
+                    Application.DoEvents();
+
+                    bool success = EmailService.SendReviewRequestEmail(recipientEmail, attendeeName, eventName, reviewUrl);
+                    if (success)
+                    {
+                        ReviewService.MarkReviewAsEmailed(ticketId);
+                        sentCount++;
+                    }
+                    else
+                    {
+                        failedCount++;
+                    }
+                }
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+                sendReviewButton.Enabled = true;
+                sendReviewsAllButton.Enabled = true;
+                resultLabel.Text = "";
+            }
+
+            string resultMsg = $"Review requests sent: {sentCount}";
+            if (failedCount > 0)
+            {
+                resultMsg += $"\nFailed: {failedCount}";
+            }
+
+            resultLabel.Text = resultMsg;
+            MessageBox.Show(resultMsg, "Send Reviews", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadAttendees(eventId);
         }
 

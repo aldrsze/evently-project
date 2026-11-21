@@ -53,6 +53,8 @@ namespace Evently.Forms
             this.importCsvButton = new System.Windows.Forms.Button();
             this.sendTicketsButton = new System.Windows.Forms.Button();
             this.sendToAllButton = new System.Windows.Forms.Button();
+            this.sendReviewButton = new System.Windows.Forms.Button();
+            this.sendReviewsAllButton = new System.Windows.Forms.Button();
             this.exportCsvButton = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
@@ -360,9 +362,11 @@ namespace Evently.Forms
             this.actionPanel.Controls.Add(this.editButton);
             this.actionPanel.Controls.Add(this.deleteButton);
             this.actionPanel.Controls.Add(this.importCsvButton);
+            this.actionPanel.Controls.Add(this.exportCsvButton);
             this.actionPanel.Controls.Add(this.sendTicketsButton);
             this.actionPanel.Controls.Add(this.sendToAllButton);
-            this.actionPanel.Controls.Add(this.exportCsvButton);
+            this.actionPanel.Controls.Add(this.sendReviewButton);
+            this.actionPanel.Controls.Add(this.sendReviewsAllButton);
             this.actionPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.actionPanel.Location = new System.Drawing.Point(12, 592);
             this.actionPanel.Name = "actionPanel";
@@ -370,58 +374,76 @@ namespace Evently.Forms
             this.actionPanel.TabIndex = 4;
             // editButton
             this.editButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.editButton.Location = new System.Drawing.Point(626, 8);
+            this.editButton.Location = new System.Drawing.Point(440, 8);
             this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(90, 30);
+            this.editButton.Size = new System.Drawing.Size(80, 30);
             this.editButton.TabIndex = 0;
             this.editButton.Text = "&Edit";
             this.editButton.UseVisualStyleBackColor = true;
             this.editButton.Click += new System.EventHandler(this.EditButton_Click);
             // deleteButton
             this.deleteButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.deleteButton.Location = new System.Drawing.Point(724, 8);
+            this.deleteButton.Location = new System.Drawing.Point(526, 8);
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(90, 30);
+            this.deleteButton.Size = new System.Drawing.Size(80, 30);
             this.deleteButton.TabIndex = 1;
             this.deleteButton.Text = "&Delete";
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // importCsvButton
             this.importCsvButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.importCsvButton.Location = new System.Drawing.Point(822, 8);
+            this.importCsvButton.Location = new System.Drawing.Point(612, 8);
             this.importCsvButton.Name = "importCsvButton";
-            this.importCsvButton.Size = new System.Drawing.Size(100, 30);
+            this.importCsvButton.Size = new System.Drawing.Size(95, 30);
             this.importCsvButton.TabIndex = 2;
             this.importCsvButton.Text = "&Import CSV";
             this.importCsvButton.UseVisualStyleBackColor = true;
             this.importCsvButton.Click += new System.EventHandler(this.ImportCsvButton_Click);
+            // exportCsvButton
+            this.exportCsvButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.exportCsvButton.Location = new System.Drawing.Point(713, 8);
+            this.exportCsvButton.Name = "exportCsvButton";
+            this.exportCsvButton.Size = new System.Drawing.Size(95, 30);
+            this.exportCsvButton.TabIndex = 3;
+            this.exportCsvButton.Text = "&Export CSV";
+            this.exportCsvButton.UseVisualStyleBackColor = true;
+            this.exportCsvButton.Click += new System.EventHandler(this.ExportCsvButton_Click);
             // sendTicketsButton
             this.sendTicketsButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.sendTicketsButton.Location = new System.Drawing.Point(930, 8);
+            this.sendTicketsButton.Location = new System.Drawing.Point(814, 8);
             this.sendTicketsButton.Name = "sendTicketsButton";
-            this.sendTicketsButton.Size = new System.Drawing.Size(105, 30);
-            this.sendTicketsButton.TabIndex = 3;
+            this.sendTicketsButton.Size = new System.Drawing.Size(100, 30);
+            this.sendTicketsButton.TabIndex = 4;
             this.sendTicketsButton.Text = "Send &Ticket";
             this.sendTicketsButton.UseVisualStyleBackColor = true;
             this.sendTicketsButton.Click += new System.EventHandler(this.SendTicketButton_Click);
             // sendToAllButton
             this.sendToAllButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.sendToAllButton.Location = new System.Drawing.Point(1043, 8);
+            this.sendToAllButton.Location = new System.Drawing.Point(920, 8);
             this.sendToAllButton.Name = "sendToAllButton";
             this.sendToAllButton.Size = new System.Drawing.Size(105, 30);
-            this.sendToAllButton.TabIndex = 4;
-            this.sendToAllButton.Text = "Send to &All";
+            this.sendToAllButton.TabIndex = 5;
+            this.sendToAllButton.Text = "Tickets to &All";
             this.sendToAllButton.UseVisualStyleBackColor = true;
             this.sendToAllButton.Click += new System.EventHandler(this.SendToAllButton_Click);
-            // exportCsvButton
-            this.exportCsvButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.exportCsvButton.Location = new System.Drawing.Point(1156, 8);
-            this.exportCsvButton.Name = "exportCsvButton";
-            this.exportCsvButton.Size = new System.Drawing.Size(100, 30);
-            this.exportCsvButton.TabIndex = 5;
-            this.exportCsvButton.Text = "&Export CSV";
-            this.exportCsvButton.UseVisualStyleBackColor = true;
-            this.exportCsvButton.Click += new System.EventHandler(this.ExportCsvButton_Click);
+            // sendReviewButton
+            this.sendReviewButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.sendReviewButton.Location = new System.Drawing.Point(1031, 8);
+            this.sendReviewButton.Name = "sendReviewButton";
+            this.sendReviewButton.Size = new System.Drawing.Size(105, 30);
+            this.sendReviewButton.TabIndex = 6;
+            this.sendReviewButton.Text = "Send &Review";
+            this.sendReviewButton.UseVisualStyleBackColor = true;
+            this.sendReviewButton.Click += new System.EventHandler(this.SendReviewButton_Click);
+            // sendReviewsAllButton
+            this.sendReviewsAllButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.sendReviewsAllButton.Location = new System.Drawing.Point(1142, 8);
+            this.sendReviewsAllButton.Name = "sendReviewsAllButton";
+            this.sendReviewsAllButton.Size = new System.Drawing.Size(114, 30);
+            this.sendReviewsAllButton.TabIndex = 7;
+            this.sendReviewsAllButton.Text = "Reviews to &All";
+            this.sendReviewsAllButton.UseVisualStyleBackColor = true;
+            this.sendReviewsAllButton.Click += new System.EventHandler(this.SendReviewsAllButton_Click);
             // AttendeesForm
             this.AcceptButton = this.addAttendeeButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -493,6 +515,8 @@ namespace Evently.Forms
         private System.Windows.Forms.Button importCsvButton;
         private System.Windows.Forms.Button sendTicketsButton;
         private System.Windows.Forms.Button sendToAllButton;
+        private System.Windows.Forms.Button sendReviewButton;
+        private System.Windows.Forms.Button sendReviewsAllButton;
         private System.Windows.Forms.Button exportCsvButton;
         private System.Windows.Forms.Label heroSublineLabel;
     }

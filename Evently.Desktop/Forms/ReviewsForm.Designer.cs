@@ -25,6 +25,7 @@ namespace Evently.Forms
             this.attendeeNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ratingColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commentColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.submittedAtColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.reviewFormWrapperPanel = new System.Windows.Forms.Panel();
             this.reviewFormGroupBox = new System.Windows.Forms.GroupBox();
             this.urlLabel = new System.Windows.Forms.Label();
@@ -77,7 +78,7 @@ namespace Evently.Forms
             this.heroSublineLabel.Name = "heroSublineLabel";
             this.heroSublineLabel.Size = new System.Drawing.Size(465, 15);
             this.heroSublineLabel.TabIndex = 1;
-            this.heroSublineLabel.Text = "Distribute Google Form rating links and import attendee responses from CSV.";
+            this.heroSublineLabel.Text = "View ratings and attendee comments submitted on the website.";
             this.heroSublineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;
@@ -144,7 +145,8 @@ namespace Evently.Forms
             this.reviewsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.attendeeNameColumn,
             this.ratingColumn,
-            this.commentColumn});
+            this.commentColumn,
+            this.submittedAtColumn});
             this.reviewsDataGridView.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.reviewsDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
             this.reviewsDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
@@ -161,20 +163,29 @@ namespace Evently.Forms
             this.reviewsDataGridView.Size = new System.Drawing.Size(1254, 400);
             this.reviewsDataGridView.TabIndex = 0;
             // attendeeNameColumn
-            this.attendeeNameColumn.FillWeight = 80F;
-            this.attendeeNameColumn.HeaderText = "Name";
+            this.attendeeNameColumn.DataPropertyName = "attendee_name";
+            this.attendeeNameColumn.FillWeight = 50F;
+            this.attendeeNameColumn.HeaderText = "Attendee";
             this.attendeeNameColumn.Name = "attendeeNameColumn";
             this.attendeeNameColumn.ReadOnly = true;
             // ratingColumn
-            this.ratingColumn.FillWeight = 30F;
+            this.ratingColumn.DataPropertyName = "rating";
+            this.ratingColumn.FillWeight = 20F;
             this.ratingColumn.HeaderText = "Rating";
             this.ratingColumn.Name = "ratingColumn";
             this.ratingColumn.ReadOnly = true;
             // commentColumn
-            this.commentColumn.FillWeight = 100F;
+            this.commentColumn.DataPropertyName = "comment";
+            this.commentColumn.FillWeight = 110F;
             this.commentColumn.HeaderText = "Comment";
             this.commentColumn.Name = "commentColumn";
             this.commentColumn.ReadOnly = true;
+            // submittedAtColumn
+            this.submittedAtColumn.DataPropertyName = "submitted_at";
+            this.submittedAtColumn.FillWeight = 40F;
+            this.submittedAtColumn.HeaderText = "Submitted";
+            this.submittedAtColumn.Name = "submittedAtColumn";
+            this.submittedAtColumn.ReadOnly = true;
             // reviewFormWrapperPanel
             this.reviewFormWrapperPanel.BackColor = System.Drawing.Color.White;
             this.reviewFormWrapperPanel.Controls.Add(this.reviewFormGroupBox);
@@ -184,6 +195,7 @@ namespace Evently.Forms
             this.reviewFormWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 16, 0, 0);
             this.reviewFormWrapperPanel.Size = new System.Drawing.Size(1256, 102);
             this.reviewFormWrapperPanel.TabIndex = 2;
+            this.reviewFormWrapperPanel.Visible = false;
             // reviewFormGroupBox
             this.reviewFormGroupBox.BackColor = System.Drawing.Color.White;
             this.reviewFormGroupBox.Controls.Add(this.urlLabel);
@@ -260,6 +272,7 @@ namespace Evently.Forms
             this.actionPanel.Name = "actionPanel";
             this.actionPanel.Size = new System.Drawing.Size(1256, 46);
             this.actionPanel.TabIndex = 4;
+            this.actionPanel.Visible = false;
             // actionHintLabel
             this.actionHintLabel.AutoSize = true;
             this.actionHintLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -332,6 +345,7 @@ namespace Evently.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn attendeeNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ratingColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn commentColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn submittedAtColumn;
         private System.Windows.Forms.Panel reviewFormWrapperPanel;
         private System.Windows.Forms.GroupBox reviewFormGroupBox;
         private System.Windows.Forms.Label urlLabel;

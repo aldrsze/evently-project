@@ -52,5 +52,44 @@ namespace Evently.Core.Services
                 return false;
             }
         }
+
+        public static bool SendReviewRequestEmail(string recipientEmail, string attendeeName, string eventName, string reviewUrl)
+        {
+            string configPath = Path.Combine(AppContext.BaseDirectory, "db.config");
+            if (!File.Exists(configPath))
+            {
+                return false;
+            }
+
+            string[] lines = File.ReadAllLines(configPath);
+            string smtpEmail = DatabaseConnection.ReadValue(lines, "SmtpEmail");
+            string smtpPassword = DatabaseConnection.ReadValue(lines, "SmtpPassword");
+
+            if (smtpEmail.Length == 0 || smtpPassword.Length == 0)
+            {
+                return false;
+            }
+
+            try
+            {
+                using MailMessage mail = new();
+                mail.From = new MailAddress(smtpEmail, "Evently");
+                mail.To.Add(recipientEmail);
+                mail.Subject = $"How was {eventName}? Leave your feedback";
+                mail.Body = $"Hi {attendeeName},\n\nThank you for attending {eventName}!\n\nWe would love to hear your feedback. Please take a moment to rate the event here:\n{reviewUrl}\n\nYour review helps us improve future events.";
+
+                using SmtpClient client = new("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential(smtpEmail, smtpPassword);
+                client.Send(mail);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
