@@ -172,7 +172,44 @@ namespace Evently.Forms
             }
         }
 
-        private void ImportCsvButton_Click(object sender, EventArgs e) { /* TODO: Import CSV logic */ }
+        private void ImportCsvButton_Click(object sender, EventArgs e)
+        {
+            if (eventComboBox.SelectedValue == null || !int.TryParse(eventComboBox.SelectedValue.ToString(), out int eventId))
+            {
+                MessageBox.Show("Please select an event first.", "Import CSV", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using OpenFileDialog ofd = new();
+            ofd.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
+            ofd.Title = "Select Attendees CSV";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Cursor = Cursors.WaitCursor;
+                    resultLabel.Text = "Importing attendees...";
+                    Application.DoEvents();
+
+                    CsvImportResult result = CsvService.ImportAttendeesFromCsv(eventId, ofd.FileName);
+
+                    string summary = $"{result.Imported} imported, {result.Duplicates} duplicates skipped, {result.Invalid} invalid, {result.OverCapacity} over capacity.";
+                    resultLabel.Text = summary;
+                    MessageBox.Show(summary, "Import Summary", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadAttendees(eventId);
+                }
+                catch (Exception ex)
+                {
+                    resultLabel.Text = "Import failed.";
+                    MessageBox.Show("Could not import CSV: " + ex.Message, "Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    Cursor = Cursors.Default;
+                }
+            }
+        }
 
         private void SendTicketButton_Click(object sender, EventArgs e)
         {
