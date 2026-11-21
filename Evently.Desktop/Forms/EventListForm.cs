@@ -16,6 +16,27 @@ namespace Evently.Forms
         {
             eventsDataGridView.DataSource = null;
             eventsDataGridView.DataSource = EventService.GetEvent();
+
+            if (eventsDataGridView.CurrentRow != null && eventsDataGridView.CurrentRow.Cells["descriptionColumn"] != null)
+            {
+                selectedDescriptionTextBox.Text = Convert.ToString(eventsDataGridView.CurrentRow.Cells["descriptionColumn"].Value) ?? "";
+            }
+            else
+            {
+                selectedDescriptionTextBox.Text = "";
+            }
+        }
+
+        private void EventsDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (eventsDataGridView.CurrentRow != null && eventsDataGridView.CurrentRow.Cells["descriptionColumn"] != null)
+            {
+                selectedDescriptionTextBox.Text = Convert.ToString(eventsDataGridView.CurrentRow.Cells["descriptionColumn"].Value) ?? "";
+            }
+            else
+            {
+                selectedDescriptionTextBox.Text = "";
+            }
         }
 
         private void AddButton_Click(object sender, EventArgs e)

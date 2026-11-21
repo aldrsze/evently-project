@@ -143,7 +143,7 @@ namespace Evently.Forms
             this.eventComboBox.Name = "eventComboBox";
             this.eventComboBox.Size = new System.Drawing.Size(580, 23);
             this.eventComboBox.TabIndex = 1;
-            this.eventComboBox.SelectedIndexChanged += new System.EventHandler(this.eventComboBox_SelectedIndexChanged);
+            this.eventComboBox.SelectedIndexChanged += new System.EventHandler(this.EventComboBox_SelectedIndexChanged);
 
             // lastUpdatedLabel
             this.lastUpdatedLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
@@ -440,7 +440,7 @@ namespace Evently.Forms
             // dashboardTimer
             this.dashboardTimer.Enabled = true;
             this.dashboardTimer.Interval = 5000;
-            this.dashboardTimer.Tick += new System.EventHandler(this.dashboardTimer_Tick);
+            this.dashboardTimer.Tick += new System.EventHandler(this.DashboardTimer_Tick);
 
             // DashboardForm
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);

@@ -22,6 +22,7 @@ namespace Evently.Forms
             this.eventComboBox = new System.Windows.Forms.ComboBox();
             this.gridHostPanel = new System.Windows.Forms.Panel();
             this.organizersDataGridView = new System.Windows.Forms.DataGridView();
+            this.organizerIdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.phoneColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,6 +42,7 @@ namespace Evently.Forms
             this.actionPanel = new System.Windows.Forms.Panel();
             this.actionHintLabel = new System.Windows.Forms.Label();
             this.resultLabel = new System.Windows.Forms.Label();
+            this.editManagerButton = new System.Windows.Forms.Button();
             this.removeManagerButton = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
@@ -118,7 +120,7 @@ namespace Evently.Forms
             this.eventComboBox.Name = "eventComboBox";
             this.eventComboBox.Size = new System.Drawing.Size(1198, 23);
             this.eventComboBox.TabIndex = 1;
-            this.eventComboBox.SelectedIndexChanged += new System.EventHandler(this.eventComboBox_SelectedIndexChanged);
+            this.eventComboBox.SelectedIndexChanged += new System.EventHandler(this.EventComboBox_SelectedIndexChanged);
             // gridHostPanel
             this.gridHostPanel.BackColor = System.Drawing.Color.White;
             this.gridHostPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -145,6 +147,7 @@ namespace Evently.Forms
             this.organizersDataGridView.ColumnHeadersHeight = 36;
             this.organizersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.organizersDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.organizerIdColumn,
             this.nameColumn,
             this.emailColumn,
             this.phoneColumn,
@@ -164,22 +167,32 @@ namespace Evently.Forms
             this.organizersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.organizersDataGridView.Size = new System.Drawing.Size(1254, 424);
             this.organizersDataGridView.TabIndex = 0;
+            // organizerIdColumn
+            this.organizerIdColumn.DataPropertyName = "organizer_id";
+            this.organizerIdColumn.HeaderText = "ID";
+            this.organizerIdColumn.Name = "organizerIdColumn";
+            this.organizerIdColumn.ReadOnly = true;
+            this.organizerIdColumn.Visible = false;
             // nameColumn
+            this.nameColumn.DataPropertyName = "full_name";
             this.nameColumn.FillWeight = 70F;
             this.nameColumn.HeaderText = "Name";
             this.nameColumn.Name = "nameColumn";
             this.nameColumn.ReadOnly = true;
             // emailColumn
+            this.emailColumn.DataPropertyName = "email";
             this.emailColumn.FillWeight = 80F;
             this.emailColumn.HeaderText = "Email";
             this.emailColumn.Name = "emailColumn";
             this.emailColumn.ReadOnly = true;
             // phoneColumn
+            this.phoneColumn.DataPropertyName = "phone";
             this.phoneColumn.FillWeight = 50F;
             this.phoneColumn.HeaderText = "Phone";
             this.phoneColumn.Name = "phoneColumn";
             this.phoneColumn.ReadOnly = true;
             // organizationColumn
+            this.organizationColumn.DataPropertyName = "organization";
             this.organizationColumn.FillWeight = 80F;
             this.organizationColumn.HeaderText = "Organization";
             this.organizationColumn.Name = "organizationColumn";
@@ -285,11 +298,12 @@ namespace Evently.Forms
             this.addManagerButton.TabIndex = 7;
             this.addManagerButton.Text = "&Add";
             this.addManagerButton.UseVisualStyleBackColor = false;
-            this.addManagerButton.Click += new System.EventHandler(this.addManagerButton_Click);
+            this.addManagerButton.Click += new System.EventHandler(this.AddManagerButton_Click);
             // actionPanel
             this.actionPanel.BackColor = System.Drawing.Color.White;
             this.actionPanel.Controls.Add(this.actionHintLabel);
             this.actionPanel.Controls.Add(this.resultLabel);
+            this.actionPanel.Controls.Add(this.editManagerButton);
             this.actionPanel.Controls.Add(this.removeManagerButton);
             this.actionPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.actionPanel.Location = new System.Drawing.Point(12, 580);
@@ -315,15 +329,24 @@ namespace Evently.Forms
             this.actionHintLabel.Size = new System.Drawing.Size(437, 15);
             this.actionHintLabel.TabIndex = 2;
             this.actionHintLabel.Text = "Removing a manager only unlinks them from this event, not the organizer list.";
+            // editManagerButton
+            this.editManagerButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.editManagerButton.Location = new System.Drawing.Point(1048, 17);
+            this.editManagerButton.Name = "editManagerButton";
+            this.editManagerButton.Size = new System.Drawing.Size(100, 30);
+            this.editManagerButton.TabIndex = 0;
+            this.editManagerButton.Text = "&Edit";
+            this.editManagerButton.UseVisualStyleBackColor = true;
+            this.editManagerButton.Click += new System.EventHandler(this.EditManagerButton_Click);
             // removeManagerButton
             this.removeManagerButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.removeManagerButton.Location = new System.Drawing.Point(1154, 17);
             this.removeManagerButton.Name = "removeManagerButton";
             this.removeManagerButton.Size = new System.Drawing.Size(100, 30);
-            this.removeManagerButton.TabIndex = 0;
+            this.removeManagerButton.TabIndex = 1;
             this.removeManagerButton.Text = "&Remove";
             this.removeManagerButton.UseVisualStyleBackColor = true;
-            this.removeManagerButton.Click += new System.EventHandler(this.removeManagerButton_Click);
+            this.removeManagerButton.Click += new System.EventHandler(this.RemoveManagerButton_Click);
             // OrganizersForm
             this.AcceptButton = this.addManagerButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -365,6 +388,7 @@ namespace Evently.Forms
         private System.Windows.Forms.ComboBox eventComboBox;
         private System.Windows.Forms.Panel gridHostPanel;
         private System.Windows.Forms.DataGridView organizersDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn organizerIdColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn emailColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn phoneColumn;
@@ -384,6 +408,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Panel actionPanel;
         private System.Windows.Forms.Label actionHintLabel;
         private System.Windows.Forms.Label resultLabel;
+        private System.Windows.Forms.Button editManagerButton;
         private System.Windows.Forms.Button removeManagerButton;
     }
 }

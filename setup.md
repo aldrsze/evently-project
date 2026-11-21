@@ -45,8 +45,13 @@ Enter your MySQL password when asked. `seed.sql` already starts with `USE eventl
 
 ### 3. Create your config file
 
-Copy `db.config.example` to `db.config` in the repo root, then open it and fill in your own MySQL username and password.
+Copy `db.config.example` to `db.config` in the repo root, then open it and fill in your own settings:
 
+- **MySQL credentials:** `Server`, `Database`, `User`, `Password`
+- **Email sending (optional, for QR tickets):** `SmtpEmail` (your Gmail address) and `SmtpPassword` (a 16-character Google App Password without spaces). To generate one: Google Account > Security > 2-Step Verification > App Passwords.
+- **Website base URL (optional, for review links):** `WebBaseUrl` (defaults to `http://localhost:5000`). If using a public tunnel, set this to your tunnel URL.
+
+Notes:
 - `db.config` is git-ignored, so your password never gets pushed.
 - It must be in the repo root (next to `Evently.sln`). Both apps use this one file.
 - Each build copies it next to the app, so after editing it, stop the app and run it again.
@@ -70,6 +75,26 @@ Then open `http://localhost:5000`.
 Both can run at the same time since they share one database.
 
 To build everything: `dotnet build Evently.sln`
+
+### 5. Exposing the website with Cloudflare Tunnel (optional)
+
+To let guests open review links or register from outside your local network:
+
+1. Download [cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/).
+2. Run the website:
+   ```bash
+   dotnet run --project Evently.Web
+   ```
+3. In a separate terminal, launch a tunnel:
+   ```bash
+   cloudflared tunnel --url http://localhost:5000
+   ```
+4. Copy the generated `https://<random-subdomain>.trycloudflare.com` URL.
+5. In `db.config`, update `WebBaseUrl`:
+   ```
+   WebBaseUrl=https://<random-subdomain>.trycloudflare.com
+   ```
+6. Rebuild and launch `Evently.Desktop` so emailed review links point to the public tunnel URL.
 
 ## Project structure
 
