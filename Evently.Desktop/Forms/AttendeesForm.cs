@@ -217,7 +217,25 @@ namespace Evently.Forms
             string venue = ticketRow["venue"].ToString() ?? "";
             DateTime eventDate = Convert.ToDateTime(ticketRow["event_date"]);
 
-            bool success = EmailService.SendTicketEmail(recipientEmail, attendeeName, eventName, venue, eventDate, ticketId);
+            sendTicketsButton.Enabled = false;
+            sendToAllButton.Enabled = false;
+            Cursor = Cursors.WaitCursor;
+            resultLabel.Text = $"Sending ticket to {attendeeName}...";
+            Application.DoEvents();
+
+            bool success = false;
+            try
+            {
+                success = EmailService.SendTicketEmail(recipientEmail, attendeeName, eventName, venue, eventDate, ticketId);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+                sendTicketsButton.Enabled = true;
+                sendToAllButton.Enabled = true;
+                resultLabel.Text = "";
+            }
+
             if (success)
             {
                 TicketService.MarkTicketAsEmailed(ticketId);
@@ -250,26 +268,45 @@ namespace Evently.Forms
 
             int sentCount = 0;
             int failedCount = 0;
+            int total = unemailedTickets.Rows.Count;
 
-            foreach (DataRow row in unemailedTickets.Rows)
+            sendTicketsButton.Enabled = false;
+            sendToAllButton.Enabled = false;
+            Cursor = Cursors.WaitCursor;
+
+            try
             {
-                string ticketId = row["ticket_id"].ToString() ?? "";
-                string recipientEmail = row["email"].ToString() ?? "";
-                string attendeeName = row["attendee_name"].ToString() ?? "";
-                string eventName = row["event_name"].ToString() ?? "";
-                string venue = row["venue"].ToString() ?? "";
-                DateTime eventDate = Convert.ToDateTime(row["event_date"]);
+                for (int i = 0; i < total; i++)
+                {
+                    DataRow row = unemailedTickets.Rows[i];
+                    string ticketId = row["ticket_id"].ToString() ?? "";
+                    string recipientEmail = row["email"].ToString() ?? "";
+                    string attendeeName = row["attendee_name"].ToString() ?? "";
+                    string eventName = row["event_name"].ToString() ?? "";
+                    string venue = row["venue"].ToString() ?? "";
+                    DateTime eventDate = Convert.ToDateTime(row["event_date"]);
 
-                bool success = EmailService.SendTicketEmail(recipientEmail, attendeeName, eventName, venue, eventDate, ticketId);
-                if (success)
-                {
-                    TicketService.MarkTicketAsEmailed(ticketId);
-                    sentCount++;
+                    resultLabel.Text = $"Sending ticket {i + 1} of {total} to {attendeeName}...";
+                    Application.DoEvents();
+
+                    bool success = EmailService.SendTicketEmail(recipientEmail, attendeeName, eventName, venue, eventDate, ticketId);
+                    if (success)
+                    {
+                        TicketService.MarkTicketAsEmailed(ticketId);
+                        sentCount++;
+                    }
+                    else
+                    {
+                        failedCount++;
+                    }
                 }
-                else
-                {
-                    failedCount++;
-                }
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+                sendTicketsButton.Enabled = true;
+                sendToAllButton.Enabled = true;
+                resultLabel.Text = "";
             }
 
             string resultMsg = $"Tickets sent: {sentCount}";
@@ -283,6 +320,44 @@ namespace Evently.Forms
             LoadAttendees(eventId);
         }
 
-        private void ExportCsvButton_Click(object sender, EventArgs e) { /* TODO: Export CSV */ }
+        private void ExportCsvButton_Click(object sender, EventArgs e)
+        {
+            if (eventComboBox.SelectedValue == null || !int.TryParse(eventComboBox.SelectedValue.ToString(), out int eventId))
+            {
+                MessageBox.Show("Please select an event first.", "Export CSV", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string eventName = eventComboBox.Text.Trim();
+            string safeEventName = string.Join("_", eventName.Split(Path.GetInvalidFileNameChars()));
+
+            using SaveFileDialog sfd = new();
+            sfd.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
+            sfd.FileName = $"{safeEventName}_attendance_{DateTime.Now:yyyyMMdd}.csv";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Cursor = Cursors.WaitCursor;
+                    resultLabel.Text = "Exporting CSV...";
+                    Application.DoEvents();
+
+                    CsvService.ExportAttendanceToCsv(eventId, sfd.FileName);
+
+                    resultLabel.Text = "Export completed.";
+                    MessageBox.Show("Attendance exported successfully.", "Export CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    resultLabel.Text = "Export failed.";
+                    MessageBox.Show("Could not export CSV: " + ex.Message, "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    Cursor = Cursors.Default;
+                }
+            }
+        }
     }
 }
