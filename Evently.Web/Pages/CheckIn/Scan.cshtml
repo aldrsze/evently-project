@@ -1,0 +1,31 @@
+@page "/Scan"
+@model Evently.Web.Pages.CheckIn.ScanModel
+@{
+    ViewData["Title"] = "QR Door Scanner";
+}
+
+<div class="scanner-container">
+    <h2>Door Check-in & Scanner</h2>
+    <p class="subline">Scan guest QR ticket or enter ticket ID manually.</p>
+
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="alert alert-success">@Model.SuccessMessage</div>
+    }
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-error">@Model.ErrorMessage</div>
+    }
+
+    <form method="post" class="scan-form">
+        <div class="form-group">
+            <label for="ticketId">Ticket ID (Scan / Enter)</label>
+            <input type="text" id="ticketId" name="TicketId" value="@Model.TicketId" placeholder="e.g. 11111111-0001-4000-8000-000000000001" autofocus required />
+        </div>
+
+        <div class="btn-group">
+            <button type="submit" name="Action" value="checkin" class="btn-checkin">Check In (Entry)</button>
+            <button type="submit" name="Action" value="checkout" class="btn-checkout">Check Out (Exit)</button>
+        </div>
+    </form>
+</div>

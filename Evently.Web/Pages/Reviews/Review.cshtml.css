@@ -1,0 +1,109 @@
+.review-page {
+    max-width: 500px;
+    margin: 2.5rem auto;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.review-page h1 {
+    font-size: 1.6rem;
+    color: #2b579a;
+    margin-bottom: 0.5rem;
+}
+
+.event-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.25rem;
+}
+
+.field {
+    margin-top: 1.25rem;
+}
+
+.field label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: #1e293b;
+}
+
+.stars {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.star-label {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: #eab308;
+}
+
+.star-label input {
+    cursor: pointer;
+}
+
+textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #2b579a;
+}
+
+.optional {
+    font-weight: normal;
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.btn-submit {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.75rem;
+    background: #2b579a;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1e3f6f;
+}
+
+.message {
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-weight: 500;
+}
+
+.message--error {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.message--success {
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}

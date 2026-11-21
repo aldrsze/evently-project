@@ -1,0 +1,99 @@
+.ticket-wrapper {
+    max-width: 420px;
+    margin: 2.5rem auto;
+}
+
+.ticket-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.ticket-header {
+    background: #2b579a;
+    color: #fff;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.ticket-header h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.ticket-header .venue {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.ticket-header .date {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.ticket-body {
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+.qr-box {
+    margin: 0 auto 1.5rem;
+    display: inline-block;
+    padding: 1rem;
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+}
+
+.qr-box img {
+    display: block;
+    max-width: 200px;
+    height: auto;
+}
+
+.attendee-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+}
+
+.attendee-email {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+}
+
+.ticket-id {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.status-badge {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-valid {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status-used {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.ticket-footer {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    padding: 0.85rem;
+    text-align: center;
+    color: #94a3b8;
+}

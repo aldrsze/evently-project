@@ -1,0 +1,55 @@
+.hero {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+}
+
+.hero h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #2b579a;
+    margin-bottom: 0.5rem;
+}
+
+.hero p {
+    color: #555;
+    font-size: 1.1rem;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.event-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #222;
+}
+
+.event-card .meta {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+}
+
+.event-card .btn-register {
+    margin-top: auto;
+    background: #2b579a;
+    color: #fff;
+    padding: 0.6rem 1rem;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+}
