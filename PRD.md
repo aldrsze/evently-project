@@ -19,20 +19,20 @@ Evently
 | Hanna Raiza Mukaddis | Frontend Designer |
 
 **Summary:**
-Evently is two apps on one MySQL database. **Evently.Web** is a small ASP.NET Core website that guests open on their phone: they register themselves for an event, get their QR ticket on screen, show it at the door, and fill in the rating form after the event. **Evently.Desktop** is a Windows Forms app for the organizers: users and events, manual or CSV attendee entry, ticket emails, a live dashboard, and an attendance CSV export. Both apps call the same shared library (**Evently.Core**), so capacity, duplicate, ticket, and check-in rules are written once and enforced everywhere. Admin login uses a username and password (hashed). At the door, staff scan the QR ticket with a phone camera through the web page. The same ticket is scanned again on the way out, so the system knows who is inside the venue right now. After the event, the admin emails a link to the site's own rating form, and the guest's rating and comment are saved straight into the database — no Google Forms, no CSV import. A live dashboard shows how many people are inside, how many have arrived, and the average rating, with charts. Data is stored in MySQL with a normalized schema (attendees and reviews are separate tables, and events can have organizers).
+Evently is an event ticketing and live gate monitoring system tailored for student organizations at Quezon City University (QCU). The system runs two applications against one MySQL database. **Evently.Web** is an ASP.NET Core site accessible by QCU students and attendees on mobile: students register for org events, view unique QR tickets, present them at venue entrances, and submit feedback post-event. **Evently.Desktop** is a Windows Forms application for QCU student org event administrators: managing events, entering walk-ins or importing batch attendees via CSV, dispatching ticket emails, monitoring live venue headcounts on a dashboard, and exporting attendance records. Both applications share **Evently.Core**, ensuring capacity checks, duplicate prevention, and check-in/out logic are enforced uniformly. Staff volunteers verify attendance by scanning QR codes with mobile cameras directly on the web interface.
 
 ---
 
 ## 2. Problem Statement
 
 **What problem are you solving?**
-Many school and organization events still use paper attendance sheets. This causes long lines at the entrance, mistakes when checking people in, no way to tell if the venue is over capacity, and people using fake or copied tickets. Paper sheets also cannot tell organizers how many people are inside right now, or what guests thought of the event.
+Student organizations at Quezon City University (across San Bartolome, Batasan, and San Francisco campuses) rely heavily on manual paper sign-in sheets and unverified registration lists during general assemblies, college seminars, org fairs, and workshops. This causes congested entry lines, inaccurate attendance tracking, inability to enforce venue safety capacity limits, and counterfeit registrations. Organizers lack real-time visibility into current venue occupancy and struggle to gather timely post-event feedback from actual attendees.
 
 **Who has this problem?**
-Event organizers, student volunteers, and the people attending campus or organization events.
+Quezon City University student organization officers, event committees, student volunteer marshals, and university students attending campus events.
 
 **Why does it matter?**
-Checking people in by hand is slow and creates bottlenecks at the door. Organizers have no easy way to see, in real time, how many people are in the venue. Feedback is usually collected late, or never.
+Manual paper logging creates bottlenecks at venue doors (e.g., QCU Auditorium, Multi-purpose Halls, AVRs) and delays event programs. Org officers cannot verify live hall capacity in real time, and evaluation surveys sent days later suffer low completion rates.
 
 ---
 
@@ -84,9 +84,9 @@ Checking people in by hand is slow and creates bottlenecks at the door. Organize
 
 | Persona | Description | Needs |
 | --- | --- | --- |
-| Event Attendee | A student or guest going to an event | A page on their phone to register, their QR ticket, a quick entry at the door, and a short rating form after the event. |
-| Event Administrator | The organizer running the event | A desktop login, an easy screen to create events, a way to add walk-ins (manual or CSV), ticket emails, a rating request email, a dashboard, and an attendance export. |
-| Staff | Staff member or volunteer checking people in at the door | Their own login, a scan page on their phone, and clear pass or fail messages. |
+| QCU Student Attendee | A Quezon City University student attending an org seminar, assembly, or workshop | Mobile web page to register, instant QR ticket to show at the gate, fast entry, and an in-app evaluation form post-event. |
+| QCU Org Administrator | Student organization executive or committee lead running the event | Desktop app to create events, manage walk-in attendees, send QR tickets, track real-time venue occupancy, and export attendance. |
+| Student Org Marshal (Staff) | Student volunteer or committee member stationed at event entrances | Mobile web scan page to scan student tickets with phone camera, validating entry and exit with immediate visual feedback. |
 
 ---
 
