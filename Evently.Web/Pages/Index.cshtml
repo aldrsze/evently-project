@@ -1,8 +1,33 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Upcoming Events";
 }
 
-<h1>Evently</h1>
-<p>Upcoming events will be listed here.</p>
+<div class="hero">
+    <h1>Discover Campus Events</h1>
+    <p>Browse upcoming student organization events, register online, and receive your digital QR ticket.</p>
+</div>
+
+@if (Model.UpcomingEvents.Count == 0)
+{
+    <p class="empty-state">No events scheduled right now. Check back soon!</p>
+}
+else
+{
+    <div class="events-grid">
+        @foreach (var ev in Model.UpcomingEvents)
+        {
+            <div class="event-card">
+                <h3>@ev.Name</h3>
+                <div class="meta">
+                    <p><strong>Venue:</strong> @ev.Venue</p>
+                    <p><strong>Date:</strong> @ev.EventDate.ToString("MMMM d, yyyy  h:mm tt")</p>
+                    <p><strong>Limit:</strong> @ev.Capacity attendees</p>
+                </div>
+                <p class="description">@ev.Description</p>
+                <a asp-page="/Registration/Register" asp-route-eventId="@ev.EventId" class="btn-register">Register Now</a>
+            </div>
+        }
+    </div>
+}

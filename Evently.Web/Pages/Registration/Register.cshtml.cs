@@ -26,16 +26,31 @@ public class RegisterModel : PageModel
 
     public string? ErrorMessage { get; set; }
 
+    public EventItem? SelectedEvent { get; set; }
+
     public List<EventItem> AvailableEvents { get; set; } = new();
 
-    public void OnGet()
+    public void OnGet(int? eventId)
     {
+        if (eventId.HasValue)
+        {
+            EventId = eventId.Value;
+        }
+
         LoadEvents();
+        if (EventId.HasValue)
+        {
+            SelectedEvent = AvailableEvents.Find(e => e.EventId == EventId.Value);
+        }
     }
 
     public IActionResult OnPost()
     {
         LoadEvents();
+        if (EventId.HasValue)
+        {
+            SelectedEvent = AvailableEvents.Find(e => e.EventId == EventId.Value);
+        }
 
         if (!EventId.HasValue || EventId.Value <= 0)
         {

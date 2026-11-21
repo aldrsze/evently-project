@@ -20,6 +20,34 @@
     margin-bottom: 1.5rem;
 }
 
+.selected-event-banner {
+    background: #f1f5f9;
+    border-left: 4px solid #2b579a;
+    padding: 1rem 1.25rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+}
+
+.selected-event-banner .banner-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.selected-event-banner h3 {
+    margin: 0.25rem 0;
+    color: #1e293b;
+    font-size: 1.2rem;
+}
+
+.selected-event-banner .banner-venue {
+    margin: 0;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
 .form-group {
     margin-bottom: 1.25rem;
 }

@@ -14,18 +14,30 @@
     }
 
     <form method="post">
-        <div class="form-group">
-            <label for="eventId">Select Event</label>
-            <select id="eventId" name="EventId" required>
-                <option value="">-- Choose an Event --</option>
-                @foreach (var ev in Model.AvailableEvents)
-                {
-                    <option value="@ev.EventId" selected="@(ev.EventId == Model.EventId ? "selected" : null)">
-                        @ev.Name (@ev.Venue)
-                    </option>
-                }
-            </select>
-        </div>
+        @if (Model.SelectedEvent != null)
+        {
+            <div class="selected-event-banner">
+                <span class="banner-label">Registering for:</span>
+                <h3>@Model.SelectedEvent.Name</h3>
+                <p class="banner-venue">📍 @Model.SelectedEvent.Venue</p>
+                <input type="hidden" name="EventId" value="@Model.SelectedEvent.EventId" />
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label for="eventId">Select Event</label>
+                <select id="eventId" name="EventId" required>
+                    <option value="">-- Choose an Event --</option>
+                    @foreach (var ev in Model.AvailableEvents)
+                    {
+                        <option value="@ev.EventId" selected="@(ev.EventId == Model.EventId ? "selected" : null)">
+                            @ev.Name (@ev.Venue)
+                        </option>
+                    }
+                </select>
+            </div>
+        }
 
         <div class="form-row">
             <div class="form-group">
