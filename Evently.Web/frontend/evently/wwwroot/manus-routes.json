@@ -1,0 +1,9 @@
+{
+  "routes": [
+    { "path": "/Register", "title": "Guest Registration" },
+    { "path": "/Ticket/:ticket_id", "title": "QR Ticket" },
+    { "path": "/Login", "title": "Staff Login" },
+    { "path": "/Scan", "title": "Staff QR Scan and Check-In / Check-Out" },
+    { "path": "/Review/:ticket_id", "title": "Guest Review Submission" }
+  ]
+}

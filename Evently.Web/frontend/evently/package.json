@@ -1,0 +1,1 @@
+{"name":"evently-frontend","version":"1.0.0","private":true,"type":"module","packageManager":"pnpm@11.0.0","scripts":{"check":"node --input-type=module --check < wwwroot/js/app.js && node --input-type=module --check < wwwroot/js/data/store.js"}}
