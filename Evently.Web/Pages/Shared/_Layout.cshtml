@@ -16,9 +16,11 @@
         </a>
         <nav aria-label="Main navigation">
             <a asp-page="/Registration/Register">Guest registration</a>
-            @if (Context.Request.Path.StartsWithSegments("/Scan"))
+            @if (User.Identity?.IsAuthenticated == true)
             {
                 <a asp-page="/CheckIn/Scan">Scanner</a>
+                <span class="user-badge">@User.Identity.Name</span>
+                <a asp-page="/Auth/Logout">Sign out</a>
             }
             else
             {

@@ -1,3 +1,6 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Evently.Core.Services;
@@ -16,7 +19,7 @@ public class LoginModel : PageModel
 
     public void OnGet() { }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
         {
@@ -24,20 +27,41 @@ public class LoginModel : PageModel
             return Page();
         }
 
-        bool isValid = AuthService.VerifyAuth(Username.Trim(), Password);
+        string identifier = Username.Trim();
+        bool isValid = AuthService.VerifyAuth(identifier, Password);
         if (!isValid)
         {
             ErrorMessage = "Invalid username or password.";
             return Page();
         }
 
-        if (!AuthService.IsApproved(Username.Trim()))
+        if (!AuthService.IsApproved(identifier))
         {
             ErrorMessage = "Your account is waiting for admin approval.";
             return Page();
         }
 
-        // Store staff session / cookie or redirect to scan page
+        string actualUsername = AuthService.GetUsername(identifier) ?? identifier;
+        string role = AuthService.GetRole(identifier) ?? "STAFF";
+
+        var claims = new List<Claim>
+        {
+            new(ClaimTypes.Name, actualUsername),
+            new(ClaimTypes.Role, role)
+        };
+
+        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var authProperties = new AuthenticationProperties
+        {
+            IsPersistent = true,
+            ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8)
+        };
+
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(claimsIdentity),
+            authProperties);
+
         return RedirectToPage("/CheckIn/Scan");
     }
 }

@@ -97,6 +97,12 @@ button:disabled {
   font-size: 14px;
 }
 
+.user-badge {
+  font-weight: 600;
+  color: var(--blue);
+  font-size: 14px;
+}
+
 .site-header nav a:hover, .back-link:hover {
   color: var(--blue);
 }
