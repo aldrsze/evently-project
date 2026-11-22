@@ -28,6 +28,11 @@
             <input type="password" id="password" name="Password" required autocomplete="current-password" />
         </div>
 
+        <label class="checkbox-field">
+            <input type="checkbox" onchange="document.getElementById('password').type = this.checked ? 'text' : 'password'" />
+            Show password
+        </label>
+
         <button type="submit" class="button primary full">Sign in</button>
     </form>
 

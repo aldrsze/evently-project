@@ -150,6 +150,18 @@ namespace Evently.Forms
 
         } // end loginButton_Click
 
+        private void ShowPasswordCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            passwordTextBox.UseSystemPasswordChar = !showPasswordCheckBox.Checked;
+        }
+
+        private void SignupShowPasswordCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            bool show = signupShowPasswordCheckBox.Checked;
+            signupPasswordTextBox.UseSystemPasswordChar = !show;
+            signupConfirmTextBox.UseSystemPasswordChar = !show;
+        }
+
     } // end class
 
 } // end namespace

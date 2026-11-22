@@ -65,6 +65,11 @@
                 <input type="password" id="confirmPassword" name="ConfirmPassword" minlength="8" required autocomplete="new-password" />
             </div>
 
+            <label class="checkbox-field">
+                <input type="checkbox" onchange="const t = this.checked ? 'text' : 'password'; document.getElementById('password').type = t; document.getElementById('confirmPassword').type = t;" />
+                Show passwords
+            </label>
+
             <button type="submit" class="button primary full">Request staff account</button>
         </form>
     }

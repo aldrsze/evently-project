@@ -28,6 +28,7 @@ namespace Evently.Forms
             this.usernameTextBox = new System.Windows.Forms.TextBox();
             this.passwordLabel = new System.Windows.Forms.Label();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
+            this.showPasswordCheckBox = new System.Windows.Forms.CheckBox();
             this.errorLabel = new System.Windows.Forms.Label();
             this.loginHintLabel = new System.Windows.Forms.Label();
             this.reassuranceLabel = new System.Windows.Forms.Label();
@@ -49,6 +50,7 @@ namespace Evently.Forms
             this.signupPasswordTextBox = new System.Windows.Forms.TextBox();
             this.signupConfirmLabel = new System.Windows.Forms.Label();
             this.signupConfirmTextBox = new System.Windows.Forms.TextBox();
+            this.signupShowPasswordCheckBox = new System.Windows.Forms.CheckBox();
             this.signupButton = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
@@ -152,6 +154,7 @@ namespace Evently.Forms
             this.loginPanel.Controls.Add(this.usernameTextBox);
             this.loginPanel.Controls.Add(this.passwordLabel);
             this.loginPanel.Controls.Add(this.passwordTextBox);
+            this.loginPanel.Controls.Add(this.showPasswordCheckBox);
             this.loginPanel.Controls.Add(this.errorLabel);
             this.loginPanel.Controls.Add(this.loginHintLabel);
             this.loginPanel.Controls.Add(this.reassuranceLabel);
@@ -203,12 +206,21 @@ namespace Evently.Forms
             this.passwordTextBox.Size = new System.Drawing.Size(340, 23);
             this.passwordTextBox.TabIndex = 3;
             this.passwordTextBox.UseSystemPasswordChar = true;
+            // showPasswordCheckBox
+            this.showPasswordCheckBox.AutoSize = true;
+            this.showPasswordCheckBox.Location = new System.Drawing.Point(40, 222);
+            this.showPasswordCheckBox.Name = "showPasswordCheckBox";
+            this.showPasswordCheckBox.Size = new System.Drawing.Size(108, 19);
+            this.showPasswordCheckBox.TabIndex = 4;
+            this.showPasswordCheckBox.Text = "Show password";
+            this.showPasswordCheckBox.UseVisualStyleBackColor = true;
+            this.showPasswordCheckBox.CheckedChanged += new System.EventHandler(this.ShowPasswordCheckBox_CheckedChanged);
             // errorLabel
             this.errorLabel.AutoSize = false;
-            this.errorLabel.Location = new System.Drawing.Point(40, 226);
+            this.errorLabel.Location = new System.Drawing.Point(40, 246);
             this.errorLabel.Name = "errorLabel";
             this.errorLabel.Size = new System.Drawing.Size(340, 22);
-            this.errorLabel.TabIndex = 4;
+            this.errorLabel.TabIndex = 5;
             this.errorLabel.Text = "";
             // loginHintLabel
             this.loginHintLabel.AutoSize = false;
@@ -260,6 +272,7 @@ namespace Evently.Forms
             this.signupPanel.Controls.Add(this.signupPasswordTextBox);
             this.signupPanel.Controls.Add(this.signupConfirmLabel);
             this.signupPanel.Controls.Add(this.signupConfirmTextBox);
+            this.signupPanel.Controls.Add(this.signupShowPasswordCheckBox);
             this.signupPanel.Controls.Add(this.signupButton);
             this.signupPanel.Location = new System.Drawing.Point(210, 50);
             this.signupPanel.Name = "signupPanel";
@@ -372,6 +385,15 @@ namespace Evently.Forms
             this.signupConfirmTextBox.Size = new System.Drawing.Size(340, 23);
             this.signupConfirmTextBox.TabIndex = 15;
             this.signupConfirmTextBox.UseSystemPasswordChar = true;
+            // signupShowPasswordCheckBox
+            this.signupShowPasswordCheckBox.AutoSize = true;
+            this.signupShowPasswordCheckBox.Location = new System.Drawing.Point(40, 532);
+            this.signupShowPasswordCheckBox.Name = "signupShowPasswordCheckBox";
+            this.signupShowPasswordCheckBox.Size = new System.Drawing.Size(113, 19);
+            this.signupShowPasswordCheckBox.TabIndex = 16;
+            this.signupShowPasswordCheckBox.Text = "Show passwords";
+            this.signupShowPasswordCheckBox.UseVisualStyleBackColor = true;
+            this.signupShowPasswordCheckBox.CheckedChanged += new System.EventHandler(this.SignupShowPasswordCheckBox_CheckedChanged);
             // signupButton
             this.signupButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
             this.signupButton.FlatAppearance.BorderSize = 0;
@@ -427,6 +449,7 @@ namespace Evently.Forms
         private System.Windows.Forms.TextBox usernameTextBox;
         private System.Windows.Forms.Label passwordLabel;
         private System.Windows.Forms.TextBox passwordTextBox;
+        private System.Windows.Forms.CheckBox showPasswordCheckBox;
         private System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.Label loginHintLabel;
         private System.Windows.Forms.Label reassuranceLabel;
@@ -448,6 +471,7 @@ namespace Evently.Forms
         private System.Windows.Forms.TextBox signupPasswordTextBox;
         private System.Windows.Forms.Label signupConfirmLabel;
         private System.Windows.Forms.TextBox signupConfirmTextBox;
+        private System.Windows.Forms.CheckBox signupShowPasswordCheckBox;
         private System.Windows.Forms.Button signupButton;
     }
 }

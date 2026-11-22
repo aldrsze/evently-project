@@ -370,6 +370,24 @@ main.page-wrap {
   outline: 3px solid #bfdbfe;
 }
 
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--slate);
+  margin-top: -6px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-field input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
 .field-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
