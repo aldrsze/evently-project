@@ -83,7 +83,7 @@ namespace Evently.Forms
             this.heroSublineLabel.Name = "heroSublineLabel";
             this.heroSublineLabel.Size = new System.Drawing.Size(468, 15);
             this.heroSublineLabel.TabIndex = 1;
-            this.heroSublineLabel.Text = "Assign organizers to an event and keep their contact details in one place.";
+            this.heroSublineLabel.Text = "Assign event managers to an event and keep their contact details in one place.";
             this.heroSublineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;
@@ -285,7 +285,7 @@ namespace Evently.Forms
             this.managerHelperLabel.Name = "managerHelperLabel";
             this.managerHelperLabel.Size = new System.Drawing.Size(180, 13);
             this.managerHelperLabel.TabIndex = 6;
-            this.managerHelperLabel.Text = "Saved to your organizer list";
+            this.managerHelperLabel.Text = "Saved to your event manager list";
             // addManagerButton
             this.addManagerButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.addManagerButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
@@ -328,7 +328,7 @@ namespace Evently.Forms
             this.actionHintLabel.Name = "actionHintLabel";
             this.actionHintLabel.Size = new System.Drawing.Size(437, 15);
             this.actionHintLabel.TabIndex = 2;
-            this.actionHintLabel.Text = "Removing a manager only unlinks them from this event, not the organizer list.";
+            this.actionHintLabel.Text = "Removing a manager only unlinks them from this event, not the event manager list.";
             // editManagerButton
             this.editManagerButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.editManagerButton.Location = new System.Drawing.Point(1048, 17);

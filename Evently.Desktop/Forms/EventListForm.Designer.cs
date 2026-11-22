@@ -86,7 +86,7 @@ namespace Evently.Forms
             this.heroSublineLabel.Name = "heroSublineLabel";
             this.heroSublineLabel.Size = new System.Drawing.Size(370, 15);
             this.heroSublineLabel.TabIndex = 1;
-            this.heroSublineLabel.Text = "Create events, set guest capacities, and manage your schedules.";
+            this.heroSublineLabel.Text = "Create events, set attendee capacities, and manage your schedules.";
             this.heroSublineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;

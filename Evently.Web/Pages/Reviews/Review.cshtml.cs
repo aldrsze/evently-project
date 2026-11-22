@@ -28,7 +28,7 @@ public class ReviewModel : PageModel
 
         if (row["checked_in_at"] == DBNull.Value)
         {
-            ErrorMessage = "You have not checked in to this event. Reviews are only available to checked-in attendees.";
+            ErrorMessage = "You have not checked in to this event. Reviews are only available to checked-in guests.";
             return;
         }
 

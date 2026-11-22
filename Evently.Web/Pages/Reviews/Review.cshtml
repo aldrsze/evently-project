@@ -1,47 +1,53 @@
 @page "/Review/{ticketId}"
 @model Evently.Web.Pages.Reviews.ReviewModel
 @{
-    ViewData["Title"] = "Leave a Review";
+    ViewData["Title"] = "Leave a review";
 }
 
-<div class="review-page">
-    <h1>Leave a Review</h1>
+<section class="narrow-page">
+    <p class="eyebrow">Event feedback</p>
+    <h1>Leave a review</h1>
 
     @if (Model.ErrorMessage != null)
     {
-        <p class="message message--error">@Model.ErrorMessage</p>
+        <div class="error-panel" role="alert">
+            <p>@Model.ErrorMessage</p>
+        </div>
     }
     else if (Model.IsSubmitted)
     {
-        <p class="message message--success">Thank you! Your review has been submitted.</p>
+        <div class="success-panel" role="status">
+            <strong>Thank you for your feedback.</strong>
+            <p>Your review has been submitted.</p>
+        </div>
     }
     else
     {
-        <p class="event-name">@Model.EventName</p>
+        <p class="lead">@Model.EventName</p>
         <p>Hi <strong>@Model.AttendeeName</strong>, how was the event?</p>
 
-        <form method="post">
+        <form method="post" class="form-card">
             <input type="hidden" name="TicketId" value="@Model.TicketId" />
 
-            <div class="field">
-                <label>Rating</label>
-                <div class="stars">
+            <fieldset class="rating-field">
+                <legend>Rating</legend>
+                <div class="rating-options">
                     @for (int i = 1; i <= 5; i++)
                     {
-                        <label class="star-label">
+                        <label>
                             <input type="radio" name="Rating" value="@i" required />
-                            @i &#9733;
+                            <span>@i @(i == 1 ? "star" : "stars")</span>
                         </label>
                     }
                 </div>
-            </div>
+            </fieldset>
 
             <div class="field">
                 <label for="comment">Comment <span class="optional">(optional)</span></label>
                 <textarea id="comment" name="Comment" rows="4" maxlength="500" placeholder="Tell us what you thought..."></textarea>
             </div>
 
-            <button type="submit" class="btn-submit">Submit Review</button>
+            <button type="submit" class="button primary full">Submit review</button>
         </form>
     }
-</div>
+</section>

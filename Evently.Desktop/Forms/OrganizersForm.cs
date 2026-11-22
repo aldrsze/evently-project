@@ -175,7 +175,7 @@ namespace Evently.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Manager is already assigned to this event, or email belongs to another organizer with different details.", "Duplicate", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Manager is already assigned to this event, or email belongs to another event manager with different details.", "Duplicate", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)

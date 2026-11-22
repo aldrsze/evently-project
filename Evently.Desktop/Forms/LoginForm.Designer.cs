@@ -98,7 +98,7 @@ namespace Evently.Forms
             this.benefit3Label.Name = "benefit3Label";
             this.benefit3Label.Size = new System.Drawing.Size(0, 17);
             this.benefit3Label.TabIndex = 4;
-            this.benefit3Label.Text = "•  Watch live capacity as guests arrive";
+            this.benefit3Label.Text = "•  Watch live capacity as attendees arrive";
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.FromArgb(249, 249, 249);
             this.contentPanel.Controls.Add(this.centerLayoutPanel);
@@ -217,7 +217,7 @@ namespace Evently.Forms
             this.LoginButton.Name = "loginButton";
             this.LoginButton.Size = new System.Drawing.Size(120, 36);
             this.LoginButton.TabIndex = 5;
-            this.LoginButton.Text = "&Login";
+            this.LoginButton.Text = "&Sign in";
             this.LoginButton.UseVisualStyleBackColor = false;
             this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
             // LoginForm

@@ -213,7 +213,7 @@ namespace Evently.Forms
             this.bullet2Label.Name = "bullet2Label";
             this.bullet2Label.Size = new System.Drawing.Size(155, 13);
             this.bullet2Label.TabIndex = 10;
-            this.bullet2Label.Text = "• Scan guests at entry and exit";
+            this.bullet2Label.Text = "• Scan attendees at entry and exit";
             // bullet3Label
             this.bullet3Label.AutoSize = true;
             this.bullet3Label.Font = new System.Drawing.Font("Segoe UI", 9F);

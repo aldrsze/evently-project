@@ -96,7 +96,7 @@ namespace Evently.Forms
             this.heroSublineLabel.Name = "heroSublineLabel";
             this.heroSublineLabel.Size = new System.Drawing.Size(437, 15);
             this.heroSublineLabel.TabIndex = 1;
-            this.heroSublineLabel.Text = "Register guests, import attendee lists from CSV, and dispatch QR tickets.";
+            this.heroSublineLabel.Text = "Register attendees, import attendee lists from CSV, and dispatch QR tickets.";
             this.heroSublineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;

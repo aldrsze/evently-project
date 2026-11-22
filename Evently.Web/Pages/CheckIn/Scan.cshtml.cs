@@ -31,7 +31,7 @@ public class ScanModel : PageModel
 
         if (ticket == null)
         {
-            ErrorMessage = $"Invalid Ticket: '{cleanTicketId}' not found.";
+            ErrorMessage = $"Invalid ticket: '{cleanTicketId}' not found.";
             return Page();
         }
 
@@ -42,7 +42,7 @@ public class ScanModel : PageModel
         {
             if (ticket["checked_in_at"] != DBNull.Value)
             {
-                ErrorMessage = $"Already Checked In: '{attendeeName}' was already checked in at {Convert.ToDateTime(ticket["checked_in_at"]):h:mm tt}.";
+                ErrorMessage = $"Already checked in: '{attendeeName}' was already checked in at {Convert.ToDateTime(ticket["checked_in_at"]):h:mm tt}.";
                 return Page();
             }
 
@@ -61,13 +61,13 @@ public class ScanModel : PageModel
         {
             if (ticket["checked_in_at"] == DBNull.Value)
             {
-                ErrorMessage = $"Cannot Check Out: '{attendeeName}' has not checked in yet.";
+                ErrorMessage = $"Cannot check out: '{attendeeName}' has not checked in yet.";
                 return Page();
             }
 
             if (ticket["checked_out_at"] != DBNull.Value)
             {
-                ErrorMessage = $"Already Checked Out: '{attendeeName}' was already checked out at {Convert.ToDateTime(ticket["checked_out_at"]):h:mm tt}.";
+                ErrorMessage = $"Already checked out: '{attendeeName}' was already checked out at {Convert.ToDateTime(ticket["checked_out_at"]):h:mm tt}.";
                 return Page();
             }
 

@@ -1,31 +1,36 @@
 @page "/Scan"
 @model Evently.Web.Pages.CheckIn.ScanModel
 @{
-    ViewData["Title"] = "QR Door Scanner";
+    ViewData["Title"] = "QR door scanner";
 }
 
-<div class="scanner-container">
-    <h2>Door Check-in & Scanner</h2>
-    <p class="subline">Scan guest QR ticket or enter ticket ID manually.</p>
+<section class="scan-page">
+    <p class="eyebrow">Staff QR scanner</p>
+    <h1>Door check-in &amp; scanner</h1>
+    <p class="scan-guidance">Scan an attendee QR ticket or enter the ticket ID manually.</p>
 
     @if (!string.IsNullOrEmpty(Model.SuccessMessage))
     {
-        <div class="alert alert-success">@Model.SuccessMessage</div>
+        <div class="scan-result success" role="status">
+            <strong>Success</strong>
+            <span>@Model.SuccessMessage</span>
+        </div>
     }
     @if (!string.IsNullOrEmpty(Model.ErrorMessage))
     {
-        <div class="alert alert-error">@Model.ErrorMessage</div>
+        <div class="scan-result danger" role="alert">
+            <strong>Invalid ticket</strong>
+            <span>@Model.ErrorMessage</span>
+        </div>
     }
 
-    <form method="post" class="scan-form">
-        <div class="form-group">
-            <label for="ticketId">Ticket ID (Scan / Enter)</label>
+    <form method="post" class="form-card">
+        <div class="field">
+            <label for="ticketId">Ticket ID (scan / enter)</label>
             <input type="text" id="ticketId" name="TicketId" value="@Model.TicketId" placeholder="e.g. 11111111-0001-4000-8000-000000000001" autofocus required />
         </div>
 
-        <div class="btn-group">
-            <button type="submit" name="Action" value="checkin" class="btn-checkin">Check In (Entry)</button>
-            <button type="submit" name="Action" value="checkout" class="btn-checkout">Check Out (Exit)</button>
-        </div>
+        <button type="submit" name="Action" value="checkin" class="button primary full">Check in (entry)</button>
+        <button type="submit" name="Action" value="checkout" class="button secondary full">Check out (exit)</button>
     </form>
-</div>
+</section>

@@ -320,7 +320,7 @@ namespace Evently.Forms
             this.actionHintLabel.Name = "actionHintLabel";
             this.actionHintLabel.Size = new System.Drawing.Size(468, 15);
             this.actionHintLabel.TabIndex = 2;
-            this.actionHintLabel.Text = "Review requests are only sent to guests who checked in at the door";
+            this.actionHintLabel.Text = "Review requests are only sent to attendees who checked in at the door";
             // sendRequestButton
             this.sendRequestButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.sendRequestButton.Location = new System.Drawing.Point(1028, 8);
