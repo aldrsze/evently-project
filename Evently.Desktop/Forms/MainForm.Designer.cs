@@ -48,27 +48,29 @@ namespace Evently.Forms
             this.headerPanel.Size = new System.Drawing.Size(1280, 64);
             this.headerPanel.TabIndex = 0;
             // titleLabel
-            this.titleLabel.AutoSize = true;
+            this.titleLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.titleLabel.AutoSize = false;
             this.titleLabel.BackColor = System.Drawing.Color.Transparent;
             this.titleLabel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.titleLabel.ForeColor = System.Drawing.Color.White;
-            this.titleLabel.Location = new System.Drawing.Point(12, 10);
+            this.titleLabel.Location = new System.Drawing.Point(0, 8);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(77, 25);
+            this.titleLabel.Size = new System.Drawing.Size(1280, 28);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "Evently";
-            this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // heroSublineLabel
-            this.heroSublineLabel.AutoSize = true;
+            this.heroSublineLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.heroSublineLabel.AutoSize = false;
             this.heroSublineLabel.BackColor = System.Drawing.Color.Transparent;
             this.heroSublineLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.heroSublineLabel.ForeColor = System.Drawing.Color.FromArgb(218, 230, 245);
-            this.heroSublineLabel.Location = new System.Drawing.Point(12, 38);
+            this.heroSublineLabel.Location = new System.Drawing.Point(0, 36);
             this.heroSublineLabel.Name = "heroSublineLabel";
-            this.heroSublineLabel.Size = new System.Drawing.Size(462, 15);
+            this.heroSublineLabel.Size = new System.Drawing.Size(1280, 20);
             this.heroSublineLabel.TabIndex = 2;
             this.heroSublineLabel.Text = "Register attendees, issue QR tickets, and monitor venue capacity in real time.";
-            this.heroSublineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.heroSublineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // signedInLabel
             this.signedInLabel.AutoSize = false;
             this.signedInLabel.BackColor = System.Drawing.Color.Transparent;
@@ -248,7 +250,7 @@ namespace Evently.Forms
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Evently - Main Menu";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);

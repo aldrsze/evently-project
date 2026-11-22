@@ -367,7 +367,6 @@ namespace Evently.Forms
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Controls.Add(this.contentPanel);
-            this.Controls.Add(this.headerPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.MaximizeBox = true;
             this.MinimumSize = new System.Drawing.Size(1024, 600);
