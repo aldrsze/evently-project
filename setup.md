@@ -36,12 +36,11 @@ Run these in **Command Prompt** (not PowerShell, it can't do `<`):
 ```cmd
 mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS evently_db"
 mysql -u root -p evently_db < db\schema.sql
-mysql -u root -p < db\seed.sql
 ```
 
-Enter your MySQL password when asked. `seed.sql` already starts with `USE evently_db;`, so it needs no database argument. It adds the demo admin account.
+Enter your MySQL password when asked. There are no default accounts in the schema.
 
-**Login:** `admin` / `admin123`
+**First run:** open `http://localhost:5000/Signup` and create the first account. The first signup becomes the admin and can sign in right away. Later staff signups wait for an admin to approve them in the desktop app (Manage Users > Approve).
 
 ### 3. Create your config file
 
@@ -103,7 +102,7 @@ To let guests open review links or register from outside your local network:
 | `Evently.Core` | Shared library (database access, logic) |
 | `Evently.Desktop` | Windows Forms desktop app |
 | `Evently.Web` | ASP.NET Core website |
-| `db` | `schema.sql` (tables) and `seed.sql` (demo admin) |
+| `db` | `schema.sql` (tables) and `sample_data.sql` (fake demo rows) |
 
 ## Troubleshooting
 
@@ -112,7 +111,7 @@ To let guests open review links or register from outside your local network:
 | App can't connect to the database | Check `db.config` (repo root) has the right user and password, then rebuild and rerun |
 | `mysql` is not recognized | Add MySQL's `bin` folder to your PATH, then reopen the terminal |
 | `dotnet` is not recognized | Install the .NET 9 SDK and reopen the terminal |
-| Can't log in | Make sure you ran `db\seed.sql`, then use `admin` / `admin123` |
+| Can't log in | First signup on `/Signup` creates the admin. Later staff accounts need approval in Manage Users |
 | Phone can't open the website | Same Wi-Fi as the laptop, use `http://<laptop-ip>:5000`, allow the Windows Firewall prompt |
 
 ## Never commit

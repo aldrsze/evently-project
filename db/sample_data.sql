@@ -1,5 +1,5 @@
 -- Fake rows for testing screens and the dashboard. Not real people.
--- Run after schema.sql and seed.sql. Needs empty tables (see the DELETE block below).
+-- Run after schema.sql. Needs empty tables (see the DELETE block below).
 -- Ticket IDs are deterministic UUIDs so they can be tested with web links and QR codes.
 
 USE evently_db;
@@ -11,12 +11,13 @@ DELETE FROM event_organizers;
 DELETE FROM organizers;
 DELETE FROM attendees;
 DELETE FROM events;
-DELETE FROM users WHERE username IN ('staff1', 'staff2');
+DELETE FROM users WHERE username IN ('admin', 'staff1', 'staff2');
 
--- Staff accounts for door check-in testing (password: admin123)
-INSERT INTO users (username, password, role) VALUES
-('staff1', '$2a$11$Zq5hVFTuuSmfdyUiCX9M7.CpLHM7iTkdmGHRGRKlpLYbJU6aZ8LVq', 'STAFF'),
-('staff2', '$2a$11$Zq5hVFTuuSmfdyUiCX9M7.CpLHM7iTkdmGHRGRKlpLYbJU6aZ8LVq', 'STAFF');
+-- Demo accounts (password: admin123). The admin is approved so sample data works right away.
+INSERT INTO users (username, password, email, first_name, last_name, birthdate, role, is_active, is_approved) VALUES
+('admin', '$2a$11$Zq5hVFTuuSmfdyUiCX9M7.CpLHM7iTkdmGHRGRKlpLYbJU6aZ8LVq', 'admin@evently.local', 'Evently', 'Admin', NULL, 'ADMIN', TRUE, TRUE),
+('staff1', '$2a$11$Zq5hVFTuuSmfdyUiCX9M7.CpLHM7iTkdmGHRGRKlpLYbJU6aZ8LVq', 'staff1@evently.local', 'Staff', 'One', NULL, 'STAFF', TRUE, TRUE),
+('staff2', '$2a$11$Zq5hVFTuuSmfdyUiCX9M7.CpLHM7iTkdmGHRGRKlpLYbJU6aZ8LVq', 'staff2@evently.local', 'Staff', 'Two', NULL, 'STAFF', TRUE, TRUE);
 
 -- QCU Campus Organization Events
 INSERT INTO events (event_id, name, venue, description, event_date, capacity) VALUES
