@@ -1,0 +1,57 @@
+@page "/Ticket/{ticketId}"
+@model Evently.Web.Pages.Tickets.TicketModel
+@{
+    ViewData["Title"] = "Your event ticket";
+}
+
+<section class="narrow-page">
+    <p class="eyebrow">QR ticket</p>
+    <h1>Your event ticket</h1>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="error-panel" role="alert">
+            <p>@Model.ErrorMessage</p>
+        </div>
+        <a asp-page="/Registration/Register" class="button primary full">Return to registration</a>
+    }
+    else
+    {
+        <article class="ticket-card">
+            <div class="ticket-heading">
+                <span class="sample-tag">@(Model.IsCheckedIn ? "Checked in" : "Valid ticket")</span>
+                <h2>@Model.EventName</h2>
+            </div>
+
+            <div class="qr-frame">
+                @if (!string.IsNullOrEmpty(Model.QrCodeBase64))
+                {
+                    <img src="data:image/png;base64,@Model.QrCodeBase64" alt="Ticket QR Code" />
+                }
+            </div>
+
+            <p class="ticket-id">Ticket ID <code>@Model.TicketId</code></p>
+
+            <div class="ticket-info">
+                <div>
+                    <span>Guest</span>
+                    <strong>@Model.AttendeeName</strong>
+                </div>
+                <div>
+                    <span>Email</span>
+                    <strong>@Model.Email</strong>
+                </div>
+                <div>
+                    <span>Venue</span>
+                    <strong>@Model.Venue</strong>
+                </div>
+                <div>
+                    <span>Event date</span>
+                    <strong>@Model.EventDate?.ToString("MMMM d, yyyy  h:mm tt")</strong>
+                </div>
+            </div>
+
+            <p class="save-instruction">Present this QR code at the entrance for admission.</p>
+        </article>
+    }
+</section>

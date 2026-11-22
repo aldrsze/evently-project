@@ -2,8 +2,13 @@ CREATE TABLE users (
     user_id       INT AUTO_INCREMENT PRIMARY KEY,
     username      VARCHAR(50)  NOT NULL UNIQUE,
     password      VARCHAR(100) NOT NULL,
+    email         VARCHAR(100) NOT NULL UNIQUE,
+    first_name    VARCHAR(50)  NOT NULL,
+    last_name     VARCHAR(50)  NOT NULL,
+    birthdate     DATE NULL,
     role          ENUM('ADMIN','STAFF') NOT NULL,
-    is_active     BOOLEAN NOT NULL DEFAULT TRUE
+    is_active     BOOLEAN NOT NULL DEFAULT TRUE,
+    is_approved   BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE events (
@@ -60,5 +65,5 @@ CREATE TABLE reviews (
     FOREIGN KEY (ticket_id) REFERENCES tickets(ticket_id) ON DELETE CASCADE
 );
 
--- Default admin account (change the password after first login)
--- INSERT INTO users (username, password, role) VALUES ('admin', '<bcrypt hash>', 'ADMIN');
+-- No default admin here. Open /Signup on the website to create the first one.
+-- That first account becomes ADMIN. Later signups become STAFF and need approval.

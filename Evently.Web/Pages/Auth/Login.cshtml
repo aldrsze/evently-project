@@ -1,0 +1,40 @@
+@page "/Login"
+@model Evently.Web.Pages.Auth.LoginModel
+@{
+    ViewData["Title"] = "Sign in";
+}
+
+<section class="narrow-page">
+    <a class="back-link" asp-page="/Index">← Upcoming events</a>
+    <p class="eyebrow">Staff & Admin access</p>
+    <h1>Sign in</h1>
+    <p class="lead">Sign in with your staff or administrator account to access the door scanner.</p>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="error-panel" role="alert">
+            <p>@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <form method="post" class="form-card">
+        <div class="field">
+            <label for="username">Username or Email</label>
+            <input type="text" id="username" name="Username" value="@Model.Username" required autocomplete="username" />
+        </div>
+
+        <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="Password" required autocomplete="current-password" />
+        </div>
+
+        <label class="checkbox-field">
+            <input type="checkbox" onchange="document.getElementById('password').type = this.checked ? 'text' : 'password'" />
+            Show password
+        </label>
+
+        <button type="submit" class="button primary full">Sign in</button>
+    </form>
+
+    <p class="info-panel">Need a staff account? <a asp-page="/Auth/Signup">Sign up</a>.</p>
+</section>

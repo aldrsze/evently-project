@@ -1,0 +1,78 @@
+@page "/Signup"
+@model Evently.Web.Pages.Auth.SignupModel
+@{
+    ViewData["Title"] = "Staff signup";
+}
+
+<section class="narrow-page">
+    <a class="back-link" asp-page="/Index">← Upcoming events</a>
+    <p class="eyebrow">Staff access</p>
+    <h1>Staff signup</h1>
+
+    <p class="lead">Create a staff account. An administrator must approve it before you can sign in.</p>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="error-panel" role="alert">
+            <p>@Model.ErrorMessage</p>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="success-panel" role="status">
+            <p>@Model.SuccessMessage</p>
+        </div>
+        <p class="info-panel">
+            <a class="button primary full" asp-page="/Auth/Login">Go to sign in</a>
+        </p>
+    }
+    else
+    {
+        <form method="post" class="form-card">
+            <div class="field">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="Username" value="@Model.Username" required autocomplete="username" />
+            </div>
+
+            <div class="field">
+                <label for="firstName">First name</label>
+                <input type="text" id="firstName" name="FirstName" value="@Model.FirstName" required autocomplete="given-name" />
+            </div>
+
+            <div class="field">
+                <label for="lastName">Last name</label>
+                <input type="text" id="lastName" name="LastName" value="@Model.LastName" required autocomplete="family-name" />
+            </div>
+
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="Email" value="@Model.Email" required autocomplete="email" />
+            </div>
+
+            <div class="field">
+                <label for="birthdate">Birthdate (optional)</label>
+                <input type="date" id="birthdate" name="Birthdate" value="@Model.Birthdate" autocomplete="bday" />
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="Password" minlength="8" required autocomplete="new-password" />
+            </div>
+
+            <div class="field">
+                <label for="confirmPassword">Confirm password</label>
+                <input type="password" id="confirmPassword" name="ConfirmPassword" minlength="8" required autocomplete="new-password" />
+            </div>
+
+            <label class="checkbox-field">
+                <input type="checkbox" onchange="const t = this.checked ? 'text' : 'password'; document.getElementById('password').type = t; document.getElementById('confirmPassword').type = t;" />
+                Show passwords
+            </label>
+
+            <button type="submit" class="button primary full">Request staff account</button>
+        </form>
+    }
+
+    <p class="info-panel">Already have an account? <a asp-page="/Auth/Login">Sign in</a>.</p>
+</section>

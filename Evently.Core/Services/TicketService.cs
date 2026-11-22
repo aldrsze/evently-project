@@ -22,6 +22,7 @@ namespace Evently.Core.Services
                                     ELSE NULL
                                 END AS age,
                                 a.email,
+                                CASE WHEN t.checked_in_at IS NOT NULL THEN 'Yes' ELSE 'No' END AS is_checked_in,
                                 CASE WHEN t.ticket_emailed = TRUE THEN 'Yes' ELSE 'No' END AS ticket_emailed,
                                 CASE WHEN t.review_emailed = TRUE THEN 'Yes' ELSE 'No' END AS review_emailed
                              FROM tickets t
@@ -198,6 +199,8 @@ namespace Evently.Core.Services
             using var conn = DatabaseConnection.GetConnection();
             string query = @"SELECT 
                                 t.ticket_id,
+                                t.checked_in_at,
+                                t.checked_out_at,
                                 a.email,
                                 CONCAT(a.first_name, ' ', a.last_name) AS attendee_name,
                                 e.name AS event_name,
@@ -214,6 +217,24 @@ namespace Evently.Core.Services
             DataTable table = new();
             adapter.Fill(table);
             return table.Rows.Count > 0 ? table.Rows[0] : null;
+        }
+
+        public static bool CheckInTicket(string ticketId)
+        {
+            using var conn = DatabaseConnection.GetConnection();
+            string query = "UPDATE tickets SET checked_in_at = NOW() WHERE ticket_id = @ticketId AND checked_in_at IS NULL;";
+            using MySqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@ticketId", ticketId);
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
+        public static bool CheckOutTicket(string ticketId)
+        {
+            using var conn = DatabaseConnection.GetConnection();
+            string query = "UPDATE tickets SET checked_out_at = NOW() WHERE ticket_id = @ticketId AND checked_in_at IS NOT NULL AND checked_out_at IS NULL;";
+            using MySqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@ticketId", ticketId);
+            return cmd.ExecuteNonQuery() > 0;
         }
 
         public static bool MarkTicketAsEmailed(string ticketId)

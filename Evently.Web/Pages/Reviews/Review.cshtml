@@ -1,0 +1,53 @@
+@page "/Review/{ticketId}"
+@model Evently.Web.Pages.Reviews.ReviewModel
+@{
+    ViewData["Title"] = "Leave a review";
+}
+
+<section class="narrow-page">
+    <p class="eyebrow">Event feedback</p>
+    <h1>Leave a review</h1>
+
+    @if (Model.ErrorMessage != null)
+    {
+        <div class="error-panel" role="alert">
+            <p>@Model.ErrorMessage</p>
+        </div>
+    }
+    else if (Model.IsSubmitted)
+    {
+        <div class="success-panel" role="status">
+            <strong>Thank you for your feedback.</strong>
+            <p>Your review has been submitted.</p>
+        </div>
+    }
+    else
+    {
+        <p class="lead">@Model.EventName</p>
+        <p>Hi <strong>@Model.AttendeeName</strong>, how was the event?</p>
+
+        <form method="post" class="form-card">
+            <input type="hidden" name="TicketId" value="@Model.TicketId" />
+
+            <fieldset class="rating-field">
+                <legend>Rating</legend>
+                <div class="rating-options">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <label>
+                            <input type="radio" name="Rating" value="@i" required />
+                            <span>@i @(i == 1 ? "star" : "stars")</span>
+                        </label>
+                    }
+                </div>
+            </fieldset>
+
+            <div class="field">
+                <label for="comment">Comment <span class="optional">(optional)</span></label>
+                <textarea id="comment" name="Comment" rows="4" maxlength="500" placeholder="Tell us what you thought..."></textarea>
+            </div>
+
+            <button type="submit" class="button primary full">Submit review</button>
+        </form>
+    }
+</section>

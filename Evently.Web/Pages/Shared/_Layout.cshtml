@@ -7,16 +7,35 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <header class="site-header">
-        <a class="brand" asp-page="/Index">Evently</a>
+        <a class="wordmark" asp-page="/Index" aria-label="Evently home">
+            <span class="mark" aria-hidden="true">E</span>
+            <span>Evently</span>
+        </a>
+        <nav aria-label="Main navigation">
+            <a asp-page="/Registration/Register">Guest registration</a>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-page="/CheckIn/Scan">Scanner</a>
+                <span class="user-badge">@User.Identity.Name</span>
+                <a asp-page="/Auth/Logout">Sign out</a>
+            }
+            else
+            {
+                <a asp-page="/Auth/Login">Sign in</a>
+            }
+        </nav>
     </header>
 
-    <main class="site-main">
+    <main id="main" class="page-wrap">
         @RenderBody()
     </main>
 
     <footer class="site-footer">
-        Evently
+        <span>Evently · Event registration and attendance</span>
+        <span>Campus events · Digital QR tickets</span>
     </footer>
 
     <script src="~/js/site.js" asp-append-version="true"></script>

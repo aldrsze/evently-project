@@ -205,8 +205,9 @@ Your database is now out of date and the app may crash with a missing column. Re
 mysql -u root -p -e "DROP DATABASE evently_db"
 mysql -u root -p -e "CREATE DATABASE evently_db"
 mysql -u root -p evently_db < db\schema.sql
-mysql -u root -p < db\seed.sql
 ```
+
+Then open `/Signup` to create the first admin account.
 
 ## Before you open a pull request
 

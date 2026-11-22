@@ -86,7 +86,7 @@ namespace Evently.Forms
             this.heroSublineLabel.Name = "heroSublineLabel";
             this.heroSublineLabel.Size = new System.Drawing.Size(370, 15);
             this.heroSublineLabel.TabIndex = 1;
-            this.heroSublineLabel.Text = "Create events, set guest capacities, and manage your schedules.";
+            this.heroSublineLabel.Text = "Create events, set attendee capacities, and manage your schedules.";
             this.heroSublineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;
@@ -113,7 +113,7 @@ namespace Evently.Forms
             this.eventsDataGridView.AllowUserToAddRows = false;
             this.eventsDataGridView.AllowUserToDeleteRows = false;
             this.eventsDataGridView.AllowUserToResizeRows = false;
-            this.eventsDataGridView.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.eventsDataGridView.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(249, 249, 249);
             this.eventsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.eventsDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.eventsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -133,8 +133,8 @@ namespace Evently.Forms
             this.capacityColumn,
             this.descriptionColumn});
             this.eventsDataGridView.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            this.eventsDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(233, 238, 246);
-            this.eventsDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.eventsDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.eventsDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
             this.eventsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.eventsDataGridView.EnableHeadersVisualStyles = false;
             this.eventsDataGridView.GridColor = System.Drawing.Color.FromArgb(224, 224, 224);
@@ -367,7 +367,6 @@ namespace Evently.Forms
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Controls.Add(this.contentPanel);
-            this.Controls.Add(this.headerPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.MaximizeBox = true;
             this.MinimumSize = new System.Drawing.Size(1024, 600);

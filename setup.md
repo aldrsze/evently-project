@@ -36,12 +36,11 @@ Run these in **Command Prompt** (not PowerShell, it can't do `<`):
 ```cmd
 mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS evently_db"
 mysql -u root -p evently_db < db\schema.sql
-mysql -u root -p < db\seed.sql
 ```
 
-Enter your MySQL password when asked. `seed.sql` already starts with `USE evently_db;`, so it needs no database argument. It adds the demo admin account.
+Enter your MySQL password when asked. There are no default accounts in the schema.
 
-**Login:** `admin` / `admin123`
+**First run:** launch `Evently.Desktop`. When no accounts exist, the desktop app displays the initial administrator setup panel to create the first admin account. Later staff signups can register on the website (`/Signup`) and wait for desktop admin approval (Manage Users > Approve). Both desktop and web login accept either username or email.
 
 ### 3. Create your config file
 
@@ -103,7 +102,7 @@ To let guests open review links or register from outside your local network:
 | `Evently.Core` | Shared library (database access, logic) |
 | `Evently.Desktop` | Windows Forms desktop app |
 | `Evently.Web` | ASP.NET Core website |
-| `db` | `schema.sql` (tables) and `seed.sql` (demo admin) |
+| `db` | `schema.sql` (tables) and `sample_data.sql` (fake demo rows) |
 
 ## Troubleshooting
 
@@ -112,7 +111,7 @@ To let guests open review links or register from outside your local network:
 | App can't connect to the database | Check `db.config` (repo root) has the right user and password, then rebuild and rerun |
 | `mysql` is not recognized | Add MySQL's `bin` folder to your PATH, then reopen the terminal |
 | `dotnet` is not recognized | Install the .NET 9 SDK and reopen the terminal |
-| Can't log in | Make sure you ran `db\seed.sql`, then use `admin` / `admin123` |
+| Can't log in | Create the initial admin on the desktop app on first run. Staff web signups require desktop admin approval before sign-in |
 | Phone can't open the website | Same Wi-Fi as the laptop, use `http://<laptop-ip>:5000`, allow the Windows Firewall prompt |
 
 ## Never commit

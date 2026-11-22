@@ -1,0 +1,70 @@
+@page "/Register/{eventId:int?}"
+@model Evently.Web.Pages.Registration.RegisterModel
+@{
+    ViewData["Title"] = "Event registration";
+}
+
+<section class="narrow-page">
+    <a class="back-link" asp-page="/Index">← Upcoming events</a>
+    <p class="eyebrow">Guest registration</p>
+    <h1>Register for an event</h1>
+    <p class="lead">Reserve your spot and get your digital QR ticket immediately.</p>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="error-panel" role="alert">
+            <p>@Model.ErrorMessage</p>
+        </div>
+    }
+
+    <form method="post" class="form-card">
+        @if (Model.SelectedEvent != null)
+        {
+            <div class="selected-event">
+                <strong>@Model.SelectedEvent.Name</strong>
+                <span>@Model.SelectedEvent.Venue</span>
+                <input type="hidden" name="EventId" value="@Model.SelectedEvent.EventId" />
+            </div>
+        }
+        else
+        {
+            <div class="field">
+                <label for="eventId">Select event</label>
+                <select id="eventId" name="EventId" required>
+                    <option value="">-- Choose an event --</option>
+                    @foreach (var ev in Model.AvailableEvents)
+                    {
+                        <option value="@ev.EventId" selected="@(ev.EventId == Model.EventId ? "selected" : null)">
+                            @ev.Name (@ev.Venue)
+                        </option>
+                    }
+                </select>
+            </div>
+        }
+
+        <div class="field-grid">
+            <div class="field">
+                <label for="firstName">First name</label>
+                <input type="text" id="firstName" name="FirstName" value="@Model.FirstName" required maxlength="50" />
+            </div>
+
+            <div class="field">
+                <label for="lastName">Last name</label>
+                <input type="text" id="lastName" name="LastName" value="@Model.LastName" required maxlength="50" />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="Email" value="@Model.Email" required maxlength="100" />
+            <p class="form-note">Your digital ticket will be linked to this email.</p>
+        </div>
+
+        <div class="field">
+            <label for="birthdate">Birthdate</label>
+            <input type="date" id="birthdate" name="Birthdate" value="@Model.Birthdate?.ToString("yyyy-MM-dd")" required />
+        </div>
+
+        <button type="submit" class="button primary full">Complete registration</button>
+    </form>
+</section>

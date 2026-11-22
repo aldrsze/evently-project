@@ -1,4 +1,5 @@
 using Evently.Core.Helpers;
+using Evently.Helpers;
 
 namespace Evently.Forms
 {
@@ -10,13 +11,16 @@ namespace Evently.Forms
         public MainForm()
         {
             InitializeComponent();
+            currentUserLabel.Text = $"Signed in as:\n{Session.CurrentUsername} ({Session.CurrentRole})";
             FormClosing += MainForm_FormClosing;
-            ShowForm(new EventListForm());
-
+            ShowForm(new EventListForm(), "Manage Events", "Create events, set attendee capacities, and manage your schedules.");
         }
 
-        private void ShowForm(Form form)
+        private void ShowForm(Form form, string title, string subline)
         {
+            titleLabel.Text = title;
+            heroSublineLabel.Text = subline;
+
             if (currentForm != null) // if form is already shown on the panel detach it.
             {
                 contentPlaceholderPanel.Controls.Remove(currentForm); // take it off the panel first
@@ -36,32 +40,32 @@ namespace Evently.Forms
 
         private void EventsButton_Click(object sender, EventArgs e)
         {
-            ShowForm(new EventListForm());
+            ShowForm(new EventListForm(), "Manage Events", "Create events, set attendee capacities, and manage your schedules.");
         }
 
         private void AttendeesButton_Click(object sender, EventArgs e)
         {
-            ShowForm(new AttendeesForm());
+            ShowForm(new AttendeesForm(), "Manage Attendees", "Register attendees, import attendee lists from CSV, and dispatch QR tickets.");
         }
 
         private void ManagersButton_Click(object sender, EventArgs e)
         {
-            ShowForm(new OrganizersForm());
+            ShowForm(new OrganizersForm(), "Manage Event Managers", "Assign event managers to an event and keep their contact details in one place.");
         }
 
         private void ReviewsButton_Click(object sender, EventArgs e)
         {
-            ShowForm(new ReviewsForm());
+            ShowForm(new ReviewsForm(), "Collect Reviews", "View ratings and attendee comments submitted on the website.");
         }
 
         private void DashboardButton_Click(object sender, EventArgs e)
         {
-            ShowForm(new DashboardForm());
+            ShowForm(new DashboardForm(), "Live Dashboard", "Live headcount, entry progress, and attendee satisfaction metrics.");
         }
 
         private void UsersButton_Click(object sender, EventArgs e)
         {
-            ShowForm(new UserListForm());
+            ShowForm(new UserListForm(), "Manage Users", "Configure administrator and staff access accounts.");
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)

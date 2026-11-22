@@ -26,6 +26,7 @@ namespace Evently.Forms
             this.reviewsButton = new System.Windows.Forms.Button();
             this.dashboardButton = new System.Windows.Forms.Button();
             this.usersButton = new System.Windows.Forms.Button();
+            this.currentUserLabel = new System.Windows.Forms.Label();
             this.logoutButton = new System.Windows.Forms.Button();
             this.sidebarHeaderLabel = new System.Windows.Forms.Label();
             this.bullet1Label = new System.Windows.Forms.Label();
@@ -48,27 +49,29 @@ namespace Evently.Forms
             this.headerPanel.Size = new System.Drawing.Size(1280, 64);
             this.headerPanel.TabIndex = 0;
             // titleLabel
-            this.titleLabel.AutoSize = true;
+            this.titleLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.titleLabel.AutoSize = false;
             this.titleLabel.BackColor = System.Drawing.Color.Transparent;
             this.titleLabel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.titleLabel.ForeColor = System.Drawing.Color.White;
-            this.titleLabel.Location = new System.Drawing.Point(12, 10);
+            this.titleLabel.Location = new System.Drawing.Point(0, 8);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(77, 25);
+            this.titleLabel.Size = new System.Drawing.Size(1280, 28);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "Evently";
-            this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // heroSublineLabel
-            this.heroSublineLabel.AutoSize = true;
+            this.heroSublineLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.heroSublineLabel.AutoSize = false;
             this.heroSublineLabel.BackColor = System.Drawing.Color.Transparent;
             this.heroSublineLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.heroSublineLabel.ForeColor = System.Drawing.Color.FromArgb(218, 230, 245);
-            this.heroSublineLabel.Location = new System.Drawing.Point(12, 38);
+            this.heroSublineLabel.Location = new System.Drawing.Point(0, 36);
             this.heroSublineLabel.Name = "heroSublineLabel";
-            this.heroSublineLabel.Size = new System.Drawing.Size(462, 15);
+            this.heroSublineLabel.Size = new System.Drawing.Size(1280, 20);
             this.heroSublineLabel.TabIndex = 2;
             this.heroSublineLabel.Text = "Register attendees, issue QR tickets, and monitor venue capacity in real time.";
-            this.heroSublineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.heroSublineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // signedInLabel
             this.signedInLabel.AutoSize = false;
             this.signedInLabel.BackColor = System.Drawing.Color.Transparent;
@@ -107,6 +110,7 @@ namespace Evently.Forms
             this.menuPanel.Controls.Add(this.reviewsButton);
             this.menuPanel.Controls.Add(this.dashboardButton);
             this.menuPanel.Controls.Add(this.usersButton);
+            this.menuPanel.Controls.Add(this.currentUserLabel);
             this.menuPanel.Controls.Add(this.logoutButton);
             this.menuPanel.Controls.Add(this.sidebarHeaderLabel);
             this.menuPanel.Controls.Add(this.bullet1Label);
@@ -175,12 +179,23 @@ namespace Evently.Forms
             this.usersButton.Text = "&Manage Users";
             this.usersButton.UseVisualStyleBackColor = true;
             this.usersButton.Click += new System.EventHandler(this.UsersButton_Click);
+            // currentUserLabel
+            this.currentUserLabel.AutoSize = true;
+            this.currentUserLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.currentUserLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
+            this.currentUserLabel.Location = new System.Drawing.Point(6, 340);
+            this.currentUserLabel.Margin = new System.Windows.Forms.Padding(6, 16, 3, 4);
+            this.currentUserLabel.MaximumSize = new System.Drawing.Size(200, 0);
+            this.currentUserLabel.Name = "currentUserLabel";
+            this.currentUserLabel.Size = new System.Drawing.Size(73, 15);
+            this.currentUserLabel.TabIndex = 7;
+            this.currentUserLabel.Text = "Signed in as:";
             // logoutButton
-            this.logoutButton.Location = new System.Drawing.Point(3, 356);
-            this.logoutButton.Margin = new System.Windows.Forms.Padding(3, 20, 3, 4);
+            this.logoutButton.Location = new System.Drawing.Point(3, 363);
+            this.logoutButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.logoutButton.Name = "logoutButton";
             this.logoutButton.Size = new System.Drawing.Size(200, 40);
-            this.logoutButton.TabIndex = 7;
+            this.logoutButton.TabIndex = 8;
             this.logoutButton.Text = "L&ogout";
             this.logoutButton.UseVisualStyleBackColor = true;
             this.logoutButton.Click += new System.EventHandler(this.LogoutButton_Click);
@@ -213,7 +228,7 @@ namespace Evently.Forms
             this.bullet2Label.Name = "bullet2Label";
             this.bullet2Label.Size = new System.Drawing.Size(155, 13);
             this.bullet2Label.TabIndex = 10;
-            this.bullet2Label.Text = "• Scan guests at entry and exit";
+            this.bullet2Label.Text = "• Scan attendees at entry and exit";
             // bullet3Label
             this.bullet3Label.AutoSize = true;
             this.bullet3Label.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -248,7 +263,7 @@ namespace Evently.Forms
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Evently - Main Menu";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
@@ -269,6 +284,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Button reviewsButton;
         private System.Windows.Forms.Button dashboardButton;
         private System.Windows.Forms.Button usersButton;
+        private System.Windows.Forms.Label currentUserLabel;
         private System.Windows.Forms.Button logoutButton;
         private System.Windows.Forms.Label heroSublineLabel;
         private System.Windows.Forms.Label sidebarHeaderLabel;

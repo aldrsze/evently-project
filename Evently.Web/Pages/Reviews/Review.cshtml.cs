@@ -1,9 +1,10 @@
+using System;
 using System.Data;
-using Evently.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Evently.Core.Services;
 
-namespace Evently.Web.Pages;
+namespace Evently.Web.Pages.Reviews;
 
 public class ReviewModel : PageModel
 {
@@ -27,7 +28,7 @@ public class ReviewModel : PageModel
 
         if (row["checked_in_at"] == DBNull.Value)
         {
-            ErrorMessage = "You have not checked in to this event. Reviews are only available to checked-in attendees.";
+            ErrorMessage = "You have not checked in to this event. Reviews are only available to checked-in guests.";
             return;
         }
 
@@ -58,10 +59,9 @@ public class ReviewModel : PageModel
         }
 
         bool ok = ReviewService.SubmitReview(ticketId, rating, comment);
-
         if (!ok)
         {
-            // Already submitted or ticket invalid — just show the thank-you state
+            // Already submitted or ticket invalid
         }
 
         IsSubmitted = true;
