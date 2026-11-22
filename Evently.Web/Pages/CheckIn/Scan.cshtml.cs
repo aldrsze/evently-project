@@ -1,11 +1,13 @@
 using System;
 using System.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Evently.Core.Services;
 
 namespace Evently.Web.Pages.CheckIn;
 
+[Authorize]
 public class ScanModel : PageModel
 {
     [BindProperty]
