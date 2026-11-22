@@ -130,8 +130,8 @@ namespace Evently.Forms
             this.roleColumn,
             this.statusColumn});
             this.usersDataGridView.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            this.usersDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(233, 238, 246);
-            this.usersDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.usersDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.usersDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
             this.usersDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.usersDataGridView.EnableHeadersVisualStyles = false;
             this.usersDataGridView.GridColor = System.Drawing.Color.FromArgb(224, 224, 224);
