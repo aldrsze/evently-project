@@ -123,13 +123,30 @@ namespace Evently.Forms
             }
 
             string username = Convert.ToString(usersDataGridView.CurrentRow.Cells["usernameColumn"].Value) ?? "";
+            string email = Convert.ToString(usersDataGridView.CurrentRow.Cells["emailColumn"].Value) ?? "";
+            string fullName = Convert.ToString(usersDataGridView.CurrentRow.Cells["fullNameColumn"].Value) ?? username;
             username = username.Trim();
+            email = email.Trim();
 
             try
             {
                 if (UserService.SetUserApproved(username, true))
                 {
-                    MessageBox.Show("Account approved. It can sign in now.", "Account approved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    bool emailSent = false;
+                    if (!string.IsNullOrEmpty(email))
+                    {
+                        emailSent = EmailService.SendAccountApprovedEmail(email, fullName);
+                    }
+
+                    if (emailSent)
+                    {
+                        MessageBox.Show("Account approved and notification email sent.", "Account approved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Account approved. (Notification email could not be sent. Check SMTP settings).", "Account approved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
                     LoadUsers();
                 }
                 else

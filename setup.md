@@ -40,7 +40,7 @@ mysql -u root -p evently_db < db\schema.sql
 
 Enter your MySQL password when asked. There are no default accounts in the schema.
 
-**First run:** open `http://localhost:5000/Signup` and create the first account. The first signup becomes the admin and can sign in right away. Later staff signups wait for an admin to approve them in the desktop app (Manage Users > Approve).
+**First run:** launch `Evently.Desktop`. When no accounts exist, the desktop app displays the initial administrator setup panel to create the first admin account. Later staff signups can register on the website (`/Signup`) and wait for desktop admin approval (Manage Users > Approve). Both desktop and web login accept either username or email.
 
 ### 3. Create your config file
 
@@ -111,7 +111,7 @@ To let guests open review links or register from outside your local network:
 | App can't connect to the database | Check `db.config` (repo root) has the right user and password, then rebuild and rerun |
 | `mysql` is not recognized | Add MySQL's `bin` folder to your PATH, then reopen the terminal |
 | `dotnet` is not recognized | Install the .NET 9 SDK and reopen the terminal |
-| Can't log in | First signup on `/Signup` creates the admin. Later staff accounts need approval in Manage Users |
+| Can't log in | Create the initial admin on the desktop app on first run. Staff web signups require desktop admin approval before sign-in |
 | Phone can't open the website | Same Wi-Fi as the laptop, use `http://<laptop-ip>:5000`, allow the Windows Firewall prompt |
 
 ## Never commit

@@ -100,5 +100,49 @@ namespace Evently.Core.Services
                 return false;
             }
         }
+
+        public static bool SendAccountApprovedEmail(string recipientEmail, string recipientName)
+        {
+            string configPath = Path.Combine(AppContext.BaseDirectory, "db.config");
+            if (!File.Exists(configPath))
+            {
+                return false;
+            }
+
+            string[] lines = File.ReadAllLines(configPath);
+            string smtpEmail = DatabaseConnection.ReadValue(lines, "SmtpEmail");
+            string smtpPassword = DatabaseConnection.ReadValue(lines, "SmtpPassword");
+
+            if (smtpEmail.Length == 0 || smtpPassword.Length == 0)
+            {
+                return false;
+            }
+
+            try
+            {
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Evently", smtpEmail));
+                message.To.Add(new MailboxAddress(recipientName, recipientEmail));
+                message.Subject = "Your Evently Account Has Been Approved";
+
+                var builder = new BodyBuilder
+                {
+                    TextBody = $"Hi {recipientName},\n\nYour account has been approved by an administrator. You may now sign in to Evently using your username or email.\n\nThank you,\nEvently Team"
+                };
+                message.Body = builder.ToMessageBody();
+
+                using var client = new SmtpClient();
+                client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                client.Authenticate(smtpEmail, smtpPassword);
+                client.Send(message);
+                client.Disconnect(true);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
