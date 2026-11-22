@@ -184,7 +184,7 @@ namespace Evently.Forms
             this.usernameLabel.Name = "usernameLabel";
             this.usernameLabel.Size = new System.Drawing.Size(63, 15);
             this.usernameLabel.TabIndex = 0;
-            this.usernameLabel.Text = "Username:";
+            this.usernameLabel.Text = "Username or Email:";
             // usernameTextBox
             this.usernameTextBox.Location = new System.Drawing.Point(40, 130);
             this.usernameTextBox.Name = "usernameTextBox";

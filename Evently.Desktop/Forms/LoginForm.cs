@@ -112,20 +112,21 @@ namespace Evently.Forms
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
-            string username = usernameTextBox.Text.Trim();
+            string identifier = usernameTextBox.Text.Trim();
             string password = passwordTextBox.Text;
 
             try
             {
-                if (AuthService.VerifyAuth(username, password))
+                if (AuthService.VerifyAuth(identifier, password))
                 {
-                    if (!AuthService.IsApproved(username))
+                    if (!AuthService.IsApproved(identifier))
                     {
                         MessageBox.Show("This account is waiting for admin approval.", "Sign-in blocked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
-                    Session.SignIn(username, AuthService.GetRole(username) ?? "");
+                    string actualUsername = AuthService.GetUsername(identifier) ?? identifier;
+                    Session.SignIn(actualUsername, AuthService.GetRole(identifier) ?? "");
                     MessageBox.Show("You are signed in. Opening Evently now.", "Signed in", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     usernameTextBox.Text = "";
                     passwordTextBox.Text = "";
