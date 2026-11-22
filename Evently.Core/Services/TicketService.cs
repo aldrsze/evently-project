@@ -22,6 +22,7 @@ namespace Evently.Core.Services
                                     ELSE NULL
                                 END AS age,
                                 a.email,
+                                CASE WHEN t.checked_in_at IS NOT NULL THEN 'Yes' ELSE 'No' END AS is_checked_in,
                                 CASE WHEN t.ticket_emailed = TRUE THEN 'Yes' ELSE 'No' END AS ticket_emailed,
                                 CASE WHEN t.review_emailed = TRUE THEN 'Yes' ELSE 'No' END AS review_emailed
                              FROM tickets t

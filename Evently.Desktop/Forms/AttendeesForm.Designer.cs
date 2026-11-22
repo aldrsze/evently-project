@@ -30,6 +30,7 @@ namespace Evently.Forms
             this.attendeeNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkedInColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ticketEmailedColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.reviewEmailedColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addAttendeeWrapperPanel = new System.Windows.Forms.Panel();
@@ -169,6 +170,7 @@ namespace Evently.Forms
             this.attendeeNameColumn,
             this.ageColumn,
             this.emailColumn,
+            this.checkedInColumn,
             this.ticketEmailedColumn,
             this.reviewEmailedColumn});
             this.attendeesDataGridView.DefaultCellStyle.BackColor = System.Drawing.Color.White;
@@ -231,6 +233,12 @@ namespace Evently.Forms
             this.emailColumn.HeaderText = "Email";
             this.emailColumn.Name = "emailColumn";
             this.emailColumn.ReadOnly = true;
+            // checkedInColumn
+            this.checkedInColumn.DataPropertyName = "is_checked_in";
+            this.checkedInColumn.HeaderText = "Checked In";
+            this.checkedInColumn.Name = "checkedInColumn";
+            this.checkedInColumn.ReadOnly = true;
+            this.checkedInColumn.FillWeight = 50F;
             // ticketEmailedColumn
             this.ticketEmailedColumn.DataPropertyName = "ticket_emailed";
             this.ticketEmailedColumn.HeaderText = "Ticket Emailed";
@@ -491,6 +499,7 @@ namespace Evently.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn attendeeNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ageColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn emailColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn checkedInColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ticketEmailedColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn reviewEmailedColumn;
         private System.Windows.Forms.Panel addAttendeeWrapperPanel;
