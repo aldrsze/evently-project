@@ -26,6 +26,7 @@ namespace Evently.Forms
             this.reviewsButton = new System.Windows.Forms.Button();
             this.dashboardButton = new System.Windows.Forms.Button();
             this.usersButton = new System.Windows.Forms.Button();
+            this.currentUserLabel = new System.Windows.Forms.Label();
             this.logoutButton = new System.Windows.Forms.Button();
             this.sidebarHeaderLabel = new System.Windows.Forms.Label();
             this.bullet1Label = new System.Windows.Forms.Label();
@@ -109,6 +110,7 @@ namespace Evently.Forms
             this.menuPanel.Controls.Add(this.reviewsButton);
             this.menuPanel.Controls.Add(this.dashboardButton);
             this.menuPanel.Controls.Add(this.usersButton);
+            this.menuPanel.Controls.Add(this.currentUserLabel);
             this.menuPanel.Controls.Add(this.logoutButton);
             this.menuPanel.Controls.Add(this.sidebarHeaderLabel);
             this.menuPanel.Controls.Add(this.bullet1Label);
@@ -177,12 +179,23 @@ namespace Evently.Forms
             this.usersButton.Text = "&Manage Users";
             this.usersButton.UseVisualStyleBackColor = true;
             this.usersButton.Click += new System.EventHandler(this.UsersButton_Click);
+            // currentUserLabel
+            this.currentUserLabel.AutoSize = true;
+            this.currentUserLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.currentUserLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
+            this.currentUserLabel.Location = new System.Drawing.Point(6, 340);
+            this.currentUserLabel.Margin = new System.Windows.Forms.Padding(6, 16, 3, 4);
+            this.currentUserLabel.MaximumSize = new System.Drawing.Size(200, 0);
+            this.currentUserLabel.Name = "currentUserLabel";
+            this.currentUserLabel.Size = new System.Drawing.Size(73, 15);
+            this.currentUserLabel.TabIndex = 7;
+            this.currentUserLabel.Text = "Signed in as:";
             // logoutButton
-            this.logoutButton.Location = new System.Drawing.Point(3, 356);
-            this.logoutButton.Margin = new System.Windows.Forms.Padding(3, 20, 3, 4);
+            this.logoutButton.Location = new System.Drawing.Point(3, 363);
+            this.logoutButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.logoutButton.Name = "logoutButton";
             this.logoutButton.Size = new System.Drawing.Size(200, 40);
-            this.logoutButton.TabIndex = 7;
+            this.logoutButton.TabIndex = 8;
             this.logoutButton.Text = "L&ogout";
             this.logoutButton.UseVisualStyleBackColor = true;
             this.logoutButton.Click += new System.EventHandler(this.LogoutButton_Click);
@@ -271,6 +284,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Button reviewsButton;
         private System.Windows.Forms.Button dashboardButton;
         private System.Windows.Forms.Button usersButton;
+        private System.Windows.Forms.Label currentUserLabel;
         private System.Windows.Forms.Button logoutButton;
         private System.Windows.Forms.Label heroSublineLabel;
         private System.Windows.Forms.Label sidebarHeaderLabel;

@@ -1,4 +1,5 @@
 using Evently.Core.Helpers;
+using Evently.Helpers;
 
 namespace Evently.Forms
 {
@@ -10,6 +11,7 @@ namespace Evently.Forms
         public MainForm()
         {
             InitializeComponent();
+            currentUserLabel.Text = $"Signed in as:\n{Session.CurrentUsername} ({Session.CurrentRole})";
             FormClosing += MainForm_FormClosing;
             ShowForm(new EventListForm(), "Manage Events", "Create events, set attendee capacities, and manage your schedules.");
         }
