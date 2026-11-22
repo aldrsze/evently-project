@@ -25,6 +25,9 @@ namespace Evently.Forms
             this.dateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.capacityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descriptionPreviewPanel = new System.Windows.Forms.Panel();
+            this.descriptionPreviewGroupBox = new System.Windows.Forms.GroupBox();
+            this.selectedDescriptionTextBox = new System.Windows.Forms.TextBox();
             this.addEventWrapperPanel = new System.Windows.Forms.Panel();
             this.addEventGroupBox = new System.Windows.Forms.GroupBox();
             this.nameLabel = new System.Windows.Forms.Label();
@@ -49,6 +52,8 @@ namespace Evently.Forms
             this.addEventWrapperPanel.SuspendLayout();
             this.addEventGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.capacityNumericUpDown)).BeginInit();
+            this.descriptionPreviewPanel.SuspendLayout();
+            this.descriptionPreviewGroupBox.SuspendLayout();
             this.actionPanel.SuspendLayout();
             this.SuspendLayout();
             // headerPanel
@@ -86,6 +91,7 @@ namespace Evently.Forms
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;
             this.contentPanel.Controls.Add(this.gridHostPanel);
+            this.contentPanel.Controls.Add(this.descriptionPreviewPanel);
             this.contentPanel.Controls.Add(this.addEventWrapperPanel);
             this.contentPanel.Controls.Add(this.actionPanel);
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -142,6 +148,7 @@ namespace Evently.Forms
             this.eventsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.eventsDataGridView.Size = new System.Drawing.Size(1254, 450);
             this.eventsDataGridView.TabIndex = 0;
+            this.eventsDataGridView.SelectionChanged += new System.EventHandler(this.EventsDataGridView_SelectionChanged);
             // eventIdColumn
             this.eventIdColumn.DataPropertyName = "event_id";
             this.eventIdColumn.HeaderText = "ID";
@@ -178,6 +185,38 @@ namespace Evently.Forms
             this.descriptionColumn.Name = "descriptionColumn";
             this.descriptionColumn.ReadOnly = true;
             this.descriptionColumn.DataPropertyName = "description";
+            // descriptionPreviewPanel
+            this.descriptionPreviewPanel.BackColor = System.Drawing.Color.White;
+            this.descriptionPreviewPanel.Controls.Add(this.descriptionPreviewGroupBox);
+            this.descriptionPreviewPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.descriptionPreviewPanel.Location = new System.Drawing.Point(12, 374);
+            this.descriptionPreviewPanel.Name = "descriptionPreviewPanel";
+            this.descriptionPreviewPanel.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.descriptionPreviewPanel.Size = new System.Drawing.Size(1256, 90);
+            this.descriptionPreviewPanel.TabIndex = 3;
+            // descriptionPreviewGroupBox
+            this.descriptionPreviewGroupBox.BackColor = System.Drawing.Color.White;
+            this.descriptionPreviewGroupBox.Controls.Add(this.selectedDescriptionTextBox);
+            this.descriptionPreviewGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.descriptionPreviewGroupBox.Location = new System.Drawing.Point(0, 10);
+            this.descriptionPreviewGroupBox.Name = "descriptionPreviewGroupBox";
+            this.descriptionPreviewGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
+            this.descriptionPreviewGroupBox.Size = new System.Drawing.Size(1256, 80);
+            this.descriptionPreviewGroupBox.TabIndex = 0;
+            this.descriptionPreviewGroupBox.TabStop = false;
+            this.descriptionPreviewGroupBox.Text = "Event Description Details";
+            // selectedDescriptionTextBox
+            this.selectedDescriptionTextBox.BackColor = System.Drawing.Color.FromArgb(249, 249, 249);
+            this.selectedDescriptionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.selectedDescriptionTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectedDescriptionTextBox.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.selectedDescriptionTextBox.Location = new System.Drawing.Point(8, 24);
+            this.selectedDescriptionTextBox.Multiline = true;
+            this.selectedDescriptionTextBox.Name = "selectedDescriptionTextBox";
+            this.selectedDescriptionTextBox.ReadOnly = true;
+            this.selectedDescriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.selectedDescriptionTextBox.Size = new System.Drawing.Size(1240, 48);
+            this.selectedDescriptionTextBox.TabIndex = 0;
             // addEventWrapperPanel
             this.addEventWrapperPanel.BackColor = System.Drawing.Color.White;
             this.addEventWrapperPanel.Controls.Add(this.addEventGroupBox);
@@ -345,6 +384,9 @@ namespace Evently.Forms
             this.addEventGroupBox.ResumeLayout(false);
             this.addEventGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.capacityNumericUpDown)).EndInit();
+            this.descriptionPreviewGroupBox.ResumeLayout(false);
+            this.descriptionPreviewGroupBox.PerformLayout();
+            this.descriptionPreviewPanel.ResumeLayout(false);
             this.actionPanel.ResumeLayout(false);
             this.actionPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -362,6 +404,9 @@ namespace Evently.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn dateColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn capacityColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn descriptionColumn;
+        private System.Windows.Forms.Panel descriptionPreviewPanel;
+        private System.Windows.Forms.GroupBox descriptionPreviewGroupBox;
+        private System.Windows.Forms.TextBox selectedDescriptionTextBox;
         private System.Windows.Forms.Panel addEventWrapperPanel;
         private System.Windows.Forms.GroupBox addEventGroupBox;
         private System.Windows.Forms.Label nameLabel;
