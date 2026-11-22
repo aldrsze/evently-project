@@ -1,8 +1,9 @@
 using System;
 using System.IO;
-using System.Net;
-using System.Net.Mail;
 using Evently.Core.Helpers;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
 
 namespace Evently.Core.Services
 {
@@ -30,20 +31,23 @@ namespace Evently.Core.Services
             {
                 byte[] qrBytes = QrCodeService.GenerateTicketQrPng(ticketId);
 
-                using MailMessage mail = new();
-                mail.From = new MailAddress(smtpEmail, "Evently");
-                mail.To.Add(recipientEmail);
-                mail.Subject = $"Your Ticket for {eventName}";
-                mail.Body = $"Hi {attendeeName},\n\nHere is your ticket for {eventName}.\nVenue: {venue}\nDate: {eventDate:MMMM d, yyyy h:mm tt}\nTicket ID: {ticketId}\n\nPlease present the attached QR code at the door.";
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Evently", smtpEmail));
+                message.To.Add(new MailboxAddress(attendeeName, recipientEmail));
+                message.Subject = $"Your Ticket for {eventName}";
 
-                using MemoryStream stream = new(qrBytes);
-                mail.Attachments.Add(new Attachment(stream, "ticket_qr.png", "image/png"));
+                var builder = new BodyBuilder
+                {
+                    TextBody = $"Hi {attendeeName},\n\nHere is your ticket for {eventName}.\nVenue: {venue}\nDate: {eventDate:MMMM d, yyyy h:mm tt}\nTicket ID: {ticketId}\n\nPlease present the attached QR code at the door."
+                };
+                builder.Attachments.Add("ticket_qr.png", qrBytes, new ContentType("image", "png"));
+                message.Body = builder.ToMessageBody();
 
-                using SmtpClient client = new("smtp.gmail.com", 587);
-                client.EnableSsl = true;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(smtpEmail, smtpPassword);
-                client.Send(mail);
+                using var client = new SmtpClient();
+                client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                client.Authenticate(smtpEmail, smtpPassword);
+                client.Send(message);
+                client.Disconnect(true);
 
                 return true;
             }
@@ -72,17 +76,22 @@ namespace Evently.Core.Services
 
             try
             {
-                using MailMessage mail = new();
-                mail.From = new MailAddress(smtpEmail, "Evently");
-                mail.To.Add(recipientEmail);
-                mail.Subject = $"How was {eventName}? Leave your feedback";
-                mail.Body = $"Hi {attendeeName},\n\nThank you for attending {eventName}!\n\nWe would love to hear your feedback. Please take a moment to rate the event here:\n{reviewUrl}\n\nYour review helps us improve future events.";
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Evently", smtpEmail));
+                message.To.Add(new MailboxAddress(attendeeName, recipientEmail));
+                message.Subject = $"How was {eventName}? Leave your feedback";
 
-                using SmtpClient client = new("smtp.gmail.com", 587);
-                client.EnableSsl = true;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(smtpEmail, smtpPassword);
-                client.Send(mail);
+                var builder = new BodyBuilder
+                {
+                    TextBody = $"Hi {attendeeName},\n\nThank you for attending {eventName}!\n\nWe would love to hear your feedback. Please take a moment to rate the event here:\n{reviewUrl}\n\nYour review helps us improve future events."
+                };
+                message.Body = builder.ToMessageBody();
+
+                using var client = new SmtpClient();
+                client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                client.Authenticate(smtpEmail, smtpPassword);
+                client.Send(message);
+                client.Disconnect(true);
 
                 return true;
             }
