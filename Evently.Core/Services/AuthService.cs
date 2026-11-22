@@ -34,5 +34,22 @@ namespace Evently.Core.Services
             cmd.Parameters.AddWithValue("@username", username);
             return cmd.ExecuteScalar()?.ToString();
         }
+
+        // a staff signup cannot sign in until an admin approves it
+        public static bool IsApproved(string username)
+        {
+            using var conn = DatabaseConnection.GetConnection();
+            string query = "SELECT is_approved FROM users WHERE username = @username AND is_active = 1";
+            using var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@username", username);
+            object? result = cmd.ExecuteScalar();
+
+            if (result == null)
+            {
+                return false;
+            }
+
+            return Convert.ToBoolean(result);
+        }
     }
 }

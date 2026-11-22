@@ -1,14 +1,14 @@
 @page "/Login"
 @model Evently.Web.Pages.Auth.LoginModel
 @{
-    ViewData["Title"] = "Staff login";
+    ViewData["Title"] = "Sign in";
 }
 
 <section class="narrow-page">
     <a class="back-link" asp-page="/Index">← Upcoming events</a>
-    <p class="eyebrow">Staff access</p>
-    <h1>Staff login</h1>
-    <p class="lead">Sign in with your staff account to access the door scanner.</p>
+    <p class="eyebrow">Staff & Admin access</p>
+    <h1>Sign in</h1>
+    <p class="lead">Sign in with your staff or administrator account to access the door scanner.</p>
 
     @if (!string.IsNullOrEmpty(Model.ErrorMessage))
     {
@@ -30,4 +30,6 @@
 
         <button type="submit" class="button primary full">Sign in</button>
     </form>
+
+    <p class="info-panel">Need a staff account? <a asp-page="/Auth/Signup">Sign up</a>.</p>
 </section>

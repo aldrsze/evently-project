@@ -14,9 +14,7 @@ public class LoginModel : PageModel
 
     public string? ErrorMessage { get; set; }
 
-    public void OnGet()
-    {
-    }
+    public void OnGet() { }
 
     public IActionResult OnPost()
     {
@@ -30,6 +28,12 @@ public class LoginModel : PageModel
         if (!isValid)
         {
             ErrorMessage = "Invalid username or password.";
+            return Page();
+        }
+
+        if (!AuthService.IsApproved(Username.Trim()))
+        {
+            ErrorMessage = "Your account is waiting for admin approval.";
             return Page();
         }
 

@@ -20,10 +20,17 @@ namespace Evently.Forms
         private void AddButton_Click(object sender, EventArgs e) 
         {
             string username = usernameTextBox.Text.Trim();
+            string firstName = firstNameTextBox.Text.Trim();
+            string lastName = lastNameTextBox.Text.Trim();
+            string email = emailTextBox.Text.Trim();
             string password = passwordTextBox.Text;
             string role = roleComboBox.Text;
 
-            if (username == "" || password == "" || role == "") { MessageBox.Show("Fill in username, password, and role.", "Add account", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            if (username == "" || firstName == "" || lastName == "" || email == "" || password == "" || role == "")
+            {
+                MessageBox.Show("Fill in username, name, email, password, and role.", "Add account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             if (password.Length < UserService.MinPasswordLength)
             {
@@ -33,14 +40,18 @@ namespace Evently.Forms
 
             try
             {
-                if (UserService.AddUser(username, password, role))
+                // an admin adding an account approves it right away
+                if (UserService.AddUser(username, password, email, firstName, lastName, null, role, true))
                 {
                     MessageBox.Show("Account created. It can sign in right away.", "Account added", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     usernameTextBox.Text = "";
+                    firstNameTextBox.Text = "";
+                    lastNameTextBox.Text = "";
+                    emailTextBox.Text = "";
                     passwordTextBox.Text = "";
                     LoadUsers();
                 }
-                else { MessageBox.Show("That username is already taken. Choose another one.", "Username taken", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                else { MessageBox.Show("That username or email is already taken. Choose another one.", "Account taken", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
             catch (Exception ex)
             {
@@ -67,7 +78,7 @@ namespace Evently.Forms
                 return;
             }
 
-            string username = Convert.ToString(usersDataGridView.CurrentRow.Cells[0].Value) ?? "";
+            string username = Convert.ToString(usersDataGridView.CurrentRow.Cells["usernameColumn"].Value) ?? "";
             username = username.Trim();
 
             bool isSelf = string.Equals(username, Session.CurrentUsername, StringComparison.OrdinalIgnoreCase);
@@ -103,6 +114,35 @@ namespace Evently.Forms
             }
         }
 
+        private void ApproveButton_Click(object sender, EventArgs e)
+        {
+            if (usersDataGridView.CurrentRow == null)
+            {
+                MessageBox.Show("Select a user in the list first.", "No selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string username = Convert.ToString(usersDataGridView.CurrentRow.Cells["usernameColumn"].Value) ?? "";
+            username = username.Trim();
+
+            try
+            {
+                if (UserService.SetUserApproved(username, true))
+                {
+                    MessageBox.Show("Account approved. It can sign in now.", "Account approved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadUsers();
+                }
+                else
+                {
+                    MessageBox.Show("Nothing changed. The account is missing or already approved.", "No change", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The change could not be saved. " + ex.Message, "Save failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private static bool WouldRemoveLastAdmin(string username)
         {
             string role = AuthService.GetRole(username) ?? "";
@@ -123,8 +163,8 @@ namespace Evently.Forms
                 return;
             }
 
-            string username = Convert.ToString(usersDataGridView.CurrentRow.Cells[0].Value) ?? "";
-            string role = Convert.ToString(usersDataGridView.CurrentRow.Cells[1].Value) ?? "";
+            string username = Convert.ToString(usersDataGridView.CurrentRow.Cells["usernameColumn"].Value) ?? "";
+            string role = Convert.ToString(usersDataGridView.CurrentRow.Cells["roleColumn"].Value) ?? "";
 
             // nobody changes their own role
             bool lockRole = string.Equals(username, Session.CurrentUsername, StringComparison.OrdinalIgnoreCase);
@@ -132,17 +172,22 @@ namespace Evently.Forms
             using UserEditForm dialog = new(username, role, lockRole);
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                SaveUserChanges(username, dialog.UsernameValue, dialog.RoleValue, dialog.NewPasswordValue);
+                SaveUserChanges(username, dialog);
             }
         }
 
-        private void SaveUserChanges(string oldUsername, string newUsername, string role, string newPassword)
+        private void SaveUserChanges(string oldUsername, UserEditForm dialog)
         {
-            newUsername = newUsername.Trim();
+            string newUsername = dialog.UsernameValue.Trim();
+            string email = dialog.EmailValue.Trim();
+            string firstName = dialog.FirstNameValue.Trim();
+            string lastName = dialog.LastNameValue.Trim();
+            string role = dialog.RoleValue;
+            string newPassword = dialog.NewPasswordValue;
 
-            if (newUsername == "")
+            if (newUsername == "" || email == "" || firstName == "" || lastName == "")
             {
-                MessageBox.Show("Enter a username.", "Edit account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Enter a username, name, and email.", "Edit account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -160,7 +205,8 @@ namespace Evently.Forms
 
             try
             {
-                if (UserService.UpdateUser(oldUsername, newUsername, role, newPassword))
+                if (UserService.UpdateUser(oldUsername, newUsername, role, newPassword,
+                                           email, firstName, lastName, dialog.BirthdateValue))
                 {
                     if (string.Equals(oldUsername, Session.CurrentUsername, StringComparison.OrdinalIgnoreCase))
                     {
@@ -171,7 +217,7 @@ namespace Evently.Forms
                 }
                 else
                 {
-                    MessageBox.Show("That username is already taken. Choose another one.", "Username taken", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("That username or email is already taken. Choose another one.", "Account taken", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)

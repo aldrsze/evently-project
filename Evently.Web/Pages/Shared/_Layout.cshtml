@@ -18,11 +18,11 @@
             <a asp-page="/Registration/Register">Guest registration</a>
             @if (Context.Request.Path.StartsWithSegments("/Scan"))
             {
-                <a asp-page="/CheckIn/Scan">Staff scan</a>
+                <a asp-page="/CheckIn/Scan">Scanner</a>
             }
             else
             {
-                <a asp-page="/Auth/Login">Staff login</a>
+                <a asp-page="/Auth/Login">Sign in</a>
             }
         </nav>
     </header>
