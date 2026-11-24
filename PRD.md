@@ -116,7 +116,7 @@ Status reflects what is in the repository today, which is still the single-proje
 | 14 | Rating Form | The guest opens the link on their phone, picks 1 to 5, optionally writes a comment, and submits. The review is saved only for a checked-in ticket that has no review yet. | Web | High | Not started. |
 | 15 | Live Dashboard | A screen with an event selector, metrics, a doughnut chart, a check-ins-over-time chart, and a recent check-ins list (section 5.4). | Desktop | High | Layout, charts, and 5-second timer done with sample data. Real queries not written. |
 | 16 | Attendance Export (CSV) | Admin can export an event's attendee list (first name, last name, birthdate, email, check-in time, check-out time, rating, comment) as a CSV file. | Desktop, Core | High | Button only. |
-| 17 | Event Organizers | The schema stores organizers and links them to events through `event_organizers`, so one event can list several organizer contacts. A manager is typed when the event is created; after that, the Managers panel adds, edits, and removes them. The same name and email cannot be added twice to one event, and an email belongs to only one organizer. Removing a manager unlinks them from the event, and deletes the organizer row itself when no other event uses it. An event may have no manager, but it cannot take registrations until one is assigned. | Core, Desktop | Medium | Done. Manager fields on Add Event, add/edit/remove in the Managers panel, Edit Event leaves managers alone, registration blocked without a manager. |
+| 17 | Event Organizers | The schema stores organizers and links them to events through `event_organizers`, so one event can list several organizer contacts. A manager is typed when the event is created; after that, the Managers panel adds, edits, and removes them. The same email cannot be added twice to one event, and an email belongs to only one organizer. Removing a manager unlinks them from the event, and deletes the organizer row itself when no other event uses it. An event may have no manager, but it cannot take registrations until one is assigned. | Core, Desktop | Medium | Done. Manager fields on Add Event, add/edit/remove in the Managers panel, Edit Event leaves managers alone, registration blocked without a manager. |
 
 ### 5.2 Nice-to-Have Features (Stretch Goals)
 
@@ -431,7 +431,7 @@ evently-project/
 | 6 | Check-in / check-out | Not started | `TicketService` scan rules with the 3-second cooldown, `/Scan` page with `html5-qrcode`, result plus that event's inside count in one call. |
 | 7 | Reviews | Screen only | `/Review` page, `ReviewService.Save` with the checked-in and one-per-ticket checks, "Send Review Request" email using `review_emailed`. |
 | 8 | Dashboard | Mock data | Replace sample data with `DashboardService` queries, including average rating and response rate. |
-| 9 | Organizers | Done | Manager is captured on the Add Event form; the Managers panel adds, edits, and removes managers (same name + email blocked per event); removing a manager's last event deletes the organizer row; `TicketService.AddAttendee` refuses events with no manager. |
+| 9 | Organizers | Done | Manager is captured on the Add Event form; the Managers panel adds, edits, and removes managers (an email cannot be reused by a second manager); removing a manager's last event deletes the organizer row; `TicketService.AddAttendee` refuses events with no manager. |
 | 10 | Cleanup | Not started | Delete the root `Evently.csproj` and stale build folders once both apps build from the solution. |
 
 ---
