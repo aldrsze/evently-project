@@ -50,6 +50,12 @@ namespace Evently.Forms
                 return;
             }
 
+            if (!OrganizerService.EventHasManager(eventId))
+            {
+                MessageBox.Show("This event has no manager. Assign a manager before registering attendees.", "No Manager", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             string firstName = firstNameTextBox.Text.Trim();
             string lastName = lastNameTextBox.Text.Trim();
             string email = emailTextBox.Text.Trim();
@@ -179,6 +185,12 @@ namespace Evently.Forms
             if (eventComboBox.SelectedValue == null || !int.TryParse(eventComboBox.SelectedValue.ToString(), out int eventId))
             {
                 MessageBox.Show("Please select an event first.", "Import CSV", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!OrganizerService.EventHasManager(eventId))
+            {
+                MessageBox.Show("This event has no manager. Assign a manager before importing attendees.", "No Manager", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

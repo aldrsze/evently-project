@@ -43,6 +43,12 @@ namespace Evently.Core.Services
             lastName = lastName.Trim();
             email = email.Trim();
 
+            // no manager means no registration, from any of the three entry points
+            if (!OrganizerService.EventHasManager(eventId))
+            {
+                return false;
+            }
+
             using var conn = DatabaseConnection.GetConnection();
 
             int attendeeId = 0;

@@ -32,7 +32,7 @@ namespace Evently.Forms
             this.nameLabel = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.emailLabel = new System.Windows.Forms.Label();
-            this.emailTextBox = new System.Windows.Forms.TextBox();
+            this.emailComboBox = new System.Windows.Forms.ComboBox();
             this.phoneLabel = new System.Windows.Forms.Label();
             this.phoneTextBox = new System.Windows.Forms.TextBox();
             this.organizationLabel = new System.Windows.Forms.Label();
@@ -211,7 +211,7 @@ namespace Evently.Forms
             this.addManagerGroupBox.Controls.Add(this.nameLabel);
             this.addManagerGroupBox.Controls.Add(this.nameTextBox);
             this.addManagerGroupBox.Controls.Add(this.emailLabel);
-            this.addManagerGroupBox.Controls.Add(this.emailTextBox);
+            this.addManagerGroupBox.Controls.Add(this.emailComboBox);
             this.addManagerGroupBox.Controls.Add(this.phoneLabel);
             this.addManagerGroupBox.Controls.Add(this.phoneTextBox);
             this.addManagerGroupBox.Controls.Add(this.organizationLabel);
@@ -246,11 +246,14 @@ namespace Evently.Forms
             this.emailLabel.TabIndex = 2;
             this.emailLabel.Text = "Email:";
             this.emailLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // emailTextBox
-            this.emailTextBox.Location = new System.Drawing.Point(414, 26);
-            this.emailTextBox.Name = "emailTextBox";
-            this.emailTextBox.Size = new System.Drawing.Size(200, 23);
-            this.emailTextBox.TabIndex = 3;
+            // emailComboBox
+            this.emailComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.emailComboBox.Location = new System.Drawing.Point(414, 26);
+            this.emailComboBox.Name = "emailComboBox";
+            this.emailComboBox.Size = new System.Drawing.Size(200, 23);
+            this.emailComboBox.TabIndex = 3;
+            this.emailComboBox.SelectedIndexChanged += new System.EventHandler(this.EmailComboBox_SelectedIndexChanged);
+            this.emailComboBox.TextChanged += new System.EventHandler(this.EmailComboBox_TextChanged);
             // phoneLabel
             this.phoneLabel.AutoSize = false;
             this.phoneLabel.Location = new System.Drawing.Point(638, 26);
@@ -269,23 +272,23 @@ namespace Evently.Forms
             this.organizationLabel.Location = new System.Drawing.Point(12, 56);
             this.organizationLabel.Name = "organizationLabel";
             this.organizationLabel.Size = new System.Drawing.Size(96, 23);
-            this.organizationLabel.TabIndex = 4;
+            this.organizationLabel.TabIndex = 6;
             this.organizationLabel.Text = "Organization:";
             this.organizationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // organizationTextBox
             this.organizationTextBox.Location = new System.Drawing.Point(116, 56);
             this.organizationTextBox.Name = "organizationTextBox";
             this.organizationTextBox.Size = new System.Drawing.Size(560, 23);
-            this.organizationTextBox.TabIndex = 5;
+            this.organizationTextBox.TabIndex = 7;
             // managerHelperLabel
             this.managerHelperLabel.AutoSize = true;
             this.managerHelperLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.managerHelperLabel.ForeColor = System.Drawing.Color.FromArgb(128, 128, 128);
             this.managerHelperLabel.Location = new System.Drawing.Point(696, 59);
             this.managerHelperLabel.Name = "managerHelperLabel";
-            this.managerHelperLabel.Size = new System.Drawing.Size(180, 13);
-            this.managerHelperLabel.TabIndex = 6;
-            this.managerHelperLabel.Text = "Saved to your event manager list";
+            this.managerHelperLabel.Size = new System.Drawing.Size(320, 15);
+            this.managerHelperLabel.TabIndex = 8;
+            this.managerHelperLabel.Text = "Type a new email or pick an existing one to reuse details";
             // addManagerButton
             this.addManagerButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.addManagerButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
@@ -295,7 +298,42 @@ namespace Evently.Forms
             this.addManagerButton.Location = new System.Drawing.Point(1154, 26);
             this.addManagerButton.Name = "addManagerButton";
             this.addManagerButton.Size = new System.Drawing.Size(90, 30);
-            this.addManagerButton.TabIndex = 7;
+            this.addManagerButton.TabIndex = 9;
+            this.addManagerButton.Text = "&Add";
+            this.addManagerButton.UseVisualStyleBackColor = false;
+            this.addManagerButton.Click += new System.EventHandler(this.AddManagerButton_Click);
+            // organizationLabel
+            this.organizationLabel.AutoSize = false;
+            this.organizationLabel.Location = new System.Drawing.Point(12, 56);
+            this.organizationLabel.Name = "organizationLabel";
+            this.organizationLabel.Size = new System.Drawing.Size(96, 23);
+            this.organizationLabel.TabIndex = 8;
+            this.organizationLabel.Text = "Organization:";
+            this.organizationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // organizationTextBox
+            this.organizationTextBox.Location = new System.Drawing.Point(116, 56);
+            this.organizationTextBox.Name = "organizationTextBox";
+            this.organizationTextBox.Size = new System.Drawing.Size(560, 23);
+            this.organizationTextBox.TabIndex = 9;
+            // managerHelperLabel
+            this.managerHelperLabel.AutoSize = true;
+            this.managerHelperLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.managerHelperLabel.ForeColor = System.Drawing.Color.FromArgb(128, 128, 128);
+            this.managerHelperLabel.Location = new System.Drawing.Point(696, 59);
+            this.managerHelperLabel.Name = "managerHelperLabel";
+            this.managerHelperLabel.Size = new System.Drawing.Size(280, 15);
+            this.managerHelperLabel.TabIndex = 10;
+            this.managerHelperLabel.Text = "Select an existing manager or choose (New manager)";
+            // addManagerButton
+            this.addManagerButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.addManagerButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.addManagerButton.FlatAppearance.BorderSize = 0;
+            this.addManagerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addManagerButton.ForeColor = System.Drawing.Color.White;
+            this.addManagerButton.Location = new System.Drawing.Point(1154, 26);
+            this.addManagerButton.Name = "addManagerButton";
+            this.addManagerButton.Size = new System.Drawing.Size(90, 30);
+            this.addManagerButton.TabIndex = 11;
             this.addManagerButton.Text = "&Add";
             this.addManagerButton.UseVisualStyleBackColor = false;
             this.addManagerButton.Click += new System.EventHandler(this.AddManagerButton_Click);
@@ -328,7 +366,7 @@ namespace Evently.Forms
             this.actionHintLabel.Name = "actionHintLabel";
             this.actionHintLabel.Size = new System.Drawing.Size(437, 15);
             this.actionHintLabel.TabIndex = 2;
-            this.actionHintLabel.Text = "Removing a manager only unlinks them from this event, not the event manager list.";
+            this.actionHintLabel.Text = "Removing a manager from their last event also deletes that manager record.";
             // editManagerButton
             this.editManagerButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.editManagerButton.Location = new System.Drawing.Point(1048, 17);
@@ -397,7 +435,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Label emailLabel;
-        private System.Windows.Forms.TextBox emailTextBox;
+        private System.Windows.Forms.ComboBox emailComboBox;
         private System.Windows.Forms.Label phoneLabel;
         private System.Windows.Forms.TextBox phoneTextBox;
         private System.Windows.Forms.Label organizationLabel;

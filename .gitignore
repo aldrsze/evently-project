@@ -9,6 +9,9 @@
 # local database credentials
 db.config
 
+# Test projects
+Evently.Tests/
+
 # User-specific files
 *.rsuser
 *.suo
