@@ -17,6 +17,7 @@ namespace Evently.Forms
             this.titleLabel = new System.Windows.Forms.Label();
             this.heroSublineLabel = new System.Windows.Forms.Label();
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.rightColumnPanel = new System.Windows.Forms.Panel();
             this.topPanel = new System.Windows.Forms.Panel();
             this.eventLabel = new System.Windows.Forms.Label();
             this.eventComboBox = new System.Windows.Forms.ComboBox();
@@ -29,29 +30,15 @@ namespace Evently.Forms
             this.commentPreviewPanel = new System.Windows.Forms.Panel();
             this.commentPreviewGroupBox = new System.Windows.Forms.GroupBox();
             this.selectedCommentTextBox = new System.Windows.Forms.TextBox();
-            this.reviewFormWrapperPanel = new System.Windows.Forms.Panel();
-            this.reviewFormGroupBox = new System.Windows.Forms.GroupBox();
-            this.urlLabel = new System.Windows.Forms.Label();
-            this.reviewFormUrlTextBox = new System.Windows.Forms.TextBox();
-            this.urlHelperLabel = new System.Windows.Forms.Label();
-            this.saveUrlButton = new System.Windows.Forms.Button();
-            this.resultPanel = new System.Windows.Forms.Panel();
             this.resultLabel = new System.Windows.Forms.Label();
-            this.actionPanel = new System.Windows.Forms.Panel();
-            this.actionHintLabel = new System.Windows.Forms.Label();
-            this.sendRequestButton = new System.Windows.Forms.Button();
-            this.importReviewsButton = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            this.rightColumnPanel.SuspendLayout();
             this.topPanel.SuspendLayout();
             this.gridHostPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reviewsDataGridView)).BeginInit();
             this.commentPreviewPanel.SuspendLayout();
             this.commentPreviewGroupBox.SuspendLayout();
-            this.reviewFormWrapperPanel.SuspendLayout();
-            this.reviewFormGroupBox.SuspendLayout();
-            this.resultPanel.SuspendLayout();
-            this.actionPanel.SuspendLayout();
             this.SuspendLayout();
             // headerPanel
             this.headerPanel.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
@@ -88,10 +75,7 @@ namespace Evently.Forms
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;
             this.contentPanel.Controls.Add(this.gridHostPanel);
-            this.contentPanel.Controls.Add(this.commentPreviewPanel);
-            this.contentPanel.Controls.Add(this.reviewFormWrapperPanel);
-            this.contentPanel.Controls.Add(this.resultPanel);
-            this.contentPanel.Controls.Add(this.actionPanel);
+            this.contentPanel.Controls.Add(this.rightColumnPanel);
             this.contentPanel.Controls.Add(this.topPanel);
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentPanel.Location = new System.Drawing.Point(0, 64);
@@ -99,6 +83,15 @@ namespace Evently.Forms
             this.contentPanel.Padding = new System.Windows.Forms.Padding(12);
             this.contentPanel.Size = new System.Drawing.Size(1280, 656);
             this.contentPanel.TabIndex = 1;
+            // rightColumnPanel
+            this.rightColumnPanel.BackColor = System.Drawing.Color.White;
+            this.rightColumnPanel.Controls.Add(this.commentPreviewPanel);
+            this.rightColumnPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rightColumnPanel.Location = new System.Drawing.Point(808, 52);
+            this.rightColumnPanel.Name = "rightColumnPanel";
+            this.rightColumnPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.rightColumnPanel.Size = new System.Drawing.Size(460, 592);
+            this.rightColumnPanel.TabIndex = 1;
             // topPanel
             this.topPanel.BackColor = System.Drawing.Color.White;
             this.topPanel.Controls.Add(this.eventLabel);
@@ -130,7 +123,7 @@ namespace Evently.Forms
             this.gridHostPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridHostPanel.Location = new System.Drawing.Point(12, 52);
             this.gridHostPanel.Name = "gridHostPanel";
-            this.gridHostPanel.Size = new System.Drawing.Size(1256, 402);
+            this.gridHostPanel.Size = new System.Drawing.Size(796, 592);
             this.gridHostPanel.TabIndex = 1;
             // reviewsDataGridView
             this.reviewsDataGridView.AllowUserToAddRows = false;
@@ -166,7 +159,7 @@ namespace Evently.Forms
             this.reviewsDataGridView.RowHeadersVisible = false;
             this.reviewsDataGridView.RowTemplate.Height = 28;
             this.reviewsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.reviewsDataGridView.Size = new System.Drawing.Size(1254, 400);
+            this.reviewsDataGridView.Size = new System.Drawing.Size(794, 590);
             this.reviewsDataGridView.TabIndex = 0;
             this.reviewsDataGridView.SelectionChanged += new System.EventHandler(this.ReviewsDataGridView_SelectionChanged);
             // attendeeNameColumn
@@ -196,20 +189,20 @@ namespace Evently.Forms
             // commentPreviewPanel
             this.commentPreviewPanel.BackColor = System.Drawing.Color.White;
             this.commentPreviewPanel.Controls.Add(this.commentPreviewGroupBox);
-            this.commentPreviewPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.commentPreviewPanel.Location = new System.Drawing.Point(12, 364);
+            this.commentPreviewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.commentPreviewPanel.Location = new System.Drawing.Point(12, 0);
             this.commentPreviewPanel.Name = "commentPreviewPanel";
-            this.commentPreviewPanel.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.commentPreviewPanel.Size = new System.Drawing.Size(1256, 90);
+            this.commentPreviewPanel.Size = new System.Drawing.Size(448, 592);
             this.commentPreviewPanel.TabIndex = 5;
             // commentPreviewGroupBox
             this.commentPreviewGroupBox.BackColor = System.Drawing.Color.White;
             this.commentPreviewGroupBox.Controls.Add(this.selectedCommentTextBox);
+            this.commentPreviewGroupBox.Controls.Add(this.resultLabel);
             this.commentPreviewGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.commentPreviewGroupBox.Location = new System.Drawing.Point(0, 10);
+            this.commentPreviewGroupBox.Location = new System.Drawing.Point(0, 0);
             this.commentPreviewGroupBox.Name = "commentPreviewGroupBox";
             this.commentPreviewGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
-            this.commentPreviewGroupBox.Size = new System.Drawing.Size(1256, 80);
+            this.commentPreviewGroupBox.Size = new System.Drawing.Size(448, 592);
             this.commentPreviewGroupBox.TabIndex = 0;
             this.commentPreviewGroupBox.TabStop = false;
             this.commentPreviewGroupBox.Text = "Review Comment Details";
@@ -223,124 +216,18 @@ namespace Evently.Forms
             this.selectedCommentTextBox.Name = "selectedCommentTextBox";
             this.selectedCommentTextBox.ReadOnly = true;
             this.selectedCommentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.selectedCommentTextBox.Size = new System.Drawing.Size(1240, 48);
+            this.selectedCommentTextBox.Size = new System.Drawing.Size(432, 534);
             this.selectedCommentTextBox.TabIndex = 0;
-            // reviewFormWrapperPanel
-            this.reviewFormWrapperPanel.BackColor = System.Drawing.Color.White;
-            this.reviewFormWrapperPanel.Controls.Add(this.reviewFormGroupBox);
-            this.reviewFormWrapperPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.reviewFormWrapperPanel.Location = new System.Drawing.Point(12, 454);
-            this.reviewFormWrapperPanel.Name = "reviewFormWrapperPanel";
-            this.reviewFormWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 16, 0, 0);
-            this.reviewFormWrapperPanel.Size = new System.Drawing.Size(1256, 102);
-            this.reviewFormWrapperPanel.TabIndex = 2;
-            this.reviewFormWrapperPanel.Visible = false;
-            // reviewFormGroupBox
-            this.reviewFormGroupBox.BackColor = System.Drawing.Color.White;
-            this.reviewFormGroupBox.Controls.Add(this.urlLabel);
-            this.reviewFormGroupBox.Controls.Add(this.reviewFormUrlTextBox);
-            this.reviewFormGroupBox.Controls.Add(this.urlHelperLabel);
-            this.reviewFormGroupBox.Controls.Add(this.saveUrlButton);
-            this.reviewFormGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reviewFormGroupBox.Location = new System.Drawing.Point(0, 16);
-            this.reviewFormGroupBox.Name = "reviewFormGroupBox";
-            this.reviewFormGroupBox.Size = new System.Drawing.Size(1256, 86);
-            this.reviewFormGroupBox.TabIndex = 0;
-            this.reviewFormGroupBox.TabStop = false;
-            this.reviewFormGroupBox.Text = "Review Form";
-            // urlLabel
-            this.urlLabel.AutoSize = true;
-            this.urlLabel.Location = new System.Drawing.Point(12, 29);
-            this.urlLabel.Name = "urlLabel";
-            this.urlLabel.TabIndex = 0;
-            this.urlLabel.Text = "Google Form URL:";
-            // reviewFormUrlTextBox
-            this.reviewFormUrlTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.reviewFormUrlTextBox.Location = new System.Drawing.Point(138, 26);
-            this.reviewFormUrlTextBox.Name = "reviewFormUrlTextBox";
-            this.reviewFormUrlTextBox.Size = new System.Drawing.Size(1004, 23);
-            this.reviewFormUrlTextBox.TabIndex = 1;
-            // urlHelperLabel
-            this.urlHelperLabel.AutoSize = true;
-            this.urlHelperLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.urlHelperLabel.ForeColor = System.Drawing.Color.FromArgb(128, 128, 128);
-            this.urlHelperLabel.Location = new System.Drawing.Point(136, 56);
-            this.urlHelperLabel.Name = "urlHelperLabel";
-            this.urlHelperLabel.Size = new System.Drawing.Size(258, 13);
-            this.urlHelperLabel.TabIndex = 3;
-            this.urlHelperLabel.Text = "Attendees use this link to submit their 1 to 5 ratings";
-            // saveUrlButton
-            this.saveUrlButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.saveUrlButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.saveUrlButton.FlatAppearance.BorderSize = 0;
-            this.saveUrlButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.saveUrlButton.ForeColor = System.Drawing.Color.White;
-            this.saveUrlButton.Location = new System.Drawing.Point(1154, 26);
-            this.saveUrlButton.Name = "saveUrlButton";
-            this.saveUrlButton.Size = new System.Drawing.Size(90, 30);
-            this.saveUrlButton.TabIndex = 2;
-            this.saveUrlButton.Text = "&Save URL";
-            this.saveUrlButton.UseVisualStyleBackColor = false;
-            this.saveUrlButton.Click += new System.EventHandler(this.saveUrlButton_Click);
-            // resultPanel
-            this.resultPanel.BackColor = System.Drawing.Color.White;
-            this.resultPanel.Controls.Add(this.resultLabel);
-            this.resultPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.resultPanel.Location = new System.Drawing.Point(12, 556);
-            this.resultPanel.Name = "resultPanel";
-            this.resultPanel.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.resultPanel.Size = new System.Drawing.Size(1256, 36);
-            this.resultPanel.TabIndex = 3;
             // resultLabel
-            this.resultLabel.AutoSize = false;
-            this.resultLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.resultLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
-            this.resultLabel.Location = new System.Drawing.Point(0, 8);
+            this.resultLabel.Location = new System.Drawing.Point(8, 558);
             this.resultLabel.Name = "resultLabel";
-            this.resultLabel.Size = new System.Drawing.Size(1256, 28);
-            this.resultLabel.TabIndex = 0;
+            this.resultLabel.Size = new System.Drawing.Size(432, 26);
+            this.resultLabel.TabIndex = 1;
             this.resultLabel.Text = "";
             this.resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // actionPanel
-            this.actionPanel.BackColor = System.Drawing.Color.White;
-            this.actionPanel.Controls.Add(this.actionHintLabel);
-            this.actionPanel.Controls.Add(this.sendRequestButton);
-            this.actionPanel.Controls.Add(this.importReviewsButton);
-            this.actionPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.actionPanel.Location = new System.Drawing.Point(12, 592);
-            this.actionPanel.Name = "actionPanel";
-            this.actionPanel.Size = new System.Drawing.Size(1256, 46);
-            this.actionPanel.TabIndex = 4;
-            this.actionPanel.Visible = false;
-            // actionHintLabel
-            this.actionHintLabel.AutoSize = true;
-            this.actionHintLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.actionHintLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
-            this.actionHintLabel.Location = new System.Drawing.Point(0, 14);
-            this.actionHintLabel.Name = "actionHintLabel";
-            this.actionHintLabel.Size = new System.Drawing.Size(468, 15);
-            this.actionHintLabel.TabIndex = 2;
-            this.actionHintLabel.Text = "Review requests are only sent to attendees who checked in at the door";
-            // sendRequestButton
-            this.sendRequestButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.sendRequestButton.Location = new System.Drawing.Point(1028, 8);
-            this.sendRequestButton.Name = "sendRequestButton";
-            this.sendRequestButton.Size = new System.Drawing.Size(118, 30);
-            this.sendRequestButton.TabIndex = 0;
-            this.sendRequestButton.Text = "Send &Request";
-            this.sendRequestButton.UseVisualStyleBackColor = true;
-            this.sendRequestButton.Click += new System.EventHandler(this.sendRequestButton_Click);
-            // importReviewsButton
-            this.importReviewsButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.importReviewsButton.Location = new System.Drawing.Point(1154, 8);
-            this.importReviewsButton.Name = "importReviewsButton";
-            this.importReviewsButton.Size = new System.Drawing.Size(100, 30);
-            this.importReviewsButton.TabIndex = 1;
-            this.importReviewsButton.Text = "I&mport CSV";
-            this.importReviewsButton.UseVisualStyleBackColor = true;
-            this.importReviewsButton.Click += new System.EventHandler(this.importReviewsButton_Click);
             // ReviewsForm
-            this.AcceptButton = this.saveUrlButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -357,19 +244,14 @@ namespace Evently.Forms
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
+            this.rightColumnPanel.ResumeLayout(false);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
             this.gridHostPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.reviewsDataGridView)).EndInit();
-            this.reviewFormWrapperPanel.ResumeLayout(false);
-            this.reviewFormGroupBox.ResumeLayout(false);
-            this.reviewFormGroupBox.PerformLayout();
             this.commentPreviewGroupBox.ResumeLayout(false);
             this.commentPreviewGroupBox.PerformLayout();
             this.commentPreviewPanel.ResumeLayout(false);
-            this.resultPanel.ResumeLayout(false);
-            this.actionPanel.ResumeLayout(false);
-            this.actionPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -378,6 +260,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label heroSublineLabel;
         private System.Windows.Forms.Panel contentPanel;
+        private System.Windows.Forms.Panel rightColumnPanel;
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Label eventLabel;
         private System.Windows.Forms.ComboBox eventComboBox;
@@ -390,17 +273,6 @@ namespace Evently.Forms
         private System.Windows.Forms.Panel commentPreviewPanel;
         private System.Windows.Forms.GroupBox commentPreviewGroupBox;
         private System.Windows.Forms.TextBox selectedCommentTextBox;
-        private System.Windows.Forms.Panel reviewFormWrapperPanel;
-        private System.Windows.Forms.GroupBox reviewFormGroupBox;
-        private System.Windows.Forms.Label urlLabel;
-        private System.Windows.Forms.TextBox reviewFormUrlTextBox;
-        private System.Windows.Forms.Label urlHelperLabel;
-        private System.Windows.Forms.Button saveUrlButton;
-        private System.Windows.Forms.Panel resultPanel;
         private System.Windows.Forms.Label resultLabel;
-        private System.Windows.Forms.Panel actionPanel;
-        private System.Windows.Forms.Label actionHintLabel;
-        private System.Windows.Forms.Button sendRequestButton;
-        private System.Windows.Forms.Button importReviewsButton;
     }
 }
