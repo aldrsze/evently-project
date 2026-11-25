@@ -17,6 +17,7 @@ namespace Evently.Forms
             this.titleLabel = new System.Windows.Forms.Label();
             this.heroSublineLabel = new System.Windows.Forms.Label();
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.rightColumnPanel = new System.Windows.Forms.Panel();
             this.gridHostPanel = new System.Windows.Forms.Panel();
             this.eventsDataGridView = new System.Windows.Forms.DataGridView();
             this.eventIdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,6 +41,15 @@ namespace Evently.Forms
             this.capacityNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.descriptionLabel = new System.Windows.Forms.Label();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
+            this.managerNameLabel = new System.Windows.Forms.Label();
+            this.managerNameTextBox = new System.Windows.Forms.TextBox();
+            this.managerEmailLabel = new System.Windows.Forms.Label();
+            this.managerEmailComboBox = new System.Windows.Forms.ComboBox();
+            this.managerPhoneLabel = new System.Windows.Forms.Label();
+            this.managerPhoneTextBox = new System.Windows.Forms.TextBox();
+            this.managerOrganizationLabel = new System.Windows.Forms.Label();
+            this.managerOrganizationTextBox = new System.Windows.Forms.TextBox();
+            this.managerHelperLabel = new System.Windows.Forms.Label();
             this.addButton = new System.Windows.Forms.Button();
             this.actionPanel = new System.Windows.Forms.Panel();
             this.helperLabel = new System.Windows.Forms.Label();
@@ -47,6 +57,7 @@ namespace Evently.Forms
             this.deleteButton = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            this.rightColumnPanel.SuspendLayout();
             this.gridHostPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventsDataGridView)).BeginInit();
             this.addEventWrapperPanel.SuspendLayout();
@@ -91,8 +102,7 @@ namespace Evently.Forms
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;
             this.contentPanel.Controls.Add(this.gridHostPanel);
-            this.contentPanel.Controls.Add(this.descriptionPreviewPanel);
-            this.contentPanel.Controls.Add(this.addEventWrapperPanel);
+            this.contentPanel.Controls.Add(this.rightColumnPanel);
             this.contentPanel.Controls.Add(this.actionPanel);
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentPanel.Location = new System.Drawing.Point(0, 64);
@@ -100,6 +110,16 @@ namespace Evently.Forms
             this.contentPanel.Padding = new System.Windows.Forms.Padding(12);
             this.contentPanel.Size = new System.Drawing.Size(1280, 656);
             this.contentPanel.TabIndex = 1;
+            // rightColumnPanel
+            this.rightColumnPanel.BackColor = System.Drawing.Color.White;
+            this.rightColumnPanel.Controls.Add(this.addEventWrapperPanel);
+            this.rightColumnPanel.Controls.Add(this.descriptionPreviewPanel);
+            this.rightColumnPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rightColumnPanel.Location = new System.Drawing.Point(808, 12);
+            this.rightColumnPanel.Name = "rightColumnPanel";
+            this.rightColumnPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.rightColumnPanel.Size = new System.Drawing.Size(460, 576);
+            this.rightColumnPanel.TabIndex = 1;
             // gridHostPanel
             this.gridHostPanel.BackColor = System.Drawing.Color.White;
             this.gridHostPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -107,7 +127,7 @@ namespace Evently.Forms
             this.gridHostPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridHostPanel.Location = new System.Drawing.Point(12, 12);
             this.gridHostPanel.Name = "gridHostPanel";
-            this.gridHostPanel.Size = new System.Drawing.Size(1256, 452);
+            this.gridHostPanel.Size = new System.Drawing.Size(796, 576);
             this.gridHostPanel.TabIndex = 0;
             // eventsDataGridView
             this.eventsDataGridView.AllowUserToAddRows = false;
@@ -146,7 +166,7 @@ namespace Evently.Forms
             this.eventsDataGridView.RowHeadersVisible = false;
             this.eventsDataGridView.RowTemplate.Height = 28;
             this.eventsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.eventsDataGridView.Size = new System.Drawing.Size(1254, 450);
+            this.eventsDataGridView.Size = new System.Drawing.Size(794, 574);
             this.eventsDataGridView.TabIndex = 0;
             this.eventsDataGridView.SelectionChanged += new System.EventHandler(this.EventsDataGridView_SelectionChanged);
             // eventIdColumn
@@ -188,20 +208,20 @@ namespace Evently.Forms
             // descriptionPreviewPanel
             this.descriptionPreviewPanel.BackColor = System.Drawing.Color.White;
             this.descriptionPreviewPanel.Controls.Add(this.descriptionPreviewGroupBox);
-            this.descriptionPreviewPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.descriptionPreviewPanel.Location = new System.Drawing.Point(12, 374);
+            this.descriptionPreviewPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.descriptionPreviewPanel.Location = new System.Drawing.Point(12, 0);
             this.descriptionPreviewPanel.Name = "descriptionPreviewPanel";
-            this.descriptionPreviewPanel.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.descriptionPreviewPanel.Size = new System.Drawing.Size(1256, 90);
+            this.descriptionPreviewPanel.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.descriptionPreviewPanel.Size = new System.Drawing.Size(448, 190);
             this.descriptionPreviewPanel.TabIndex = 3;
             // descriptionPreviewGroupBox
             this.descriptionPreviewGroupBox.BackColor = System.Drawing.Color.White;
             this.descriptionPreviewGroupBox.Controls.Add(this.selectedDescriptionTextBox);
             this.descriptionPreviewGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.descriptionPreviewGroupBox.Location = new System.Drawing.Point(0, 10);
+            this.descriptionPreviewGroupBox.Location = new System.Drawing.Point(0, 0);
             this.descriptionPreviewGroupBox.Name = "descriptionPreviewGroupBox";
             this.descriptionPreviewGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
-            this.descriptionPreviewGroupBox.Size = new System.Drawing.Size(1256, 80);
+            this.descriptionPreviewGroupBox.Size = new System.Drawing.Size(448, 182);
             this.descriptionPreviewGroupBox.TabIndex = 0;
             this.descriptionPreviewGroupBox.TabStop = false;
             this.descriptionPreviewGroupBox.Text = "Event Description Details";
@@ -215,16 +235,16 @@ namespace Evently.Forms
             this.selectedDescriptionTextBox.Name = "selectedDescriptionTextBox";
             this.selectedDescriptionTextBox.ReadOnly = true;
             this.selectedDescriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.selectedDescriptionTextBox.Size = new System.Drawing.Size(1240, 48);
+            this.selectedDescriptionTextBox.Size = new System.Drawing.Size(432, 150);
             this.selectedDescriptionTextBox.TabIndex = 0;
             // addEventWrapperPanel
             this.addEventWrapperPanel.BackColor = System.Drawing.Color.White;
             this.addEventWrapperPanel.Controls.Add(this.addEventGroupBox);
-            this.addEventWrapperPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.addEventWrapperPanel.Location = new System.Drawing.Point(12, 464);
+            this.addEventWrapperPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addEventWrapperPanel.Location = new System.Drawing.Point(12, 190);
             this.addEventWrapperPanel.Name = "addEventWrapperPanel";
-            this.addEventWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 16, 0, 0);
-            this.addEventWrapperPanel.Size = new System.Drawing.Size(1256, 126);
+            this.addEventWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.addEventWrapperPanel.Size = new System.Drawing.Size(448, 386);
             this.addEventWrapperPanel.TabIndex = 1;
             // addEventGroupBox
             this.addEventGroupBox.BackColor = System.Drawing.Color.White;
@@ -238,11 +258,19 @@ namespace Evently.Forms
             this.addEventGroupBox.Controls.Add(this.capacityNumericUpDown);
             this.addEventGroupBox.Controls.Add(this.descriptionLabel);
             this.addEventGroupBox.Controls.Add(this.descriptionTextBox);
-            this.addEventGroupBox.Controls.Add(this.addButton);
+            this.addEventGroupBox.Controls.Add(this.managerNameLabel);
+            this.addEventGroupBox.Controls.Add(this.managerNameTextBox);
+            this.addEventGroupBox.Controls.Add(this.managerEmailLabel);
+            this.addEventGroupBox.Controls.Add(this.managerEmailComboBox);
+            this.addEventGroupBox.Controls.Add(this.managerPhoneLabel);
+            this.addEventGroupBox.Controls.Add(this.managerPhoneTextBox);
+            this.addEventGroupBox.Controls.Add(this.managerOrganizationLabel);
+            this.addEventGroupBox.Controls.Add(this.managerOrganizationTextBox);
+            this.addEventGroupBox.Controls.Add(this.managerHelperLabel);
             this.addEventGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addEventGroupBox.Location = new System.Drawing.Point(0, 16);
+            this.addEventGroupBox.Location = new System.Drawing.Point(0, 12);
             this.addEventGroupBox.Name = "addEventGroupBox";
-            this.addEventGroupBox.Size = new System.Drawing.Size(1256, 110);
+            this.addEventGroupBox.Size = new System.Drawing.Size(448, 374);
             this.addEventGroupBox.TabIndex = 0;
             this.addEventGroupBox.TabStop = false;
             this.addEventGroupBox.Text = "Add Event";
@@ -256,42 +284,42 @@ namespace Evently.Forms
             this.nameTextBox.Location = new System.Drawing.Point(94, 26);
             this.nameTextBox.MaxLength = 100;
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(200, 27);
+            this.nameTextBox.Size = new System.Drawing.Size(130, 27);
             this.nameTextBox.TabIndex = 1;
             // venueLabel
             this.venueLabel.AutoSize = true;
-            this.venueLabel.Location = new System.Drawing.Point(306, 29);
+            this.venueLabel.Location = new System.Drawing.Point(240, 29);
             this.venueLabel.Name = "venueLabel";
             this.venueLabel.TabIndex = 2;
             this.venueLabel.Text = "Venue:";
             // venueTextBox
-            this.venueTextBox.Location = new System.Drawing.Point(364, 26);
+            this.venueTextBox.Location = new System.Drawing.Point(318, 26);
             this.venueTextBox.MaxLength = 100;
             this.venueTextBox.Name = "venueTextBox";
-            this.venueTextBox.Size = new System.Drawing.Size(170, 27);
+            this.venueTextBox.Size = new System.Drawing.Size(118, 27);
             this.venueTextBox.TabIndex = 3;
             // dateLabel
             this.dateLabel.AutoSize = true;
-            this.dateLabel.Location = new System.Drawing.Point(546, 29);
+            this.dateLabel.Location = new System.Drawing.Point(12, 65);
             this.dateLabel.Name = "dateLabel";
             this.dateLabel.TabIndex = 4;
             this.dateLabel.Text = "Date:";
             // eventDatePicker
             this.eventDatePicker.CustomFormat = "MMMM d, yyyy  h:mm tt";
             this.eventDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.eventDatePicker.Location = new System.Drawing.Point(594, 26);
+            this.eventDatePicker.Location = new System.Drawing.Point(94, 62);
             this.eventDatePicker.Name = "eventDatePicker";
             this.eventDatePicker.ShowUpDown = true;
-            this.eventDatePicker.Size = new System.Drawing.Size(240, 27);
+            this.eventDatePicker.Size = new System.Drawing.Size(168, 27);
             this.eventDatePicker.TabIndex = 5;
             // capacityLabel
             this.capacityLabel.AutoSize = true;
-            this.capacityLabel.Location = new System.Drawing.Point(12, 65);
+            this.capacityLabel.Location = new System.Drawing.Point(280, 65);
             this.capacityLabel.Name = "capacityLabel";
             this.capacityLabel.TabIndex = 6;
             this.capacityLabel.Text = "Capacity:";
             // capacityNumericUpDown
-            this.capacityNumericUpDown.Location = new System.Drawing.Point(94, 62);
+            this.capacityNumericUpDown.Location = new System.Drawing.Point(356, 62);
             this.capacityNumericUpDown.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             this.capacityNumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             this.capacityNumericUpDown.Name = "capacityNumericUpDown";
@@ -300,31 +328,87 @@ namespace Evently.Forms
             this.capacityNumericUpDown.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // descriptionLabel
             this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.Location = new System.Drawing.Point(186, 65);
+            this.descriptionLabel.Location = new System.Drawing.Point(12, 101);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.TabIndex = 8;
             this.descriptionLabel.Text = "Description:";
             // descriptionTextBox
-            this.descriptionTextBox.Location = new System.Drawing.Point(278, 62);
+            this.descriptionTextBox.Location = new System.Drawing.Point(100, 98);
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(496, 27);
+            this.descriptionTextBox.Size = new System.Drawing.Size(336, 27);
             this.descriptionTextBox.TabIndex = 9;
-            // addButton
-            this.addButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.addButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.addButton.FlatAppearance.BorderSize = 0;
-            this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addButton.ForeColor = System.Drawing.Color.White;
-            this.addButton.Location = new System.Drawing.Point(1154, 26);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(90, 30);
-            this.addButton.TabIndex = 10;
-            this.addButton.Text = "&Add";
-            this.addButton.UseVisualStyleBackColor = false;
-            this.addButton.Click += new System.EventHandler(this.AddButton_Click);
+            // managerNameLabel
+            this.managerNameLabel.AutoSize = false;
+            this.managerNameLabel.Location = new System.Drawing.Point(12, 137);
+            this.managerNameLabel.Name = "managerNameLabel";
+            this.managerNameLabel.Size = new System.Drawing.Size(78, 23);
+            this.managerNameLabel.TabIndex = 10;
+            this.managerNameLabel.Text = "Manager:";
+            this.managerNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // managerNameTextBox
+            this.managerNameTextBox.Location = new System.Drawing.Point(94, 134);
+            this.managerNameTextBox.MaxLength = 100;
+            this.managerNameTextBox.Name = "managerNameTextBox";
+            this.managerNameTextBox.Size = new System.Drawing.Size(130, 27);
+            this.managerNameTextBox.TabIndex = 11;
+            // managerEmailLabel
+            this.managerEmailLabel.AutoSize = false;
+            this.managerEmailLabel.Location = new System.Drawing.Point(240, 137);
+            this.managerEmailLabel.Name = "managerEmailLabel";
+            this.managerEmailLabel.Size = new System.Drawing.Size(78, 23);
+            this.managerEmailLabel.TabIndex = 12;
+            this.managerEmailLabel.Text = "Email:";
+            this.managerEmailLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // managerEmailComboBox
+            this.managerEmailComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.managerEmailComboBox.Location = new System.Drawing.Point(318, 134);
+            this.managerEmailComboBox.MaxLength = 100;
+            this.managerEmailComboBox.Name = "managerEmailComboBox";
+            this.managerEmailComboBox.Size = new System.Drawing.Size(118, 27);
+            this.managerEmailComboBox.TabIndex = 13;
+            this.managerEmailComboBox.SelectedIndexChanged += new System.EventHandler(this.ManagerEmailComboBox_SelectedIndexChanged);
+            this.managerEmailComboBox.TextChanged += new System.EventHandler(this.ManagerEmailComboBox_TextChanged);
+            // managerPhoneLabel
+            this.managerPhoneLabel.AutoSize = false;
+            this.managerPhoneLabel.Location = new System.Drawing.Point(12, 173);
+            this.managerPhoneLabel.Name = "managerPhoneLabel";
+            this.managerPhoneLabel.Size = new System.Drawing.Size(78, 23);
+            this.managerPhoneLabel.TabIndex = 14;
+            this.managerPhoneLabel.Text = "Phone:";
+            this.managerPhoneLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // managerPhoneTextBox
+            this.managerPhoneTextBox.Location = new System.Drawing.Point(94, 170);
+            this.managerPhoneTextBox.Name = "managerPhoneTextBox";
+            this.managerPhoneTextBox.Size = new System.Drawing.Size(130, 27);
+            this.managerPhoneTextBox.TabIndex = 15;
+            // managerOrganizationLabel
+            this.managerOrganizationLabel.AutoSize = false;
+            this.managerOrganizationLabel.Location = new System.Drawing.Point(226, 173);
+            this.managerOrganizationLabel.Name = "managerOrganizationLabel";
+            this.managerOrganizationLabel.Size = new System.Drawing.Size(90, 23);
+            this.managerOrganizationLabel.TabIndex = 16;
+            this.managerOrganizationLabel.Text = "Organization:";
+            this.managerOrganizationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // managerOrganizationTextBox
+            this.managerOrganizationTextBox.Location = new System.Drawing.Point(318, 170);
+            this.managerOrganizationTextBox.MaxLength = 100;
+            this.managerOrganizationTextBox.Name = "managerOrganizationTextBox";
+            this.managerOrganizationTextBox.Size = new System.Drawing.Size(118, 27);
+            this.managerOrganizationTextBox.TabIndex = 17;
+            // managerHelperLabel
+            this.managerHelperLabel.AutoSize = true;
+            this.managerHelperLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.managerHelperLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
+            this.managerHelperLabel.Location = new System.Drawing.Point(12, 204);
+            this.managerHelperLabel.MaximumSize = new System.Drawing.Size(420, 0);
+            this.managerHelperLabel.Name = "managerHelperLabel";
+            this.managerHelperLabel.Size = new System.Drawing.Size(430, 15);
+            this.managerHelperLabel.TabIndex = 18;
+            this.managerHelperLabel.Text = "Optional. An event needs a manager before attendees can register for it.";
             // actionPanel
             this.actionPanel.BackColor = System.Drawing.Color.White;
             this.actionPanel.Controls.Add(this.helperLabel);
+            this.actionPanel.Controls.Add(this.addButton);
             this.actionPanel.Controls.Add(this.editButton);
             this.actionPanel.Controls.Add(this.deleteButton);
             this.actionPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -341,6 +425,19 @@ namespace Evently.Forms
             this.helperLabel.Size = new System.Drawing.Size(370, 15);
             this.helperLabel.TabIndex = 2;
             this.helperLabel.Text = "Select an event to edit or delete, or fill in the form above to add one.";
+            // addButton
+            this.addButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.addButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.addButton.FlatAppearance.BorderSize = 0;
+            this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addButton.ForeColor = System.Drawing.Color.White;
+            this.addButton.Location = new System.Drawing.Point(968, 16);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(90, 30);
+            this.addButton.TabIndex = 3;
+            this.addButton.Text = "&Add";
+            this.addButton.UseVisualStyleBackColor = false;
+            this.addButton.Click += new System.EventHandler(this.AddButton_Click);
             // editButton
             this.editButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.editButton.Location = new System.Drawing.Point(1068, 16);
@@ -377,6 +474,7 @@ namespace Evently.Forms
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
+            this.rightColumnPanel.ResumeLayout(false);
             this.gridHostPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.eventsDataGridView)).EndInit();
             this.addEventWrapperPanel.ResumeLayout(false);
@@ -395,6 +493,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Panel contentPanel;
+        private System.Windows.Forms.Panel rightColumnPanel;
         private System.Windows.Forms.Panel gridHostPanel;
         private System.Windows.Forms.DataGridView eventsDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn eventIdColumn;
@@ -418,6 +517,15 @@ namespace Evently.Forms
         private System.Windows.Forms.NumericUpDown capacityNumericUpDown;
         private System.Windows.Forms.Label descriptionLabel;
         private System.Windows.Forms.TextBox descriptionTextBox;
+        private System.Windows.Forms.Label managerNameLabel;
+        private System.Windows.Forms.TextBox managerNameTextBox;
+        private System.Windows.Forms.Label managerEmailLabel;
+        private System.Windows.Forms.ComboBox managerEmailComboBox;
+        private System.Windows.Forms.Label managerPhoneLabel;
+        private System.Windows.Forms.TextBox managerPhoneTextBox;
+        private System.Windows.Forms.Label managerOrganizationLabel;
+        private System.Windows.Forms.TextBox managerOrganizationTextBox;
+        private System.Windows.Forms.Label managerHelperLabel;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Panel actionPanel;
         private System.Windows.Forms.Label helperLabel;

@@ -13,7 +13,7 @@ namespace Evently.Forms
             InitializeComponent();
             currentUserLabel.Text = $"Signed in as:\n{Session.CurrentUsername} ({Session.CurrentRole})";
             FormClosing += MainForm_FormClosing;
-            ShowForm(new EventListForm(), "Manage Events", "Create events, set attendee capacities, and manage your schedules.");
+            ShowForm(new EventListForm(), "Manage Events", "Create events, set attendee capacities, and assign a manager.");
         }
 
         private void ShowForm(Form form, string title, string subline)
@@ -40,7 +40,7 @@ namespace Evently.Forms
 
         private void EventsButton_Click(object sender, EventArgs e)
         {
-            ShowForm(new EventListForm(), "Manage Events", "Create events, set attendee capacities, and manage your schedules.");
+            ShowForm(new EventListForm(), "Manage Events", "Create events, set attendee capacities, and assign a manager.");
         }
 
         private void AttendeesButton_Click(object sender, EventArgs e)
@@ -50,7 +50,7 @@ namespace Evently.Forms
 
         private void ManagersButton_Click(object sender, EventArgs e)
         {
-            ShowForm(new OrganizersForm(), "Manage Event Managers", "Assign event managers to an event and keep their contact details in one place.");
+            ShowForm(new OrganizersForm(), "Manage Event Managers", "Add, edit, or remove the managers of an event. An event needs a manager before it can take registrations.");
         }
 
         private void ReviewsButton_Click(object sender, EventArgs e)

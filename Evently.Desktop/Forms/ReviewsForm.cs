@@ -62,9 +62,5 @@ namespace Evently.Forms
             }
         }
 
-        // These handlers exist because Designer.cs wires them; panels are hidden so buttons are never shown.
-        private void saveUrlButton_Click(object sender, EventArgs e) { }
-        private void sendRequestButton_Click(object sender, EventArgs e) { }
-        private void importReviewsButton_Click(object sender, EventArgs e) { }
     }
 }

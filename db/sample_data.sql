@@ -32,12 +32,13 @@ INSERT INTO organizers (organizer_id, full_name, email, phone, organization) VAL
 (2, 'Joshua Gabriel Santos', 'joshua.santos@qcu.edu.ph', '09189876543', 'Junior Philippine Computer Society (JPCS - QCU)'),
 (3, 'Patricia Marie Macaraeg', 'patricia.macaraeg@qcu.edu.ph', '09223334455', 'QCU Supreme Student Council (SSC)'),
 (4, 'Christian Dave Del Rosario', 'christian.delrosario@qcu.edu.ph', '09051112233', 'QCU Peer Facilitators Circle'),
-(5, 'Nicole Angela Tolentino', 'nicole.tolentino@qcu.edu.ph', '09995556677', 'QCU Red Cross Youth');
+(5, 'Nicole Angela Tolentino', 'nicole.tolentino@qcu.edu.ph', '09995556677', 'QCU Red Cross Youth'),
+(6, 'Mark Angelo Villareal', 'mark.villareal@qcu.edu.ph', '09176543210', 'Association of Computer Studies Students (ACSS)');
 
--- Event-to-Organizer assignments
+-- Event-to-Organizer assignments (one organizer row per event, emails stay unique)
 INSERT INTO event_organizers (event_id, organizer_id) VALUES
 (1, 1),
-(1, 2),
+(1, 6),
 (2, 2),
 (3, 3),
 (3, 5),

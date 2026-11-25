@@ -18,12 +18,14 @@ namespace Evently.Core.Services
             return table;
         }
 
-        public static bool AddEvent(string name, string venue, string description, DateTime date, int capacity)
+        // returns the new event_id, or 0 when the insert was refused
+        public static int AddEvent(string name, string venue, string description, DateTime date, int capacity)
         {
             using var conn = DatabaseConnection.GetConnection();
             string query = @"INSERT INTO events(name, venue, description, event_date, capacity)
                              VALUES
-                             (@name, @venue, @description, @event_date, @capacity)";
+                             (@name, @venue, @description, @event_date, @capacity);
+                             SELECT LAST_INSERT_ID();"; // retrieves the last id
             using MySqlCommand cmd = new(query, conn);
             cmd.Parameters.AddWithValue("@name", name);
             cmd.Parameters.AddWithValue("@venue", venue);
@@ -33,14 +35,14 @@ namespace Evently.Core.Services
 
             try
             {
-                return cmd.ExecuteNonQuery() > 0;
+                return Convert.ToInt32(cmd.ExecuteScalar());
             }
             catch (MySqlException ex)
             {
                 // 3819 = a CHECK rule refused the row, here capacity > 0
-                if (ex.Number == 3819) { return false; } 
+                if (ex.Number == 3819) { return 0; }
                 // 1406 = a string is longer than its column, e.g. name over 100 chars
-                if (ex.Number == 1406) { return false; }
+                if (ex.Number == 1406) { return 0; }
 
                 // anything else is not the user's fault: wrong db.config, MySQL down
                 // rethrow so the form shows the real message instead of a guess

@@ -116,7 +116,7 @@ Status reflects what is in the repository today, which is still the single-proje
 | 14 | Rating Form | The guest opens the link on their phone, picks 1 to 5, optionally writes a comment, and submits. The review is saved only for a checked-in ticket that has no review yet. | Web | High | Not started. |
 | 15 | Live Dashboard | A screen with an event selector, metrics, a doughnut chart, a check-ins-over-time chart, and a recent check-ins list (section 5.4). | Desktop | High | Layout, charts, and 5-second timer done with sample data. Real queries not written. |
 | 16 | Attendance Export (CSV) | Admin can export an event's attendee list (first name, last name, birthdate, email, check-in time, check-out time, rating, comment) as a CSV file. | Desktop, Core | High | Button only. |
-| 17 | Event Organizers | The schema stores organizers and links them to events through `event_organizers`, so one event can list several organizer contacts. | Core | Medium | Schema only. No screens or services yet. |
+| 17 | Event Organizers | The schema stores organizers and links them to events through `event_organizers`, so one event can list several organizer contacts. A manager is typed when the event is created; after that, the Managers panel adds, edits, and removes them. The same email cannot be added twice to one event, and an email belongs to only one organizer. Removing a manager unlinks them from the event, and deletes the organizer row itself when no other event uses it. An event may have no manager, but it cannot take registrations until one is assigned. | Core, Desktop | Medium | Done. Manager fields on Add Event, add/edit/remove in the Managers panel, Edit Event leaves managers alone, registration blocked without a manager. |
 
 ### 5.2 Nice-to-Have Features (Stretch Goals)
 
@@ -348,7 +348,7 @@ CREATE TABLE reviews (
 
 * The repository is still one project; the Core / Desktop / Web split has not been done.
 * Role-based access: the desktop app still opens for any signed-in user; it must refuse Staff, who belong on the web scan page.
-* Organizers and `event_organizers` have no screen or service.
+* Removing a manager asks only about the event, but it also deletes the organizer row when that was their last event, so their phone and organization details are lost without a separate warning.
 * The dashboard shows sample events instead of database rows.
 * Services for events, tickets, CSV, QR, email, reviews, and dashboard are empty files; `Forms/*Form.cs` handlers are TODO stubs.
 * Service files use the namespace `_` (`using _.Services`), which should become `Evently.Core.Services` during the split.
@@ -426,12 +426,12 @@ evently-project/
 | 1 | Web project | Done | `Evently.Web` (Razor Pages) builds, references Core, listens on `0.0.0.0:5000`, and serves a placeholder home page on the LAN. Template Bootstrap/jQuery removed on purpose; pages get added as their services land. |
 | 2 | Schema changes | Not started | Edit `db/schema.sql`: drop `events.review_form_url`, add `tickets.review_emailed` and `reviews.submitted_at`, split `attendees.full_name` into `first_name` and `last_name`, add `attendees.birthdate`. Apply by hand to the running database. |
 | 3 | Events | Screen only | `EventService` create/edit/delete + desktop grid binding, plus the upcoming-events query for the web home page. |
-| 4 | Registration | Screen only | `TicketService` register (transaction + capacity + duplicate email), used by `/Register`, the desktop walk-in form, and the CSV importer. |
+| 4 | Registration | Screen only | `TicketService` register (transaction + capacity + duplicate email + manager required), used by `/Register`, the desktop walk-in form, and the CSV importer. |
 | 5 | QR tickets | Not started | `QrCodeService` (Core, returns PNG bytes), `/Ticket` page, `EmailService` + "Send Tickets" with a sent/failed summary. |
 | 6 | Check-in / check-out | Not started | `TicketService` scan rules with the 3-second cooldown, `/Scan` page with `html5-qrcode`, result plus that event's inside count in one call. |
 | 7 | Reviews | Screen only | `/Review` page, `ReviewService.Save` with the checked-in and one-per-ticket checks, "Send Review Request" email using `review_emailed`. |
 | 8 | Dashboard | Mock data | Replace sample data with `DashboardService` queries, including average rating and response rate. |
-| 9 | Organizers | Schema only | Decide whether screens are needed; otherwise document as schema-only. |
+| 9 | Organizers | Done | Manager is captured on the Add Event form; the Managers panel adds, edits, and removes managers (an email cannot be reused by a second manager); removing a manager's last event deletes the organizer row; `TicketService.AddAttendee` refuses events with no manager. |
 | 10 | Cleanup | Not started | Delete the root `Evently.csproj` and stale build folders once both apps build from the solution. |
 
 ---

@@ -17,6 +17,7 @@ namespace Evently.Forms
             this.titleLabel = new System.Windows.Forms.Label();
             this.heroSublineLabel = new System.Windows.Forms.Label();
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.rightColumnPanel = new System.Windows.Forms.Panel();
             this.gridHostPanel = new System.Windows.Forms.Panel();
             this.usersDataGridView = new System.Windows.Forms.DataGridView();
             this.usernameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -27,6 +28,8 @@ namespace Evently.Forms
             this.statusColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addUserWrapperPanel = new System.Windows.Forms.Panel();
             this.addUserGroupBox = new System.Windows.Forms.GroupBox();
+            this.guidancePanel = new System.Windows.Forms.Panel();
+            this.guidanceGroupBox = new System.Windows.Forms.GroupBox();
             this.usernameLabel = new System.Windows.Forms.Label();
             this.usernameTextBox = new System.Windows.Forms.TextBox();
             this.firstNameLabel = new System.Windows.Forms.Label();
@@ -48,10 +51,13 @@ namespace Evently.Forms
             this.editButton = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            this.rightColumnPanel.SuspendLayout();
             this.gridHostPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.usersDataGridView)).BeginInit();
             this.addUserWrapperPanel.SuspendLayout();
             this.addUserGroupBox.SuspendLayout();
+            this.guidancePanel.SuspendLayout();
+            this.guidanceGroupBox.SuspendLayout();
             this.actionPanel.SuspendLayout();
             this.SuspendLayout();
             // headerPanel
@@ -89,7 +95,7 @@ namespace Evently.Forms
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;
             this.contentPanel.Controls.Add(this.gridHostPanel);
-            this.contentPanel.Controls.Add(this.addUserWrapperPanel);
+            this.contentPanel.Controls.Add(this.rightColumnPanel);
             this.contentPanel.Controls.Add(this.actionPanel);
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentPanel.Location = new System.Drawing.Point(0, 64);
@@ -97,6 +103,16 @@ namespace Evently.Forms
             this.contentPanel.Padding = new System.Windows.Forms.Padding(12);
             this.contentPanel.Size = new System.Drawing.Size(1280, 656);
             this.contentPanel.TabIndex = 1;
+            // rightColumnPanel
+            this.rightColumnPanel.BackColor = System.Drawing.Color.White;
+            this.rightColumnPanel.Controls.Add(this.addUserWrapperPanel);
+            this.rightColumnPanel.Controls.Add(this.guidancePanel);
+            this.rightColumnPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rightColumnPanel.Location = new System.Drawing.Point(808, 12);
+            this.rightColumnPanel.Name = "rightColumnPanel";
+            this.rightColumnPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.rightColumnPanel.Size = new System.Drawing.Size(460, 578);
+            this.rightColumnPanel.TabIndex = 1;
             // gridHostPanel
             this.gridHostPanel.BackColor = System.Drawing.Color.White;
             this.gridHostPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -104,7 +120,7 @@ namespace Evently.Forms
             this.gridHostPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridHostPanel.Location = new System.Drawing.Point(12, 12);
             this.gridHostPanel.Name = "gridHostPanel";
-            this.gridHostPanel.Size = new System.Drawing.Size(1256, 428);
+            this.gridHostPanel.Size = new System.Drawing.Size(796, 578);
             this.gridHostPanel.TabIndex = 0;
             // usersDataGridView
             this.usersDataGridView.AllowUserToAddRows = false;
@@ -143,7 +159,7 @@ namespace Evently.Forms
             this.usersDataGridView.RowHeadersVisible = false;
             this.usersDataGridView.RowTemplate.Height = 28;
             this.usersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.usersDataGridView.Size = new System.Drawing.Size(1254, 482);
+            this.usersDataGridView.Size = new System.Drawing.Size(794, 576);
             this.usersDataGridView.TabIndex = 0;
             // usernameColumn
             this.usernameColumn.HeaderText = "Username";
@@ -178,11 +194,11 @@ namespace Evently.Forms
             // addUserWrapperPanel
             this.addUserWrapperPanel.BackColor = System.Drawing.Color.White;
             this.addUserWrapperPanel.Controls.Add(this.addUserGroupBox);
-            this.addUserWrapperPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.addUserWrapperPanel.Location = new System.Drawing.Point(12, 440);
+            this.addUserWrapperPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addUserWrapperPanel.Location = new System.Drawing.Point(12, 190);
             this.addUserWrapperPanel.Name = "addUserWrapperPanel";
-            this.addUserWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 16, 0, 0);
-            this.addUserWrapperPanel.Size = new System.Drawing.Size(1256, 150);
+            this.addUserWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.addUserWrapperPanel.Size = new System.Drawing.Size(448, 388);
             this.addUserWrapperPanel.TabIndex = 1;
             // addUserGroupBox
             this.addUserGroupBox.BackColor = System.Drawing.Color.White;
@@ -198,11 +214,10 @@ namespace Evently.Forms
             this.addUserGroupBox.Controls.Add(this.passwordTextBox);
             this.addUserGroupBox.Controls.Add(this.roleLabel);
             this.addUserGroupBox.Controls.Add(this.roleComboBox);
-            this.addUserGroupBox.Controls.Add(this.addButton);
             this.addUserGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addUserGroupBox.Location = new System.Drawing.Point(0, 16);
+            this.addUserGroupBox.Location = new System.Drawing.Point(0, 12);
             this.addUserGroupBox.Name = "addUserGroupBox";
-            this.addUserGroupBox.Size = new System.Drawing.Size(1256, 134);
+            this.addUserGroupBox.Size = new System.Drawing.Size(448, 376);
             this.addUserGroupBox.TabIndex = 0;
             this.addUserGroupBox.TabStop = false;
             this.addUserGroupBox.Text = "Add User";
@@ -215,56 +230,56 @@ namespace Evently.Forms
             // usernameTextBox
             this.usernameTextBox.Location = new System.Drawing.Point(94, 26);
             this.usernameTextBox.Name = "usernameTextBox";
-            this.usernameTextBox.Size = new System.Drawing.Size(120, 23);
+            this.usernameTextBox.Size = new System.Drawing.Size(130, 23);
             this.usernameTextBox.TabIndex = 1;
             // firstNameLabel
             this.firstNameLabel.AutoSize = true;
-            this.firstNameLabel.Location = new System.Drawing.Point(238, 29);
+            this.firstNameLabel.Location = new System.Drawing.Point(240, 29);
             this.firstNameLabel.Name = "firstNameLabel";
             this.firstNameLabel.TabIndex = 2;
             this.firstNameLabel.Text = "First name:";
             // firstNameTextBox
-            this.firstNameTextBox.Location = new System.Drawing.Point(316, 26);
+            this.firstNameTextBox.Location = new System.Drawing.Point(318, 26);
             this.firstNameTextBox.Name = "firstNameTextBox";
-            this.firstNameTextBox.Size = new System.Drawing.Size(120, 23);
+            this.firstNameTextBox.Size = new System.Drawing.Size(118, 23);
             this.firstNameTextBox.TabIndex = 3;
             // lastNameLabel
             this.lastNameLabel.AutoSize = true;
-            this.lastNameLabel.Location = new System.Drawing.Point(460, 29);
+            this.lastNameLabel.Location = new System.Drawing.Point(12, 65);
             this.lastNameLabel.Name = "lastNameLabel";
             this.lastNameLabel.TabIndex = 4;
             this.lastNameLabel.Text = "Last name:";
             // lastNameTextBox
-            this.lastNameTextBox.Location = new System.Drawing.Point(538, 26);
+            this.lastNameTextBox.Location = new System.Drawing.Point(94, 62);
             this.lastNameTextBox.Name = "lastNameTextBox";
-            this.lastNameTextBox.Size = new System.Drawing.Size(120, 23);
+            this.lastNameTextBox.Size = new System.Drawing.Size(130, 23);
             this.lastNameTextBox.TabIndex = 5;
             // emailLabel
             this.emailLabel.AutoSize = true;
-            this.emailLabel.Location = new System.Drawing.Point(682, 29);
+            this.emailLabel.Location = new System.Drawing.Point(240, 65);
             this.emailLabel.Name = "emailLabel";
             this.emailLabel.TabIndex = 6;
             this.emailLabel.Text = "Email:";
             // emailTextBox
-            this.emailTextBox.Location = new System.Drawing.Point(726, 26);
+            this.emailTextBox.Location = new System.Drawing.Point(318, 62);
             this.emailTextBox.Name = "emailTextBox";
-            this.emailTextBox.Size = new System.Drawing.Size(200, 23);
+            this.emailTextBox.Size = new System.Drawing.Size(118, 23);
             this.emailTextBox.TabIndex = 7;
             // passwordLabel
             this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(12, 69);
+            this.passwordLabel.Location = new System.Drawing.Point(12, 101);
             this.passwordLabel.Name = "passwordLabel";
             this.passwordLabel.TabIndex = 8;
             this.passwordLabel.Text = "Password:";
             // passwordTextBox
-            this.passwordTextBox.Location = new System.Drawing.Point(94, 66);
+            this.passwordTextBox.Location = new System.Drawing.Point(94, 98);
             this.passwordTextBox.Name = "passwordTextBox";
-            this.passwordTextBox.Size = new System.Drawing.Size(120, 23);
+            this.passwordTextBox.Size = new System.Drawing.Size(130, 23);
             this.passwordTextBox.TabIndex = 9;
             this.passwordTextBox.UseSystemPasswordChar = true;
             // roleLabel
             this.roleLabel.AutoSize = true;
-            this.roleLabel.Location = new System.Drawing.Point(238, 69);
+            this.roleLabel.Location = new System.Drawing.Point(240, 101);
             this.roleLabel.Name = "roleLabel";
             this.roleLabel.TabIndex = 10;
             this.roleLabel.Text = "Role:";
@@ -272,27 +287,43 @@ namespace Evently.Forms
             this.roleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.roleComboBox.FormattingEnabled = true;
             this.roleComboBox.Items.AddRange(new object[] { "ADMIN", "STAFF" });
-            this.roleComboBox.Location = new System.Drawing.Point(284, 66);
+            this.roleComboBox.Location = new System.Drawing.Point(318, 98);
             this.roleComboBox.Name = "roleComboBox";
             this.roleComboBox.SelectedIndex = 0;
-            this.roleComboBox.Size = new System.Drawing.Size(100, 23);
+            this.roleComboBox.Size = new System.Drawing.Size(118, 23);
             this.roleComboBox.TabIndex = 11;
-            // addButton
-            this.addButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.addButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.addButton.FlatAppearance.BorderSize = 0;
-            this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addButton.ForeColor = System.Drawing.Color.White;
-            this.addButton.Location = new System.Drawing.Point(1154, 66);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(90, 30);
-            this.addButton.TabIndex = 12;
-            this.addButton.Text = "&Add";
-            this.addButton.UseVisualStyleBackColor = false;
-            this.addButton.Click += new System.EventHandler(this.AddButton_Click);
+            // guidancePanel
+            this.guidancePanel.BackColor = System.Drawing.Color.White;
+            this.guidancePanel.Controls.Add(this.guidanceGroupBox);
+            this.guidancePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.guidancePanel.Location = new System.Drawing.Point(12, 0);
+            this.guidancePanel.Name = "guidancePanel";
+            this.guidancePanel.Size = new System.Drawing.Size(448, 190);
+            this.guidancePanel.TabIndex = 3;
+            // guidanceGroupBox
+            this.guidanceGroupBox.BackColor = System.Drawing.Color.White;
+            this.guidanceGroupBox.Controls.Add(this.accountStatusGuidanceLabel);
+            this.guidanceGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.guidanceGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.guidanceGroupBox.Name = "guidanceGroupBox";
+            this.guidanceGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
+            this.guidanceGroupBox.Size = new System.Drawing.Size(448, 190);
+            this.guidanceGroupBox.TabIndex = 0;
+            this.guidanceGroupBox.TabStop = false;
+            this.guidanceGroupBox.Text = "Account Status Notes";
+            // accountStatusGuidanceLabel
+            this.accountStatusGuidanceLabel.AutoSize = false;
+            this.accountStatusGuidanceLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.accountStatusGuidanceLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
+            this.accountStatusGuidanceLabel.Location = new System.Drawing.Point(8, 24);
+            this.accountStatusGuidanceLabel.Name = "accountStatusGuidanceLabel";
+            this.accountStatusGuidanceLabel.Size = new System.Drawing.Size(432, 150);
+            this.accountStatusGuidanceLabel.TabIndex = 3;
+            this.accountStatusGuidanceLabel.Text = "Approve new signups, or deactivate accounts that should not sign in.";
+            this.accountStatusGuidanceLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // actionPanel
             this.actionPanel.BackColor = System.Drawing.Color.White;
-            this.actionPanel.Controls.Add(this.accountStatusGuidanceLabel);
+            this.actionPanel.Controls.Add(this.addButton);
             this.actionPanel.Controls.Add(this.approveButton);
             this.actionPanel.Controls.Add(this.editButton);
             this.actionPanel.Controls.Add(this.deactivateButton);
@@ -302,15 +333,19 @@ namespace Evently.Forms
             this.actionPanel.Name = "actionPanel";
             this.actionPanel.Size = new System.Drawing.Size(1256, 54);
             this.actionPanel.TabIndex = 2;
-            // accountStatusGuidanceLabel
-            this.accountStatusGuidanceLabel.AutoSize = true;
-            this.accountStatusGuidanceLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.accountStatusGuidanceLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
-            this.accountStatusGuidanceLabel.Location = new System.Drawing.Point(0, 22);
-            this.accountStatusGuidanceLabel.Name = "accountStatusGuidanceLabel";
-            this.accountStatusGuidanceLabel.Size = new System.Drawing.Size(287, 15);
-            this.accountStatusGuidanceLabel.TabIndex = 3;
-            this.accountStatusGuidanceLabel.Text = "Approve new signups, or deactivate accounts that should not sign in.";
+            // addButton
+            this.addButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.addButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.addButton.FlatAppearance.BorderSize = 0;
+            this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addButton.ForeColor = System.Drawing.Color.White;
+            this.addButton.Location = new System.Drawing.Point(774, 16);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(90, 30);
+            this.addButton.TabIndex = 12;
+            this.addButton.Text = "&Add";
+            this.addButton.UseVisualStyleBackColor = false;
+            this.addButton.Click += new System.EventHandler(this.AddButton_Click);
             // approveButton
             this.approveButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.approveButton.Location = new System.Drawing.Point(872, 16);
@@ -365,11 +400,15 @@ namespace Evently.Forms
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
+            this.rightColumnPanel.ResumeLayout(false);
             this.gridHostPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.usersDataGridView)).EndInit();
             this.addUserWrapperPanel.ResumeLayout(false);
             this.addUserGroupBox.ResumeLayout(false);
             this.addUserGroupBox.PerformLayout();
+            this.guidancePanel.ResumeLayout(false);
+            this.guidanceGroupBox.ResumeLayout(false);
+            this.guidanceGroupBox.PerformLayout();
             this.actionPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -378,6 +417,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Panel contentPanel;
+        private System.Windows.Forms.Panel rightColumnPanel;
         private System.Windows.Forms.Panel gridHostPanel;
         private System.Windows.Forms.DataGridView usersDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn usernameColumn;
@@ -401,6 +441,8 @@ namespace Evently.Forms
         private System.Windows.Forms.Label roleLabel;
         private System.Windows.Forms.ComboBox roleComboBox;
         private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.Panel guidancePanel;
+        private System.Windows.Forms.GroupBox guidanceGroupBox;
         private System.Windows.Forms.Panel actionPanel;
         private System.Windows.Forms.Label accountStatusGuidanceLabel;
         private System.Windows.Forms.Button approveButton;

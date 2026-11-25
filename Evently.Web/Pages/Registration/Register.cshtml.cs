@@ -58,6 +58,12 @@ public class RegisterModel : PageModel
             return Page();
         }
 
+        if (!OrganizerService.EventHasManager(EventId.Value))
+        {
+            ErrorMessage = "This event is not open for registration yet. It has no manager assigned.";
+            return Page();
+        }
+
         if (string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(Email))
         {
             ErrorMessage = "First name, last name, and email are required.";
@@ -99,9 +105,17 @@ public class RegisterModel : PageModel
         DataTable dt = EventService.GetEvent();
         foreach (DataRow row in dt.Rows)
         {
+            int eventId = Convert.ToInt32(row["event_id"]);
+
+            // an event with no manager cannot take registrations, so leave it out
+            if (!OrganizerService.EventHasManager(eventId))
+            {
+                continue;
+            }
+
             AvailableEvents.Add(new EventItem
             {
-                EventId = Convert.ToInt32(row["event_id"]),
+                EventId = eventId,
                 Name = row["name"].ToString() ?? "",
                 Venue = row["venue"].ToString() ?? ""
             });

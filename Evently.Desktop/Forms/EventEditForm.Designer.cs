@@ -107,7 +107,7 @@ namespace Evently.Forms
             this.saveButton.FlatAppearance.BorderSize = 0;
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveButton.ForeColor = System.Drawing.Color.White;
-            this.saveButton.Location = new System.Drawing.Point(210, 294);
+            this.saveButton.Location = new System.Drawing.Point(210, 300);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(80, 30);
             this.saveButton.TabIndex = 10;
@@ -115,7 +115,7 @@ namespace Evently.Forms
             this.saveButton.UseVisualStyleBackColor = false;
             this.saveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // cancelButton
-            this.cancelButton.Location = new System.Drawing.Point(300, 294);
+            this.cancelButton.Location = new System.Drawing.Point(300, 300);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(80, 30);
             this.cancelButton.TabIndex = 11;
@@ -128,7 +128,7 @@ namespace Evently.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(404, 350);
+            this.ClientSize = new System.Drawing.Size(404, 348);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.venueLabel);

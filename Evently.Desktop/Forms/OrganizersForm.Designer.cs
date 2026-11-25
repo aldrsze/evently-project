@@ -17,6 +17,7 @@ namespace Evently.Forms
             this.titleLabel = new System.Windows.Forms.Label();
             this.heroSublineLabel = new System.Windows.Forms.Label();
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.rightColumnPanel = new System.Windows.Forms.Panel();
             this.topPanel = new System.Windows.Forms.Panel();
             this.eventLabel = new System.Windows.Forms.Label();
             this.eventComboBox = new System.Windows.Forms.ComboBox();
@@ -32,7 +33,7 @@ namespace Evently.Forms
             this.nameLabel = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.emailLabel = new System.Windows.Forms.Label();
-            this.emailTextBox = new System.Windows.Forms.TextBox();
+            this.emailComboBox = new System.Windows.Forms.ComboBox();
             this.phoneLabel = new System.Windows.Forms.Label();
             this.phoneTextBox = new System.Windows.Forms.TextBox();
             this.organizationLabel = new System.Windows.Forms.Label();
@@ -40,17 +41,22 @@ namespace Evently.Forms
             this.managerHelperLabel = new System.Windows.Forms.Label();
             this.addManagerButton = new System.Windows.Forms.Button();
             this.actionPanel = new System.Windows.Forms.Panel();
+            this.logPanel = new System.Windows.Forms.Panel();
+            this.logGroupBox = new System.Windows.Forms.GroupBox();
             this.actionHintLabel = new System.Windows.Forms.Label();
             this.resultLabel = new System.Windows.Forms.Label();
             this.editManagerButton = new System.Windows.Forms.Button();
             this.removeManagerButton = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            this.rightColumnPanel.SuspendLayout();
             this.topPanel.SuspendLayout();
             this.gridHostPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.organizersDataGridView)).BeginInit();
             this.addManagerWrapperPanel.SuspendLayout();
             this.addManagerGroupBox.SuspendLayout();
+            this.logPanel.SuspendLayout();
+            this.logGroupBox.SuspendLayout();
             this.actionPanel.SuspendLayout();
             this.SuspendLayout();
             // headerPanel
@@ -88,15 +94,25 @@ namespace Evently.Forms
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;
             this.contentPanel.Controls.Add(this.gridHostPanel);
-            this.contentPanel.Controls.Add(this.addManagerWrapperPanel);
-            this.contentPanel.Controls.Add(this.actionPanel);
+            this.contentPanel.Controls.Add(this.rightColumnPanel);
             this.contentPanel.Controls.Add(this.topPanel);
+            this.contentPanel.Controls.Add(this.actionPanel);
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentPanel.Location = new System.Drawing.Point(0, 64);
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Padding = new System.Windows.Forms.Padding(12);
             this.contentPanel.Size = new System.Drawing.Size(1280, 656);
             this.contentPanel.TabIndex = 1;
+            // rightColumnPanel
+            this.rightColumnPanel.BackColor = System.Drawing.Color.White;
+            this.rightColumnPanel.Controls.Add(this.addManagerWrapperPanel);
+            this.rightColumnPanel.Controls.Add(this.logPanel);
+            this.rightColumnPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rightColumnPanel.Location = new System.Drawing.Point(808, 52);
+            this.rightColumnPanel.Name = "rightColumnPanel";
+            this.rightColumnPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.rightColumnPanel.Size = new System.Drawing.Size(460, 538);
+            this.rightColumnPanel.TabIndex = 1;
             // topPanel
             this.topPanel.BackColor = System.Drawing.Color.White;
             this.topPanel.Controls.Add(this.eventLabel);
@@ -128,7 +144,7 @@ namespace Evently.Forms
             this.gridHostPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridHostPanel.Location = new System.Drawing.Point(12, 52);
             this.gridHostPanel.Name = "gridHostPanel";
-            this.gridHostPanel.Size = new System.Drawing.Size(1256, 426);
+            this.gridHostPanel.Size = new System.Drawing.Size(796, 538);
             this.gridHostPanel.TabIndex = 1;
             // organizersDataGridView
             this.organizersDataGridView.AllowUserToAddRows = false;
@@ -165,7 +181,7 @@ namespace Evently.Forms
             this.organizersDataGridView.RowHeadersVisible = false;
             this.organizersDataGridView.RowTemplate.Height = 28;
             this.organizersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.organizersDataGridView.Size = new System.Drawing.Size(1254, 424);
+            this.organizersDataGridView.Size = new System.Drawing.Size(794, 536);
             this.organizersDataGridView.TabIndex = 0;
             // organizerIdColumn
             this.organizerIdColumn.DataPropertyName = "organizer_id";
@@ -200,149 +216,170 @@ namespace Evently.Forms
             // addManagerWrapperPanel
             this.addManagerWrapperPanel.BackColor = System.Drawing.Color.White;
             this.addManagerWrapperPanel.Controls.Add(this.addManagerGroupBox);
-            this.addManagerWrapperPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.addManagerWrapperPanel.Location = new System.Drawing.Point(12, 478);
+            this.addManagerWrapperPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addManagerWrapperPanel.Location = new System.Drawing.Point(12, 190);
             this.addManagerWrapperPanel.Name = "addManagerWrapperPanel";
-            this.addManagerWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 16, 0, 0);
-            this.addManagerWrapperPanel.Size = new System.Drawing.Size(1256, 102);
+            this.addManagerWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.addManagerWrapperPanel.Size = new System.Drawing.Size(448, 348);
             this.addManagerWrapperPanel.TabIndex = 2;
             // addManagerGroupBox
             this.addManagerGroupBox.BackColor = System.Drawing.Color.White;
             this.addManagerGroupBox.Controls.Add(this.nameLabel);
             this.addManagerGroupBox.Controls.Add(this.nameTextBox);
             this.addManagerGroupBox.Controls.Add(this.emailLabel);
-            this.addManagerGroupBox.Controls.Add(this.emailTextBox);
+            this.addManagerGroupBox.Controls.Add(this.emailComboBox);
             this.addManagerGroupBox.Controls.Add(this.phoneLabel);
             this.addManagerGroupBox.Controls.Add(this.phoneTextBox);
             this.addManagerGroupBox.Controls.Add(this.organizationLabel);
             this.addManagerGroupBox.Controls.Add(this.organizationTextBox);
             this.addManagerGroupBox.Controls.Add(this.managerHelperLabel);
-            this.addManagerGroupBox.Controls.Add(this.addManagerButton);
             this.addManagerGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addManagerGroupBox.Location = new System.Drawing.Point(0, 16);
+            this.addManagerGroupBox.Location = new System.Drawing.Point(0, 12);
             this.addManagerGroupBox.Name = "addManagerGroupBox";
-            this.addManagerGroupBox.Size = new System.Drawing.Size(1256, 86);
+            this.addManagerGroupBox.Size = new System.Drawing.Size(448, 336);
             this.addManagerGroupBox.TabIndex = 0;
             this.addManagerGroupBox.TabStop = false;
             this.addManagerGroupBox.Text = "Add Event Manager";
             // nameLabel
             this.nameLabel.AutoSize = false;
-            this.nameLabel.Location = new System.Drawing.Point(12, 26);
+            this.nameLabel.Location = new System.Drawing.Point(12, 29);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(96, 23);
+            this.nameLabel.Size = new System.Drawing.Size(78, 23);
             this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Name:";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // nameTextBox
-            this.nameTextBox.Location = new System.Drawing.Point(116, 26);
+            this.nameTextBox.Location = new System.Drawing.Point(94, 26);
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(170, 23);
+            this.nameTextBox.Size = new System.Drawing.Size(130, 23);
             this.nameTextBox.TabIndex = 1;
             // emailLabel
             this.emailLabel.AutoSize = false;
-            this.emailLabel.Location = new System.Drawing.Point(310, 26);
+            this.emailLabel.Location = new System.Drawing.Point(240, 29);
             this.emailLabel.Name = "emailLabel";
-            this.emailLabel.Size = new System.Drawing.Size(96, 23);
+            this.emailLabel.Size = new System.Drawing.Size(78, 23);
             this.emailLabel.TabIndex = 2;
             this.emailLabel.Text = "Email:";
             this.emailLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // emailTextBox
-            this.emailTextBox.Location = new System.Drawing.Point(414, 26);
-            this.emailTextBox.Name = "emailTextBox";
-            this.emailTextBox.Size = new System.Drawing.Size(200, 23);
-            this.emailTextBox.TabIndex = 3;
+            // emailComboBox
+            this.emailComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.emailComboBox.Location = new System.Drawing.Point(318, 26);
+            this.emailComboBox.Name = "emailComboBox";
+            this.emailComboBox.Size = new System.Drawing.Size(118, 23);
+            this.emailComboBox.TabIndex = 3;
+            this.emailComboBox.SelectedIndexChanged += new System.EventHandler(this.EmailComboBox_SelectedIndexChanged);
+            this.emailComboBox.TextChanged += new System.EventHandler(this.EmailComboBox_TextChanged);
             // phoneLabel
             this.phoneLabel.AutoSize = false;
-            this.phoneLabel.Location = new System.Drawing.Point(638, 26);
+            this.phoneLabel.Location = new System.Drawing.Point(12, 65);
             this.phoneLabel.Name = "phoneLabel";
-            this.phoneLabel.Size = new System.Drawing.Size(96, 23);
+            this.phoneLabel.Size = new System.Drawing.Size(78, 23);
             this.phoneLabel.TabIndex = 4;
             this.phoneLabel.Text = "Phone:";
             this.phoneLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // phoneTextBox
-            this.phoneTextBox.Location = new System.Drawing.Point(742, 26);
+            this.phoneTextBox.Location = new System.Drawing.Point(94, 62);
             this.phoneTextBox.Name = "phoneTextBox";
             this.phoneTextBox.Size = new System.Drawing.Size(130, 23);
             this.phoneTextBox.TabIndex = 5;
             // organizationLabel
             this.organizationLabel.AutoSize = false;
-            this.organizationLabel.Location = new System.Drawing.Point(12, 56);
+            this.organizationLabel.Location = new System.Drawing.Point(226, 65);
             this.organizationLabel.Name = "organizationLabel";
-            this.organizationLabel.Size = new System.Drawing.Size(96, 23);
-            this.organizationLabel.TabIndex = 4;
+            this.organizationLabel.Size = new System.Drawing.Size(90, 23);
+            this.organizationLabel.TabIndex = 6;
             this.organizationLabel.Text = "Organization:";
             this.organizationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // organizationTextBox
-            this.organizationTextBox.Location = new System.Drawing.Point(116, 56);
+            this.organizationTextBox.Location = new System.Drawing.Point(318, 62);
             this.organizationTextBox.Name = "organizationTextBox";
-            this.organizationTextBox.Size = new System.Drawing.Size(560, 23);
-            this.organizationTextBox.TabIndex = 5;
+            this.organizationTextBox.Size = new System.Drawing.Size(118, 23);
+            this.organizationTextBox.TabIndex = 7;
             // managerHelperLabel
             this.managerHelperLabel.AutoSize = true;
             this.managerHelperLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.managerHelperLabel.ForeColor = System.Drawing.Color.FromArgb(128, 128, 128);
-            this.managerHelperLabel.Location = new System.Drawing.Point(696, 59);
+            this.managerHelperLabel.Location = new System.Drawing.Point(12, 96);
+            this.managerHelperLabel.MaximumSize = new System.Drawing.Size(420, 0);
             this.managerHelperLabel.Name = "managerHelperLabel";
-            this.managerHelperLabel.Size = new System.Drawing.Size(180, 13);
-            this.managerHelperLabel.TabIndex = 6;
-            this.managerHelperLabel.Text = "Saved to your event manager list";
+            this.managerHelperLabel.Size = new System.Drawing.Size(320, 15);
+            this.managerHelperLabel.TabIndex = 8;
+            this.managerHelperLabel.Text = "Type a new email or pick an existing one to reuse details";
+            // logPanel
+            this.logPanel.BackColor = System.Drawing.Color.White;
+            this.logPanel.Controls.Add(this.logGroupBox);
+            this.logPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.logPanel.Location = new System.Drawing.Point(12, 0);
+            this.logPanel.Name = "logPanel";
+            this.logPanel.Size = new System.Drawing.Size(448, 190);
+            this.logPanel.TabIndex = 3;
+            // logGroupBox
+            this.logGroupBox.BackColor = System.Drawing.Color.White;
+            this.logGroupBox.Controls.Add(this.resultLabel);
+            this.logGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.logGroupBox.Name = "logGroupBox";
+            this.logGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
+            this.logGroupBox.Size = new System.Drawing.Size(448, 190);
+            this.logGroupBox.TabIndex = 0;
+            this.logGroupBox.TabStop = false;
+            this.logGroupBox.Text = "Activity Log";
+            // actionPanel
+            this.actionPanel.BackColor = System.Drawing.Color.White;
+            this.actionPanel.Controls.Add(this.actionHintLabel);
+            this.actionPanel.Controls.Add(this.addManagerButton);
+            this.actionPanel.Controls.Add(this.editManagerButton);
+            this.actionPanel.Controls.Add(this.removeManagerButton);
+            this.actionPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.actionPanel.Location = new System.Drawing.Point(12, 590);
+            this.actionPanel.Name = "actionPanel";
+            this.actionPanel.Size = new System.Drawing.Size(1256, 54);
+            this.actionPanel.TabIndex = 3;
+            // resultLabel
+            this.resultLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
+            this.resultLabel.Location = new System.Drawing.Point(8, 24);
+            this.resultLabel.Name = "resultLabel";
+            this.resultLabel.Size = new System.Drawing.Size(432, 158);
+            this.resultLabel.TabIndex = 1;
+            this.resultLabel.Text = "";
+            this.resultLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            // actionHintLabel
+            this.actionHintLabel.AutoSize = true;
+            this.actionHintLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.actionHintLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
+            this.actionHintLabel.Location = new System.Drawing.Point(0, 22);
+            this.actionHintLabel.Name = "actionHintLabel";
+            this.actionHintLabel.Size = new System.Drawing.Size(437, 15);
+            this.actionHintLabel.TabIndex = 2;
+            this.actionHintLabel.Text = "Removing a manager from their last event also deletes that manager record.";
             // addManagerButton
             this.addManagerButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.addManagerButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
             this.addManagerButton.FlatAppearance.BorderSize = 0;
             this.addManagerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addManagerButton.ForeColor = System.Drawing.Color.White;
-            this.addManagerButton.Location = new System.Drawing.Point(1154, 26);
+            this.addManagerButton.Location = new System.Drawing.Point(968, 16);
             this.addManagerButton.Name = "addManagerButton";
             this.addManagerButton.Size = new System.Drawing.Size(90, 30);
-            this.addManagerButton.TabIndex = 7;
+            this.addManagerButton.TabIndex = 3;
             this.addManagerButton.Text = "&Add";
             this.addManagerButton.UseVisualStyleBackColor = false;
             this.addManagerButton.Click += new System.EventHandler(this.AddManagerButton_Click);
-            // actionPanel
-            this.actionPanel.BackColor = System.Drawing.Color.White;
-            this.actionPanel.Controls.Add(this.actionHintLabel);
-            this.actionPanel.Controls.Add(this.resultLabel);
-            this.actionPanel.Controls.Add(this.editManagerButton);
-            this.actionPanel.Controls.Add(this.removeManagerButton);
-            this.actionPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.actionPanel.Location = new System.Drawing.Point(12, 580);
-            this.actionPanel.Name = "actionPanel";
-            this.actionPanel.Size = new System.Drawing.Size(1256, 64);
-            this.actionPanel.TabIndex = 3;
-            // resultLabel
-            this.resultLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.resultLabel.AutoSize = false;
-            this.resultLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
-            this.resultLabel.Location = new System.Drawing.Point(0, 4);
-            this.resultLabel.Name = "resultLabel";
-            this.resultLabel.Size = new System.Drawing.Size(1030, 20);
-            this.resultLabel.TabIndex = 1;
-            this.resultLabel.Text = "";
-            this.resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // actionHintLabel
-            this.actionHintLabel.AutoSize = true;
-            this.actionHintLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.actionHintLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
-            this.actionHintLabel.Location = new System.Drawing.Point(0, 30);
-            this.actionHintLabel.Name = "actionHintLabel";
-            this.actionHintLabel.Size = new System.Drawing.Size(437, 15);
-            this.actionHintLabel.TabIndex = 2;
-            this.actionHintLabel.Text = "Removing a manager only unlinks them from this event, not the event manager list.";
             // editManagerButton
             this.editManagerButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.editManagerButton.Location = new System.Drawing.Point(1048, 17);
+            this.editManagerButton.Location = new System.Drawing.Point(1066, 16);
             this.editManagerButton.Name = "editManagerButton";
-            this.editManagerButton.Size = new System.Drawing.Size(100, 30);
+            this.editManagerButton.Size = new System.Drawing.Size(90, 30);
             this.editManagerButton.TabIndex = 0;
             this.editManagerButton.Text = "&Edit";
             this.editManagerButton.UseVisualStyleBackColor = true;
             this.editManagerButton.Click += new System.EventHandler(this.EditManagerButton_Click);
             // removeManagerButton
             this.removeManagerButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.removeManagerButton.Location = new System.Drawing.Point(1154, 17);
+            this.removeManagerButton.Location = new System.Drawing.Point(1164, 16);
             this.removeManagerButton.Name = "removeManagerButton";
-            this.removeManagerButton.Size = new System.Drawing.Size(100, 30);
+            this.removeManagerButton.Size = new System.Drawing.Size(90, 30);
             this.removeManagerButton.TabIndex = 1;
             this.removeManagerButton.Text = "&Remove";
             this.removeManagerButton.UseVisualStyleBackColor = true;
@@ -365,6 +402,7 @@ namespace Evently.Forms
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
+            this.rightColumnPanel.ResumeLayout(false);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
             this.gridHostPanel.ResumeLayout(false);
@@ -372,6 +410,8 @@ namespace Evently.Forms
             this.addManagerWrapperPanel.ResumeLayout(false);
             this.addManagerGroupBox.ResumeLayout(false);
             this.addManagerGroupBox.PerformLayout();
+            this.logPanel.ResumeLayout(false);
+            this.logGroupBox.ResumeLayout(false);
             this.actionPanel.ResumeLayout(false);
             this.actionPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -382,6 +422,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label heroSublineLabel;
         private System.Windows.Forms.Panel contentPanel;
+        private System.Windows.Forms.Panel rightColumnPanel;
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Label eventLabel;
         private System.Windows.Forms.ComboBox eventComboBox;
@@ -397,7 +438,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Label emailLabel;
-        private System.Windows.Forms.TextBox emailTextBox;
+        private System.Windows.Forms.ComboBox emailComboBox;
         private System.Windows.Forms.Label phoneLabel;
         private System.Windows.Forms.TextBox phoneTextBox;
         private System.Windows.Forms.Label organizationLabel;
@@ -405,6 +446,8 @@ namespace Evently.Forms
         private System.Windows.Forms.Label managerHelperLabel;
         private System.Windows.Forms.Button addManagerButton;
         private System.Windows.Forms.Panel actionPanel;
+        private System.Windows.Forms.Panel logPanel;
+        private System.Windows.Forms.GroupBox logGroupBox;
         private System.Windows.Forms.Label actionHintLabel;
         private System.Windows.Forms.Label resultLabel;
         private System.Windows.Forms.Button editManagerButton;

@@ -17,6 +17,7 @@ namespace Evently.Forms
             this.titleLabel = new System.Windows.Forms.Label();
             this.heroSublineLabel = new System.Windows.Forms.Label();
             this.contentPanel = new System.Windows.Forms.Panel();
+            this.rightColumnPanel = new System.Windows.Forms.Panel();
             this.topPanel = new System.Windows.Forms.Panel();
             this.eventLabel = new System.Windows.Forms.Label();
             this.eventComboBox = new System.Windows.Forms.ComboBox();
@@ -46,6 +47,7 @@ namespace Evently.Forms
             this.emailHelperLabel = new System.Windows.Forms.Label();
             this.addAttendeeButton = new System.Windows.Forms.Button();
             this.resultPanel = new System.Windows.Forms.Panel();
+            this.logGroupBox = new System.Windows.Forms.GroupBox();
             this.resultLabel = new System.Windows.Forms.Label();
             this.actionPanel = new System.Windows.Forms.Panel();
             this.actionHintLabel = new System.Windows.Forms.Label();
@@ -59,12 +61,14 @@ namespace Evently.Forms
             this.exportCsvButton = new System.Windows.Forms.Button();
             this.headerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
+            this.rightColumnPanel.SuspendLayout();
             this.topPanel.SuspendLayout();
             this.gridHostPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.attendeesDataGridView)).BeginInit();
             this.addAttendeeWrapperPanel.SuspendLayout();
             this.addAttendeeGroupBox.SuspendLayout();
             this.resultPanel.SuspendLayout();
+            this.logGroupBox.SuspendLayout();
             this.actionPanel.SuspendLayout();
             this.SuspendLayout();
             // headerPanel
@@ -102,16 +106,25 @@ namespace Evently.Forms
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.White;
             this.contentPanel.Controls.Add(this.gridHostPanel);
-            this.contentPanel.Controls.Add(this.addAttendeeWrapperPanel);
-            this.contentPanel.Controls.Add(this.resultPanel);
-            this.contentPanel.Controls.Add(this.actionPanel);
+            this.contentPanel.Controls.Add(this.rightColumnPanel);
             this.contentPanel.Controls.Add(this.topPanel);
+            this.contentPanel.Controls.Add(this.actionPanel);
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentPanel.Location = new System.Drawing.Point(0, 64);
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Padding = new System.Windows.Forms.Padding(12);
             this.contentPanel.Size = new System.Drawing.Size(1280, 656);
             this.contentPanel.TabIndex = 1;
+            // rightColumnPanel
+            this.rightColumnPanel.BackColor = System.Drawing.Color.White;
+            this.rightColumnPanel.Controls.Add(this.addAttendeeWrapperPanel);
+            this.rightColumnPanel.Controls.Add(this.resultPanel);
+            this.rightColumnPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rightColumnPanel.Location = new System.Drawing.Point(808, 52);
+            this.rightColumnPanel.Name = "rightColumnPanel";
+            this.rightColumnPanel.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.rightColumnPanel.Size = new System.Drawing.Size(460, 546);
+            this.rightColumnPanel.TabIndex = 1;
             // topPanel
             this.topPanel.BackColor = System.Drawing.Color.White;
             this.topPanel.Controls.Add(this.eventLabel);
@@ -143,7 +156,7 @@ namespace Evently.Forms
             this.gridHostPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridHostPanel.Location = new System.Drawing.Point(12, 52);
             this.gridHostPanel.Name = "gridHostPanel";
-            this.gridHostPanel.Size = new System.Drawing.Size(1256, 402);
+            this.gridHostPanel.Size = new System.Drawing.Size(796, 546);
             this.gridHostPanel.TabIndex = 1;
             // attendeesDataGridView
             this.attendeesDataGridView.AllowUserToAddRows = false;
@@ -186,7 +199,7 @@ namespace Evently.Forms
             this.attendeesDataGridView.RowHeadersVisible = false;
             this.attendeesDataGridView.RowTemplate.Height = 28;
             this.attendeesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.attendeesDataGridView.Size = new System.Drawing.Size(1254, 400);
+            this.attendeesDataGridView.Size = new System.Drawing.Size(794, 544);
             this.attendeesDataGridView.TabIndex = 0;
             // ticketIdColumn
             this.ticketIdColumn.DataPropertyName = "ticket_id";
@@ -254,11 +267,11 @@ namespace Evently.Forms
             // addAttendeeWrapperPanel
             this.addAttendeeWrapperPanel.BackColor = System.Drawing.Color.White;
             this.addAttendeeWrapperPanel.Controls.Add(this.addAttendeeGroupBox);
-            this.addAttendeeWrapperPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.addAttendeeWrapperPanel.Location = new System.Drawing.Point(12, 424);
+            this.addAttendeeWrapperPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addAttendeeWrapperPanel.Location = new System.Drawing.Point(12, 190);
             this.addAttendeeWrapperPanel.Name = "addAttendeeWrapperPanel";
-            this.addAttendeeWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 16, 0, 0);
-            this.addAttendeeWrapperPanel.Size = new System.Drawing.Size(1256, 132);
+            this.addAttendeeWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
+            this.addAttendeeWrapperPanel.Size = new System.Drawing.Size(448, 356);
             this.addAttendeeWrapperPanel.TabIndex = 2;
             // addAttendeeGroupBox
             this.addAttendeeGroupBox.BackColor = System.Drawing.Color.White;
@@ -271,11 +284,10 @@ namespace Evently.Forms
             this.addAttendeeGroupBox.Controls.Add(this.emailLabel);
             this.addAttendeeGroupBox.Controls.Add(this.emailTextBox);
             this.addAttendeeGroupBox.Controls.Add(this.emailHelperLabel);
-            this.addAttendeeGroupBox.Controls.Add(this.addAttendeeButton);
             this.addAttendeeGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addAttendeeGroupBox.Location = new System.Drawing.Point(0, 16);
+            this.addAttendeeGroupBox.Location = new System.Drawing.Point(0, 12);
             this.addAttendeeGroupBox.Name = "addAttendeeGroupBox";
-            this.addAttendeeGroupBox.Size = new System.Drawing.Size(1256, 116);
+            this.addAttendeeGroupBox.Size = new System.Drawing.Size(448, 344);
             this.addAttendeeGroupBox.TabIndex = 0;
             this.addAttendeeGroupBox.TabStop = false;
             this.addAttendeeGroupBox.Text = "Add Attendee";
@@ -288,85 +300,84 @@ namespace Evently.Forms
             // firstNameTextBox
             this.firstNameTextBox.Location = new System.Drawing.Point(96, 26);
             this.firstNameTextBox.Name = "firstNameTextBox";
-            this.firstNameTextBox.Size = new System.Drawing.Size(160, 23);
+            this.firstNameTextBox.Size = new System.Drawing.Size(130, 23);
             this.firstNameTextBox.TabIndex = 1;
             // lastNameLabel
             this.lastNameLabel.AutoSize = true;
-            this.lastNameLabel.Location = new System.Drawing.Point(276, 29);
+            this.lastNameLabel.Location = new System.Drawing.Point(240, 29);
             this.lastNameLabel.Name = "lastNameLabel";
             this.lastNameLabel.TabIndex = 2;
             this.lastNameLabel.Text = "Last Name:";
             // lastNameTextBox
-            this.lastNameTextBox.Location = new System.Drawing.Point(360, 26);
+            this.lastNameTextBox.Location = new System.Drawing.Point(324, 26);
             this.lastNameTextBox.Name = "lastNameTextBox";
-            this.lastNameTextBox.Size = new System.Drawing.Size(160, 23);
+            this.lastNameTextBox.Size = new System.Drawing.Size(112, 23);
             this.lastNameTextBox.TabIndex = 3;
             // birthdateLabel
             this.birthdateLabel.AutoSize = true;
-            this.birthdateLabel.Location = new System.Drawing.Point(540, 29);
+            this.birthdateLabel.Location = new System.Drawing.Point(12, 69);
             this.birthdateLabel.Name = "birthdateLabel";
             this.birthdateLabel.TabIndex = 4;
             this.birthdateLabel.Text = "Birthdate:";
             // birthdateDateTimePicker
             this.birthdateDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.birthdateDateTimePicker.Location = new System.Drawing.Point(616, 26);
+            this.birthdateDateTimePicker.Location = new System.Drawing.Point(96, 66);
             this.birthdateDateTimePicker.Name = "birthdateDateTimePicker";
             this.birthdateDateTimePicker.Size = new System.Drawing.Size(130, 23);
             this.birthdateDateTimePicker.TabIndex = 5;
             // emailLabel
             this.emailLabel.AutoSize = true;
-            this.emailLabel.Location = new System.Drawing.Point(12, 69);
+            this.emailLabel.Location = new System.Drawing.Point(240, 69);
             this.emailLabel.Name = "emailLabel";
             this.emailLabel.TabIndex = 6;
             this.emailLabel.Text = "Email:";
             // emailTextBox
-            this.emailTextBox.Location = new System.Drawing.Point(96, 66);
+            this.emailTextBox.Location = new System.Drawing.Point(324, 66);
             this.emailTextBox.Name = "emailTextBox";
-            this.emailTextBox.Size = new System.Drawing.Size(260, 23);
+            this.emailTextBox.Size = new System.Drawing.Size(112, 23);
             this.emailTextBox.TabIndex = 7;
             // emailHelperLabel
             this.emailHelperLabel.AutoSize = true;
             this.emailHelperLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.emailHelperLabel.ForeColor = System.Drawing.Color.FromArgb(128, 128, 128);
-            this.emailHelperLabel.Location = new System.Drawing.Point(368, 69);
+            this.emailHelperLabel.Location = new System.Drawing.Point(12, 105);
+            this.emailHelperLabel.MaximumSize = new System.Drawing.Size(420, 0);
             this.emailHelperLabel.Name = "emailHelperLabel";
             this.emailHelperLabel.Size = new System.Drawing.Size(280, 15);
             this.emailHelperLabel.TabIndex = 9;
             this.emailHelperLabel.Text = "Tickets with unique QR codes are sent to this address";
-            // addAttendeeButton
-            this.addAttendeeButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.addAttendeeButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.addAttendeeButton.FlatAppearance.BorderSize = 0;
-            this.addAttendeeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addAttendeeButton.ForeColor = System.Drawing.Color.White;
-            this.addAttendeeButton.Location = new System.Drawing.Point(1154, 63);
-            this.addAttendeeButton.Name = "addAttendeeButton";
-            this.addAttendeeButton.Size = new System.Drawing.Size(90, 30);
-            this.addAttendeeButton.TabIndex = 8;
-            this.addAttendeeButton.Text = "&Add";
-            this.addAttendeeButton.UseVisualStyleBackColor = false;
-            this.addAttendeeButton.Click += new System.EventHandler(this.AddAttendeeButton_Click);
             // resultPanel
             this.resultPanel.BackColor = System.Drawing.Color.White;
-            this.resultPanel.Controls.Add(this.resultLabel);
-            this.resultPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.resultPanel.Location = new System.Drawing.Point(12, 556);
+            this.resultPanel.Controls.Add(this.logGroupBox);
+            this.resultPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.resultPanel.Location = new System.Drawing.Point(12, 0);
             this.resultPanel.Name = "resultPanel";
-            this.resultPanel.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.resultPanel.Size = new System.Drawing.Size(1256, 36);
+            this.resultPanel.Size = new System.Drawing.Size(448, 190);
             this.resultPanel.TabIndex = 3;
+            // logGroupBox
+            this.logGroupBox.BackColor = System.Drawing.Color.White;
+            this.logGroupBox.Controls.Add(this.resultLabel);
+            this.logGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.logGroupBox.Name = "logGroupBox";
+            this.logGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
+            this.logGroupBox.Size = new System.Drawing.Size(448, 190);
+            this.logGroupBox.TabIndex = 0;
+            this.logGroupBox.TabStop = false;
+            this.logGroupBox.Text = "Activity Log";
             // resultLabel
             this.resultLabel.AutoSize = false;
             this.resultLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resultLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
-            this.resultLabel.Location = new System.Drawing.Point(0, 8);
+            this.resultLabel.Location = new System.Drawing.Point(8, 24);
             this.resultLabel.Name = "resultLabel";
-            this.resultLabel.Size = new System.Drawing.Size(1256, 28);
+            this.resultLabel.Size = new System.Drawing.Size(432, 158);
             this.resultLabel.TabIndex = 0;
             this.resultLabel.Text = "Send Tickets only emails attendees who have not received their QR code yet.";
-            this.resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.resultLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // actionPanel
             this.actionPanel.BackColor = System.Drawing.Color.White;
+            this.actionPanel.Controls.Add(this.addAttendeeButton);
             this.actionPanel.Controls.Add(this.editButton);
             this.actionPanel.Controls.Add(this.deleteButton);
             this.actionPanel.Controls.Add(this.importCsvButton);
@@ -376,10 +387,23 @@ namespace Evently.Forms
             this.actionPanel.Controls.Add(this.sendReviewButton);
             this.actionPanel.Controls.Add(this.sendReviewsAllButton);
             this.actionPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.actionPanel.Location = new System.Drawing.Point(12, 592);
+            this.actionPanel.Location = new System.Drawing.Point(12, 598);
             this.actionPanel.Name = "actionPanel";
             this.actionPanel.Size = new System.Drawing.Size(1256, 46);
             this.actionPanel.TabIndex = 4;
+            // addAttendeeButton
+            this.addAttendeeButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.addAttendeeButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.addAttendeeButton.FlatAppearance.BorderSize = 0;
+            this.addAttendeeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addAttendeeButton.ForeColor = System.Drawing.Color.White;
+            this.addAttendeeButton.Location = new System.Drawing.Point(344, 8);
+            this.addAttendeeButton.Name = "addAttendeeButton";
+            this.addAttendeeButton.Size = new System.Drawing.Size(90, 30);
+            this.addAttendeeButton.TabIndex = 8;
+            this.addAttendeeButton.Text = "&Add";
+            this.addAttendeeButton.UseVisualStyleBackColor = false;
+            this.addAttendeeButton.Click += new System.EventHandler(this.AddAttendeeButton_Click);
             // editButton
             this.editButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.editButton.Location = new System.Drawing.Point(440, 8);
@@ -470,6 +494,7 @@ namespace Evently.Forms
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
+            this.rightColumnPanel.ResumeLayout(false);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
             this.gridHostPanel.ResumeLayout(false);
@@ -478,6 +503,7 @@ namespace Evently.Forms
             this.addAttendeeGroupBox.ResumeLayout(false);
             this.addAttendeeGroupBox.PerformLayout();
             this.resultPanel.ResumeLayout(false);
+            this.logGroupBox.ResumeLayout(false);
             this.actionPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -486,6 +512,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Panel contentPanel;
+        private System.Windows.Forms.Panel rightColumnPanel;
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Label eventLabel;
         private System.Windows.Forms.ComboBox eventComboBox;
@@ -515,6 +542,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Label emailHelperLabel;
         private System.Windows.Forms.Button addAttendeeButton;
         private System.Windows.Forms.Panel resultPanel;
+        private System.Windows.Forms.GroupBox logGroupBox;
         private System.Windows.Forms.Label resultLabel;
         private System.Windows.Forms.Panel actionPanel;
         private System.Windows.Forms.Label actionHintLabel;
