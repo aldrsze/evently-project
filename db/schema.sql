@@ -65,5 +65,14 @@ CREATE TABLE reviews (
     FOREIGN KEY (ticket_id) REFERENCES tickets(ticket_id) ON DELETE CASCADE
 );
 
+-- One row per add, edit, or delete. Panels show only the newest row of their entity.
+CREATE TABLE activity_log (
+    log_id     INT AUTO_INCREMENT PRIMARY KEY,
+    entity     VARCHAR(20)  NOT NULL,
+    message    VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_activity_entity (entity, log_id)
+);
+
 -- No default admin here. Open /Signup on the website to create the first one.
 -- That first account becomes ADMIN. Later signups become STAFF and need approval.
