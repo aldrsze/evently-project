@@ -60,49 +60,51 @@ namespace Evently.Forms
             int checkedOut = Convert.ToInt32(stats["checked_out"]);
             int totalCheckedIn = Convert.ToInt32(stats["total_checked_in"]);
             int notArrived = Math.Max(0, registered - totalCheckedIn);
-            int ticketsEmailed = Convert.ToInt32(stats["tickets_emailed"]);
-            int reviewRequestsSent = Convert.ToInt32(stats["review_requests_sent"]);
             int reviewCount = Convert.ToInt32(stats["review_count"]);
             double averageRating = Convert.ToDouble(stats["average_rating"]);
 
-            // Text Metrics & Progress
-            double registeredPercent = capacity > 0 ? (double)registered / capacity : 0;
-            progressLabel.Text = $"Registered: {registered} of {capacity} ({registeredPercent:P0})";
-            progressBar.Maximum = Math.Max(1, capacity);
-            progressBar.Value = Math.Clamp(registered, 0, progressBar.Maximum);
-
-            insideLabel.Text = $"Currently inside: {currentlyInside}";
-            double turnoutPercent = registered > 0 ? (double)totalCheckedIn / registered : 0;
-            checkedInLabel.Text = $"Checked in: {totalCheckedIn} ({turnoutPercent:P0} turnout)";
-            notArrivedLabel.Text = $"Not yet arrived: {notArrived}";
-
-            averageRatingLabel.Text = $"Average rating: {averageRating:F1} / 5.0 ({reviewCount} reviews)";
-            double responsePercent = totalCheckedIn > 0 ? (double)reviewCount / totalCheckedIn : 0;
-            responseRateLabel.Text = $"Response rate: {responsePercent:P0}";
-            reviewRequestLabel.Text = $"Review requests sent: {reviewRequestsSent} of {totalCheckedIn}";
-
-            ticketsEmailedLabel.Text = $"Tickets emailed: {ticketsEmailed} of {registered}";
-            lastUpdatedLabel.Text = $"Last updated: {DateTime.Now:hh:mm:ss tt}";
-
-            // Attendance Doughnut Chart
-            BindAttendancePieChart(currentlyInside, checkedOut, notArrived);
-
-            // Check-Ins Over Time Chart
+            UpdateKpiCards(capacity, registered, currentlyInside, checkedOut, totalCheckedIn, notArrived, reviewCount, averageRating);
             BindTimelineChart(eventId);
+            BindAttendanceDoughnutChart(currentlyInside, checkedOut, notArrived);
+            BindRatingsBarChart(eventId);
+            BindComprehensiveLogs(eventId, capacity, currentlyInside, totalCheckedIn, averageRating, reviewCount);
 
-            // Recent Check-Ins Feed
-            BindRecentActivity(eventId);
+            lastUpdatedLabel.Text = $"Last updated: {DateTime.Now:hh:mm:ss tt}";
         }
 
-        private void BindAttendancePieChart(int inside, int checkedOut, int notArrived)
+        private void UpdateKpiCards(int capacity, int registered, int inside, int checkedOut, int totalCheckedIn, int notArrived, int reviewCount, double avgRating)
         {
-            var series = attendancePieChart.Series["AttendanceBreakdown"];
+            // Card 1: Capacity & Registered
+            double regPercent = capacity > 0 ? (double)registered / capacity : 0.0;
+            capacityValueLabel.Text = $"{registered} / {capacity}";
+            capacityProgressBar.Maximum = Math.Max(1, capacity);
+            capacityProgressBar.Value = Math.Clamp(registered, 0, capacityProgressBar.Maximum);
+            capacitySubLabel.Text = $"{regPercent:P0} booked";
+
+            // Card 2: Currently Inside
+            insideValueLabel.Text = inside.ToString();
+            insideSubLabel.Text = $"Checked out: {checkedOut}";
+
+            // Card 3: Checked In Turnout
+            double turnoutPercent = registered > 0 ? (double)totalCheckedIn / registered : 0.0;
+            checkedInValueLabel.Text = totalCheckedIn.ToString();
+            checkedInSubLabel.Text = $"{turnoutPercent:P0} turnout ({notArrived} not arrived)";
+
+            // Card 4: Average Rating
+            double responsePercent = totalCheckedIn > 0 ? (double)reviewCount / totalCheckedIn : 0.0;
+            ratingValueLabel.Text = reviewCount > 0 ? $"{avgRating:F1} / 5.0" : "- / 5.0";
+            ratingSubLabel.Text = $"{reviewCount} reviews ({responsePercent:P0} response)";
+        }
+
+        private void BindAttendanceDoughnutChart(int inside, int checkedOut, int notArrived)
+        {
+            var series = attendanceDoughnutChart.Series["AttendanceBreakdown"];
             series.Points.Clear();
 
             var pInside = new DataPoint();
             pInside.SetValueXY("Inside", inside);
             pInside.LegendText = $"Inside ({inside})";
-            pInside.Color = Color.FromArgb(43, 87, 154);
+            pInside.Color = Color.FromArgb(34, 139, 34);
             pInside.ToolTip = $"Inside: {inside}";
             series.Points.Add(pInside);
 
@@ -127,53 +129,233 @@ namespace Evently.Forms
             series.Points.Clear();
 
             DataTable timelineTable = DashboardService.GetCheckInTimeline(eventId);
-            int cumulative = 0;
-            string lastSlot = "";
+            int filterIndex = timeFilterComboBox.SelectedIndex;
+
+            var slotMap = new System.Collections.Generic.Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
             foreach (DataRow row in timelineTable.Rows)
             {
-                cumulative++;
-                DateTime checkTime = Convert.ToDateTime(row["checked_in_at"]);
-                string slot = checkTime.ToString("h:mm tt");
+                if (row["checked_in_at"] == DBNull.Value)
+                {
+                    continue;
+                }
 
-                if (slot != lastSlot)
+                DateTime checkTime = Convert.ToDateTime(row["checked_in_at"]);
+                if (!MatchesTimeFilter(checkTime, filterIndex))
                 {
-                    var point = new DataPoint();
-                    point.SetValueXY(slot, cumulative);
-                    point.ToolTip = $"{slot}: {cumulative} total check-ins";
-                    series.Points.Add(point);
-                    lastSlot = slot;
+                    continue;
                 }
-                else if (series.Points.Count > 0)
+
+                string hourSlot = new DateTime(checkTime.Year, checkTime.Month, checkTime.Day, checkTime.Hour, 0, 0)
+                    .ToString("h:00 tt", System.Globalization.CultureInfo.InvariantCulture);
+
+                if (!slotMap.ContainsKey(hourSlot))
                 {
-                    series.Points[^1].SetValueXY(slot, cumulative);
+                    slotMap[hourSlot] = 1;
                 }
+                else
+                {
+                    slotMap[hourSlot]++;
+                }
+            }
+
+            var chartArea = timelineChart.ChartAreas["ColumnArea"];
+            chartArea.AxisX.Interval = 1;
+            chartArea.AxisX.LabelStyle.Interval = 1;
+            chartArea.AxisX.LabelStyle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            chartArea.AxisX.LabelStyle.ForeColor = Color.FromArgb(70, 70, 70);
+            chartArea.AxisX.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
+
+            if (slotMap.Count == 0)
+            {
+                var emptyPoint = new DataPoint();
+                emptyPoint.SetValueXY(1, 0);
+                emptyPoint.AxisLabel = "(No Check-ins)";
+                emptyPoint.IsValueShownAsLabel = false;
+                series.Points.Add(emptyPoint);
+
+                chartArea.AxisX.Minimum = 0.5;
+                chartArea.AxisX.Maximum = 1.5;
+                chartArea.AxisY.Minimum = 0;
+                chartArea.AxisY.Maximum = 5;
+                chartArea.AxisY.Interval = 1;
+                return;
+            }
+
+            int xIndex = 1;
+            int maxCount = 0;
+
+            foreach (var kvp in slotMap)
+            {
+                string slotName = kvp.Key;
+                int count = kvp.Value;
+
+                if (count > maxCount)
+                {
+                    maxCount = count;
+                }
+
+                var point = new DataPoint();
+                point.SetValueXY(xIndex, count);
+                point.AxisLabel = slotName;
+                point.Label = $"{slotName}\n({count})";
+                point.ToolTip = $"{slotName}: {count} check-ins";
+                point.Color = Color.FromArgb(43, 87, 154);
+                point.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+                series.Points.Add(point);
+
+                xIndex++;
+            }
+
+            chartArea.AxisX.Minimum = 0.5;
+            chartArea.AxisX.Maximum = slotMap.Count + 0.5;
+            chartArea.AxisY.Minimum = 0;
+            chartArea.AxisY.Maximum = Math.Max(maxCount + 2, 5);
+            chartArea.AxisY.Interval = double.NaN;
+        }
+
+        private static bool MatchesTimeFilter(DateTime time, int filterIndex)
+        {
+            if (filterIndex == 1)
+            {
+                return time.Hour < 12; // Morning
+            }
+            if (filterIndex == 2)
+            {
+                return time.Hour >= 12 && time.Hour < 17; // Afternoon
+            }
+            if (filterIndex == 3)
+            {
+                return time.Hour >= 17; // Evening
+            }
+
+            return true; // All Times
+        }
+
+        private void BindRatingsBarChart(int eventId)
+        {
+            var series = ratingsBarChart.Series["Ratings"];
+            series.Points.Clear();
+
+            DataTable ratingsTable = DashboardService.GetRatingDistribution(eventId);
+            int[] starCounts = new int[6]; // index 1 to 5
+
+            foreach (DataRow row in ratingsTable.Rows)
+            {
+                int rating = Convert.ToInt32(row["rating"]);
+                int count = Convert.ToInt32(row["total"]);
+                if (rating >= 1 && rating <= 5)
+                {
+                    starCounts[rating] = count;
+                }
+            }
+
+            int maxCount = 0;
+            for (int star = 1; star <= 5; star++)
+            {
+                int count = starCounts[star];
+                if (count > maxCount)
+                {
+                    maxCount = count;
+                }
+
+                var point = new DataPoint();
+                point.SetValueXY(star, count);
+                point.AxisLabel = $"{star}";
+                point.Label = count > 0 ? $"{count}" : "";
+                point.ToolTip = $"{star} Stars: {count} reviews";
+                point.Color = Color.FromArgb(91, 142, 219);
+                point.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+                series.Points.Add(point);
+            }
+
+            var barArea = ratingsBarChart.ChartAreas["BarArea"];
+            barArea.AxisX.Minimum = 0.5;
+            barArea.AxisX.Maximum = 5.5;
+            barArea.AxisX.Interval = 1;
+            barArea.AxisX.LabelStyle.Interval = 1;
+            barArea.AxisX.LabelStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            barArea.AxisX.LabelStyle.ForeColor = Color.FromArgb(70, 70, 70);
+            barArea.AxisX.Title = "Stars (1 - 5)";
+            barArea.AxisX.TitleFont = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            barArea.AxisX.TitleForeColor = Color.FromArgb(100, 100, 100);
+
+            if (maxCount == 0)
+            {
+                barArea.AxisY.Minimum = 0;
+                barArea.AxisY.Maximum = 5;
+                barArea.AxisY.Interval = 1;
+            }
+            else
+            {
+                barArea.AxisY.Minimum = 0;
+                barArea.AxisY.Maximum = Math.Max(maxCount + 2, 5);
+                barArea.AxisY.Interval = double.NaN;
             }
         }
 
-        private void BindRecentActivity(int eventId)
+        private void BindComprehensiveLogs(int eventId, int capacity, int inside, int checkedIn, double avgRating, int reviewCount)
         {
-            DataTable recentTable = DashboardService.GetRecentActivity(eventId);
+            string ratingDisplay = reviewCount > 0 ? $"{avgRating:F1}" : "-";
+            logsHeaderLabel.Text = $"Status: Capacity: {capacity} | Inside: {inside} | Checked in: {checkedIn} | Average Rating: {ratingDisplay} / 5.0";
 
-            recentCheckInsListBox.BeginUpdate();
-            recentCheckInsListBox.Items.Clear();
+            DataTable logsTable = DashboardService.GetComprehensiveLogs(eventId);
 
-            foreach (DataRow row in recentTable.Rows)
+            logsListBox.BeginUpdate();
+            logsListBox.Items.Clear();
+
+            foreach (DataRow row in logsTable.Rows)
             {
-                string name = row["attendee_name"].ToString() ?? "";
-                if (row["checked_out_at"] != DBNull.Value)
+                string logText = row["log_text"].ToString() ?? "";
+                if (row["log_time"] != DBNull.Value)
                 {
-                    DateTime outTime = Convert.ToDateTime(row["checked_out_at"]);
-                    recentCheckInsListBox.Items.Add($"{name} - {outTime:h:mm tt} [Check-out]");
+                    DateTime time = Convert.ToDateTime(row["log_time"]);
+                    logsListBox.Items.Add($"[{time:MM/dd h:mm tt}] {logText}");
                 }
-                else if (row["checked_in_at"] != DBNull.Value)
+                else
                 {
-                    DateTime inTime = Convert.ToDateTime(row["checked_in_at"]);
-                    recentCheckInsListBox.Items.Add($"{name} - {inTime:h:mm tt} [Check-in]");
+                    logsListBox.Items.Add(logText);
                 }
             }
 
-            recentCheckInsListBox.EndUpdate();
+            logsListBox.EndUpdate();
+        }
+
+        private void PrevNavButton_Click(object sender, EventArgs e)
+        {
+            if (timeFilterComboBox.SelectedIndex > 0)
+            {
+                timeFilterComboBox.SelectedIndex--;
+            }
+            else
+            {
+                timeFilterComboBox.SelectedIndex = timeFilterComboBox.Items.Count - 1;
+            }
+        }
+
+        private void NextNavButton_Click(object sender, EventArgs e)
+        {
+            if (timeFilterComboBox.SelectedIndex < timeFilterComboBox.Items.Count - 1)
+            {
+                timeFilterComboBox.SelectedIndex++;
+            }
+            else
+            {
+                timeFilterComboBox.SelectedIndex = 0;
+            }
+        }
+
+        private void ResetFilterButton_Click(object sender, EventArgs e)
+        {
+            timeFilterComboBox.SelectedIndex = 0;
+        }
+
+        private void TimeFilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (eventComboBox.SelectedValue != null && int.TryParse(eventComboBox.SelectedValue.ToString(), out int eventId))
+            {
+                BindTimelineChart(eventId);
+            }
         }
     }
 }
