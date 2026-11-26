@@ -95,7 +95,15 @@ namespace Evently.Core.Services
 
             try
             {
-                return ticketCmd.ExecuteNonQuery() > 0;
+                bool added = ticketCmd.ExecuteNonQuery() > 0;
+
+                if (added)
+                {
+                    string eventName = GetEventName(eventId);
+                    ActivityLogService.Add("attendees", $"Added attendee '{firstName} {lastName}' to event '{eventName}'.");
+                }
+
+                return added;
             }
             catch (MySqlException ex)
             {
@@ -107,6 +115,12 @@ namespace Evently.Core.Services
         public static bool DeleteAttendee(int eventId, int attendeeId)
         {
             using var conn = DatabaseConnection.GetConnection();
+
+            // read the name first, because the attendee row may be deleted below
+            string nameQuery = "SELECT CONCAT(first_name, ' ', last_name) FROM attendees WHERE attendee_id = @attendeeId;";
+            using MySqlCommand nameCmd = new(nameQuery, conn);
+            nameCmd.Parameters.AddWithValue("@attendeeId", attendeeId);
+            string attendeeName = Convert.ToString(nameCmd.ExecuteScalar()) ?? "";
 
             string deleteTicketQuery = "DELETE FROM tickets WHERE event_id = @eventId AND attendee_id = @attendeeId;";
             using (MySqlCommand ticketCmd = new(deleteTicketQuery, conn))
@@ -132,10 +146,14 @@ namespace Evently.Core.Services
                 attendeeCmd.ExecuteNonQuery();
             }
 
+            string logName = attendeeName == "" ? "attendee" : attendeeName;
+            string eventName = GetEventName(eventId);
+            ActivityLogService.Add("attendees", $"Removed attendee '{logName}' from event '{eventName}'.");
+
             return true;
         }
 
-        public static bool UpdateAttendee(int attendeeId, string firstName, string lastName, string email, DateTime birthdate)
+        public static bool UpdateAttendee(int eventId, int attendeeId, string firstName, string lastName, string email, DateTime birthdate)
         {
             firstName = firstName.Trim();
             lastName = lastName.Trim();
@@ -167,6 +185,8 @@ namespace Evently.Core.Services
             try
             {
                 cmd.ExecuteNonQuery();
+                string eventName = GetEventName(eventId);
+                ActivityLogService.Add("attendees", $"Edited attendee '{firstName} {lastName}' in event '{eventName}'.");
                 return true;
             }
             catch (MySqlException ex)
@@ -250,6 +270,16 @@ namespace Evently.Core.Services
             using MySqlCommand cmd = new(query, conn);
             cmd.Parameters.AddWithValue("@ticketId", ticketId);
             return cmd.ExecuteNonQuery() > 0;
+        }
+
+        // the log message names the event, so an attendee line means something outside this screen
+        private static string GetEventName(int eventId)
+        {
+            using var conn = DatabaseConnection.GetConnection();
+            string query = "SELECT name FROM events WHERE event_id = @eventId;";
+            using MySqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@eventId", eventId);
+            return Convert.ToString(cmd.ExecuteScalar()) ?? "";
         }
     }
 }

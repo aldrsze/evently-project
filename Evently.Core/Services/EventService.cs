@@ -35,7 +35,14 @@ namespace Evently.Core.Services
 
             try
             {
-                return Convert.ToInt32(cmd.ExecuteScalar());
+                int newEventId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                if (newEventId > 0)
+                {
+                    ActivityLogService.Add("events", $"Added event '{name}'.");
+                }
+
+                return newEventId;
             }
             catch (MySqlException ex)
             {
@@ -54,11 +61,25 @@ namespace Evently.Core.Services
         public static bool DeleteEvent(int eventId)
         {
             using var conn = DatabaseConnection.GetConnection();
+
+            // read the name first, because the row is gone after the delete
+            string nameQuery = "SELECT name FROM events WHERE event_id = @eventId";
+            using MySqlCommand nameCmd = new(nameQuery, conn);
+            nameCmd.Parameters.AddWithValue("@eventId", eventId);
+            string eventName = Convert.ToString(nameCmd.ExecuteScalar()) ?? "";
+
             string query = "DELETE FROM events WHERE event_id = @eventId";
 
             using MySqlCommand cmd = new(query, conn);
             cmd.Parameters.AddWithValue("@eventId", eventId);
-            return cmd.ExecuteNonQuery() > 0;
+            bool deleted = cmd.ExecuteNonQuery() > 0;
+
+            if (deleted)
+            {
+                ActivityLogService.Add("events", $"Deleted event '{eventName}'.");
+            }
+
+            return deleted;
         }
 
         public static bool UpdateEvent(int eventId, string name, string venue, string description, DateTime date, int capacity)
@@ -90,6 +111,7 @@ namespace Evently.Core.Services
             try
             {
                 cmd.ExecuteNonQuery();
+                ActivityLogService.Add("events", $"Edited event '{name}'.");
                 return true; // the row exists, and an identical save is still a success
             }
             catch (MySqlException ex)

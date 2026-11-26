@@ -29,6 +29,9 @@ namespace Evently.Forms
             this.descriptionPreviewPanel = new System.Windows.Forms.Panel();
             this.descriptionPreviewGroupBox = new System.Windows.Forms.GroupBox();
             this.selectedDescriptionTextBox = new System.Windows.Forms.TextBox();
+            this.activityLogPanel = new System.Windows.Forms.Panel();
+            this.activityLogGroupBox = new System.Windows.Forms.GroupBox();
+            this.activityLogLabel = new System.Windows.Forms.Label();
             this.addEventWrapperPanel = new System.Windows.Forms.Panel();
             this.addEventGroupBox = new System.Windows.Forms.GroupBox();
             this.nameLabel = new System.Windows.Forms.Label();
@@ -65,6 +68,8 @@ namespace Evently.Forms
             ((System.ComponentModel.ISupportInitialize)(this.capacityNumericUpDown)).BeginInit();
             this.descriptionPreviewPanel.SuspendLayout();
             this.descriptionPreviewGroupBox.SuspendLayout();
+            this.activityLogPanel.SuspendLayout();
+            this.activityLogGroupBox.SuspendLayout();
             this.actionPanel.SuspendLayout();
             this.SuspendLayout();
             // headerPanel
@@ -114,6 +119,7 @@ namespace Evently.Forms
             this.rightColumnPanel.BackColor = System.Drawing.Color.White;
             this.rightColumnPanel.Controls.Add(this.addEventWrapperPanel);
             this.rightColumnPanel.Controls.Add(this.descriptionPreviewPanel);
+            this.rightColumnPanel.Controls.Add(this.activityLogPanel);
             this.rightColumnPanel.Dock = System.Windows.Forms.DockStyle.Right;
             this.rightColumnPanel.Location = new System.Drawing.Point(808, 12);
             this.rightColumnPanel.Name = "rightColumnPanel";
@@ -237,6 +243,37 @@ namespace Evently.Forms
             this.selectedDescriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.selectedDescriptionTextBox.Size = new System.Drawing.Size(432, 150);
             this.selectedDescriptionTextBox.TabIndex = 0;
+            // activityLogPanel
+            this.activityLogPanel.BackColor = System.Drawing.Color.White;
+            this.activityLogPanel.Controls.Add(this.activityLogGroupBox);
+            this.activityLogPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.activityLogPanel.Location = new System.Drawing.Point(12, 0);
+            this.activityLogPanel.Name = "activityLogPanel";
+            this.activityLogPanel.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.activityLogPanel.Size = new System.Drawing.Size(448, 96);
+            this.activityLogPanel.TabIndex = 4;
+            // activityLogGroupBox
+            this.activityLogGroupBox.BackColor = System.Drawing.Color.White;
+            this.activityLogGroupBox.Controls.Add(this.activityLogLabel);
+            this.activityLogGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.activityLogGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.activityLogGroupBox.Name = "activityLogGroupBox";
+            this.activityLogGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
+            this.activityLogGroupBox.Size = new System.Drawing.Size(448, 88);
+            this.activityLogGroupBox.TabIndex = 0;
+            this.activityLogGroupBox.TabStop = false;
+            this.activityLogGroupBox.Text = "Activity Log";
+            // activityLogLabel
+            this.activityLogLabel.AutoSize = false;
+            this.activityLogLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.activityLogLabel.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.activityLogLabel.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.activityLogLabel.Location = new System.Drawing.Point(8, 24);
+            this.activityLogLabel.Name = "activityLogLabel";
+            this.activityLogLabel.Size = new System.Drawing.Size(432, 56);
+            this.activityLogLabel.TabIndex = 0;
+            this.activityLogLabel.Text = "No activity yet.";
+            this.activityLogLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // addEventWrapperPanel
             this.addEventWrapperPanel.BackColor = System.Drawing.Color.White;
             this.addEventWrapperPanel.Controls.Add(this.addEventGroupBox);
@@ -244,7 +281,7 @@ namespace Evently.Forms
             this.addEventWrapperPanel.Location = new System.Drawing.Point(12, 190);
             this.addEventWrapperPanel.Name = "addEventWrapperPanel";
             this.addEventWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
-            this.addEventWrapperPanel.Size = new System.Drawing.Size(448, 386);
+            this.addEventWrapperPanel.Size = new System.Drawing.Size(448, 290);
             this.addEventWrapperPanel.TabIndex = 1;
             // addEventGroupBox
             this.addEventGroupBox.BackColor = System.Drawing.Color.White;
@@ -270,7 +307,7 @@ namespace Evently.Forms
             this.addEventGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.addEventGroupBox.Location = new System.Drawing.Point(0, 12);
             this.addEventGroupBox.Name = "addEventGroupBox";
-            this.addEventGroupBox.Size = new System.Drawing.Size(448, 374);
+            this.addEventGroupBox.Size = new System.Drawing.Size(448, 278);
             this.addEventGroupBox.TabIndex = 0;
             this.addEventGroupBox.TabStop = false;
             this.addEventGroupBox.Text = "Add Event";
@@ -484,6 +521,9 @@ namespace Evently.Forms
             this.descriptionPreviewGroupBox.ResumeLayout(false);
             this.descriptionPreviewGroupBox.PerformLayout();
             this.descriptionPreviewPanel.ResumeLayout(false);
+            this.activityLogGroupBox.ResumeLayout(false);
+            this.activityLogGroupBox.PerformLayout();
+            this.activityLogPanel.ResumeLayout(false);
             this.actionPanel.ResumeLayout(false);
             this.actionPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -505,6 +545,9 @@ namespace Evently.Forms
         private System.Windows.Forms.Panel descriptionPreviewPanel;
         private System.Windows.Forms.GroupBox descriptionPreviewGroupBox;
         private System.Windows.Forms.TextBox selectedDescriptionTextBox;
+        private System.Windows.Forms.Panel activityLogPanel;
+        private System.Windows.Forms.GroupBox activityLogGroupBox;
+        private System.Windows.Forms.Label activityLogLabel;
         private System.Windows.Forms.Panel addEventWrapperPanel;
         private System.Windows.Forms.GroupBox addEventGroupBox;
         private System.Windows.Forms.Label nameLabel;

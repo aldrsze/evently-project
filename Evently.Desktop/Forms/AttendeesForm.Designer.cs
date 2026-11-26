@@ -48,6 +48,7 @@ namespace Evently.Forms
             this.addAttendeeButton = new System.Windows.Forms.Button();
             this.resultPanel = new System.Windows.Forms.Panel();
             this.logGroupBox = new System.Windows.Forms.GroupBox();
+            this.activityLogLabel = new System.Windows.Forms.Label();
             this.resultLabel = new System.Windows.Forms.Label();
             this.actionPanel = new System.Windows.Forms.Panel();
             this.actionHintLabel = new System.Windows.Forms.Label();
@@ -357,6 +358,7 @@ namespace Evently.Forms
             // logGroupBox
             this.logGroupBox.BackColor = System.Drawing.Color.White;
             this.logGroupBox.Controls.Add(this.resultLabel);
+            this.logGroupBox.Controls.Add(this.activityLogLabel);
             this.logGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logGroupBox.Location = new System.Drawing.Point(0, 0);
             this.logGroupBox.Name = "logGroupBox";
@@ -365,13 +367,24 @@ namespace Evently.Forms
             this.logGroupBox.TabIndex = 0;
             this.logGroupBox.TabStop = false;
             this.logGroupBox.Text = "Activity Log";
+            // activityLogLabel
+            this.activityLogLabel.AutoSize = false;
+            this.activityLogLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.activityLogLabel.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.activityLogLabel.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.activityLogLabel.Location = new System.Drawing.Point(8, 24);
+            this.activityLogLabel.Name = "activityLogLabel";
+            this.activityLogLabel.Size = new System.Drawing.Size(432, 44);
+            this.activityLogLabel.TabIndex = 1;
+            this.activityLogLabel.Text = "No activity yet.";
+            this.activityLogLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // resultLabel
             this.resultLabel.AutoSize = false;
             this.resultLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resultLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
-            this.resultLabel.Location = new System.Drawing.Point(8, 24);
+            this.resultLabel.Location = new System.Drawing.Point(8, 68);
             this.resultLabel.Name = "resultLabel";
-            this.resultLabel.Size = new System.Drawing.Size(432, 158);
+            this.resultLabel.Size = new System.Drawing.Size(432, 114);
             this.resultLabel.TabIndex = 0;
             this.resultLabel.Text = "Send Tickets only emails attendees who have not received their QR code yet.";
             this.resultLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
@@ -543,6 +556,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Button addAttendeeButton;
         private System.Windows.Forms.Panel resultPanel;
         private System.Windows.Forms.GroupBox logGroupBox;
+        private System.Windows.Forms.Label activityLogLabel;
         private System.Windows.Forms.Label resultLabel;
         private System.Windows.Forms.Panel actionPanel;
         private System.Windows.Forms.Label actionHintLabel;

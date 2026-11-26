@@ -15,6 +15,19 @@ namespace Evently.Forms
         {
             usersDataGridView.DataSource = null;
             usersDataGridView.DataSource = UserService.GetUser();
+            RefreshActivityLog();
+        }
+
+        private void RefreshActivityLog()
+        {
+            string latest = ActivityLogService.GetLatest("users");
+
+            if (latest == "")
+            {
+                latest = "No activity yet.";
+            }
+
+            activityLogLabel.Text = latest;
         }
 
         private void AddButton_Click(object sender, EventArgs e) 
@@ -41,7 +54,7 @@ namespace Evently.Forms
             try
             {
                 // an admin adding an account approves it right away
-                if (UserService.AddUser(username, password, email, firstName, lastName, null, role, true))
+                if (UserService.AddUser(username, password, email, firstName, lastName, null, role, true, Session.CurrentUsername))
                 {
                     MessageBox.Show("Account created. It can sign in right away.", "Account added", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     usernameTextBox.Text = "";
@@ -130,7 +143,7 @@ namespace Evently.Forms
 
             try
             {
-                if (UserService.SetUserApproved(username, true))
+                if (UserService.SetUserApproved(username, true, Session.CurrentUsername))
                 {
                     bool emailSent = false;
                     if (!string.IsNullOrEmpty(email))

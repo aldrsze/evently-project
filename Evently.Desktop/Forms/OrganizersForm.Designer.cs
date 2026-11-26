@@ -43,6 +43,7 @@ namespace Evently.Forms
             this.actionPanel = new System.Windows.Forms.Panel();
             this.logPanel = new System.Windows.Forms.Panel();
             this.logGroupBox = new System.Windows.Forms.GroupBox();
+            this.activityLogLabel = new System.Windows.Forms.Label();
             this.actionHintLabel = new System.Windows.Forms.Label();
             this.resultLabel = new System.Windows.Forms.Label();
             this.editManagerButton = new System.Windows.Forms.Button();
@@ -316,6 +317,7 @@ namespace Evently.Forms
             // logGroupBox
             this.logGroupBox.BackColor = System.Drawing.Color.White;
             this.logGroupBox.Controls.Add(this.resultLabel);
+            this.logGroupBox.Controls.Add(this.activityLogLabel);
             this.logGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logGroupBox.Location = new System.Drawing.Point(0, 0);
             this.logGroupBox.Name = "logGroupBox";
@@ -335,12 +337,23 @@ namespace Evently.Forms
             this.actionPanel.Name = "actionPanel";
             this.actionPanel.Size = new System.Drawing.Size(1256, 54);
             this.actionPanel.TabIndex = 3;
+            // activityLogLabel
+            this.activityLogLabel.AutoSize = false;
+            this.activityLogLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.activityLogLabel.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.activityLogLabel.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.activityLogLabel.Location = new System.Drawing.Point(8, 24);
+            this.activityLogLabel.Name = "activityLogLabel";
+            this.activityLogLabel.Size = new System.Drawing.Size(432, 44);
+            this.activityLogLabel.TabIndex = 2;
+            this.activityLogLabel.Text = "No activity yet.";
+            this.activityLogLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // resultLabel
             this.resultLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resultLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
-            this.resultLabel.Location = new System.Drawing.Point(8, 24);
+            this.resultLabel.Location = new System.Drawing.Point(8, 68);
             this.resultLabel.Name = "resultLabel";
-            this.resultLabel.Size = new System.Drawing.Size(432, 158);
+            this.resultLabel.Size = new System.Drawing.Size(432, 114);
             this.resultLabel.TabIndex = 1;
             this.resultLabel.Text = "";
             this.resultLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
@@ -448,6 +461,7 @@ namespace Evently.Forms
         private System.Windows.Forms.Panel actionPanel;
         private System.Windows.Forms.Panel logPanel;
         private System.Windows.Forms.GroupBox logGroupBox;
+        private System.Windows.Forms.Label activityLogLabel;
         private System.Windows.Forms.Label actionHintLabel;
         private System.Windows.Forms.Label resultLabel;
         private System.Windows.Forms.Button editManagerButton;

@@ -75,7 +75,7 @@ public class SignupModel : PageModel
         bool added;
         try
         {
-            added = UserService.AddUser(username, password, email, firstName, lastName, birthdate, "STAFF", false);
+            added = UserService.AddUser(username, password, email, firstName, lastName, birthdate, "STAFF", false, "");
         }
         catch (Exception ex)
         {
