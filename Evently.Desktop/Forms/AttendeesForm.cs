@@ -303,6 +303,7 @@ namespace Evently.Forms
             if (success)
             {
                 TicketService.MarkTicketAsEmailed(ticketId);
+                ActivityLogService.Add("tickets", $"Emailed ticket to {attendeeName} ({recipientEmail}) for '{eventName}'.");
                 MessageBox.Show($"Ticket sent to {attendeeName} ({recipientEmail}).", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (eventComboBox.SelectedValue != null && int.TryParse(eventComboBox.SelectedValue.ToString(), out int eventId))
                 {
@@ -357,6 +358,7 @@ namespace Evently.Forms
                     if (success)
                     {
                         TicketService.MarkTicketAsEmailed(ticketId);
+                        ActivityLogService.Add("tickets", $"Emailed ticket to {attendeeName} ({recipientEmail}) for '{eventName}'.");
                         sentCount++;
                     }
                     else
@@ -384,7 +386,7 @@ namespace Evently.Forms
             LoadAttendees(eventId);
         }
 
-        private string GetWebBaseUrl()
+        private static string GetWebBaseUrl()
         {
             string configPath = Path.Combine(AppContext.BaseDirectory, "db.config");
             if (File.Exists(configPath))

@@ -41,19 +41,15 @@ namespace Evently.Core.Services
             return table.Rows[0];
         }
 
-        public static DataTable GetRecentActivity(int eventId)
+        public static DataTable GetCheckInTimeline(int eventId)
         {
             using var conn = DatabaseConnection.GetConnection();
             string query = @"SELECT 
-                                CONCAT(a.first_name, ' ', a.last_name) AS attendee_name,
-                                t.checked_in_at,
-                                t.checked_out_at
-                             FROM tickets t
-                             INNER JOIN attendees a ON t.attendee_id = a.attendee_id
-                             WHERE t.event_id = @eventId 
-                               AND (t.checked_in_at IS NOT NULL OR t.checked_out_at IS NOT NULL)
-                             ORDER BY GREATEST(COALESCE(t.checked_in_at, '1970-01-01'), COALESCE(t.checked_out_at, '1970-01-01')) DESC
-                             LIMIT 15;";
+                                checked_in_at
+                             FROM tickets
+                             WHERE event_id = @eventId
+                                AND checked_in_at IS NOT NULL
+                             ORDER BY checked_in_at ASC;";
 
             using MySqlCommand cmd = new(query, conn);
             cmd.Parameters.AddWithValue("@eventId", eventId);
@@ -64,15 +60,67 @@ namespace Evently.Core.Services
             return table;
         }
 
-        public static DataTable GetCheckInTimeline(int eventId)
+        public static DataTable GetRatingDistribution(int eventId)
         {
             using var conn = DatabaseConnection.GetConnection();
             string query = @"SELECT 
-                                checked_in_at
-                             FROM tickets
-                             WHERE event_id = @eventId 
-                               AND checked_in_at IS NOT NULL
-                             ORDER BY checked_in_at ASC;";
+                                r.rating,
+                                COUNT(*) AS total
+                             FROM reviews r
+                             INNER JOIN tickets t ON r.ticket_id = t.ticket_id
+                             WHERE t.event_id = @eventId
+                             GROUP BY r.rating
+                             ORDER BY r.rating DESC;";
+
+            using MySqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@eventId", eventId);
+
+            MySqlDataAdapter adapter = new(cmd);
+            DataTable table = new();
+            adapter.Fill(table);
+            return table;
+        }
+
+        public static DataTable GetComprehensiveLogs(int eventId)
+        {
+            using var conn = DatabaseConnection.GetConnection();
+            string query = @"(
+                                SELECT
+                                    created_at AS log_time,
+                                    CONCAT('[', UPPER(entity), '] ', message) AS log_text
+                                FROM activity_log
+                                WHERE entity <> 'reviews'
+                             )
+                             UNION ALL
+                             (
+                                SELECT
+                                    t.checked_in_at AS log_time,
+                                    CONCAT('[CHECK-IN] ', a.first_name, ' ', a.last_name, ' checked in') AS log_text
+                                FROM tickets t
+                                INNER JOIN attendees a ON t.attendee_id = a.attendee_id
+                                WHERE t.event_id = @eventId AND t.checked_in_at IS NOT NULL
+                             )
+                             UNION ALL
+                             (
+                                SELECT
+                                    t.checked_out_at AS log_time,
+                                    CONCAT('[CHECK-OUT] ', a.first_name, ' ', a.last_name, ' checked out') AS log_text
+                                FROM tickets t
+                                INNER JOIN attendees a ON t.attendee_id = a.attendee_id
+                                WHERE t.event_id = @eventId AND t.checked_out_at IS NOT NULL
+                             )
+                             UNION ALL
+                             (
+                                SELECT
+                                    r.submitted_at AS log_time,
+                                    CONCAT('[REVIEW] ', a.first_name, ' ', a.last_name, ' rated ', r.rating, '/5: ', COALESCE(r.comment, 'No comment')) AS log_text
+                                FROM reviews r
+                                INNER JOIN tickets t ON r.ticket_id = t.ticket_id
+                                INNER JOIN attendees a ON t.attendee_id = a.attendee_id
+                                WHERE t.event_id = @eventId
+                             )
+                             ORDER BY log_time DESC
+                             LIMIT 50;";
 
             using MySqlCommand cmd = new(query, conn);
             cmd.Parameters.AddWithValue("@eventId", eventId);

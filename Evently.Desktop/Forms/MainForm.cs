@@ -13,7 +13,7 @@ namespace Evently.Forms
             InitializeComponent();
             currentUserLabel.Text = $"Signed in as:\n{Session.CurrentUsername} ({Session.CurrentRole})";
             FormClosing += MainForm_FormClosing;
-            ShowForm(new EventListForm(), "Manage Events", "Create events, set attendee capacities, and assign a manager.");
+            ShowForm(new DashboardForm(), "Live Dashboard", "Live headcount, entry progress, and attendee satisfaction metrics.");
         }
 
         private void ShowForm(Form form, string title, string subline)
