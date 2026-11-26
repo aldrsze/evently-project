@@ -63,7 +63,8 @@ namespace Evently.Core.Services
 
         public static bool AddUser(string username, string password, string email,
                                    string firstName, string lastName,
-                                   DateTime? birthdate, string role, bool isApproved)
+                                   DateTime? birthdate, string role, bool isApproved,
+                                   string createdBy)
         {
             username = username.Trim();
             email = email.Trim();
@@ -88,7 +89,21 @@ namespace Evently.Core.Services
 
             try
             {
-                return cmd.ExecuteNonQuery() > 0;
+                bool added = cmd.ExecuteNonQuery() > 0;
+
+                if (added)
+                {
+                    if (createdBy == "")
+                    {
+                        ActivityLogService.Add("users", $"Created account '{username}'.");
+                    }
+                    else
+                    {
+                        ActivityLogService.Add("users", $"Admin '{createdBy}' created account '{username}'.");
+                    }
+                }
+
+                return added;
             }
             catch (MySqlException ex)
             {
@@ -107,10 +122,18 @@ namespace Evently.Core.Services
             using MySqlCommand cmd = new(query, conn);
             cmd.Parameters.AddWithValue("@isActive", isActive);
             cmd.Parameters.AddWithValue("@username", username);
-            return cmd.ExecuteNonQuery() > 0;
+            bool changed = cmd.ExecuteNonQuery() > 0;
+
+            if (changed)
+            {
+                string action = isActive ? "Reactivated" : "Deactivated";
+                ActivityLogService.Add("users", $"{action} account '{username}'.");
+            }
+
+            return changed;
         }
 
-        public static bool SetUserApproved(string username, bool isApproved)
+        public static bool SetUserApproved(string username, bool isApproved, string approvedBy)
         {
             using var conn = DatabaseConnection.GetConnection();
             string query = @"UPDATE users
@@ -120,7 +143,14 @@ namespace Evently.Core.Services
             using MySqlCommand cmd = new(query, conn);
             cmd.Parameters.AddWithValue("@isApproved", isApproved);
             cmd.Parameters.AddWithValue("@username", username);
-            return cmd.ExecuteNonQuery() > 0;
+            bool changed = cmd.ExecuteNonQuery() > 0;
+
+            if (changed && isApproved)
+            {
+                ActivityLogService.Add("users", $"Admin '{approvedBy}' approved account '{username}'.");
+            }
+
+            return changed;
         }
 
         public static bool UpdateUser(string oldUsername, string newUsername, string role, string newPassword,
@@ -168,7 +198,14 @@ namespace Evently.Core.Services
 
             try
             {
-                return cmd.ExecuteNonQuery() > 0;
+                bool updated = cmd.ExecuteNonQuery() > 0;
+
+                if (updated)
+                {
+                    ActivityLogService.Add("users", $"Edited account '{newUsername}'.");
+                }
+
+                return updated;
             }
             catch (MySqlException ex)
             {

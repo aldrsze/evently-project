@@ -131,12 +131,25 @@ namespace Evently.Forms
                 }
 
                 LoadAvailableManagers(eventId);
+                RefreshActivityLog();
             }
             catch (Exception ex)
             {
                 resultLabel.Text = "Error loading managers.";
                 MessageBox.Show("Could not load managers: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void RefreshActivityLog()
+        {
+            string latest = ActivityLogService.GetLatest("organizers");
+
+            if (latest == "")
+            {
+                latest = "No activity yet.";
+            }
+
+            activityLogLabel.Text = latest;
         }
 
         private void LoadAvailableManagers(int eventId)

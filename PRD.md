@@ -117,6 +117,7 @@ Status reflects what is in the repository today, which is still the single-proje
 | 15 | Live Dashboard | A screen with an event selector, metrics, a doughnut chart, a check-ins-over-time chart, and a recent check-ins list (section 5.4). | Desktop | High | Layout, charts, and 5-second timer done with sample data. Real queries not written. |
 | 16 | Attendance Export (CSV) | Admin can export an event's attendee list (first name, last name, birthdate, email, check-in time, check-out time, rating, comment) as a CSV file. | Desktop, Core | High | Button only. |
 | 17 | Event Organizers | The schema stores organizers and links them to events through `event_organizers`, so one event can list several organizer contacts. A manager is typed when the event is created; after that, the Managers panel adds, edits, and removes them. The same email cannot be added twice to one event, and an email belongs to only one organizer. Removing a manager unlinks them from the event, and deletes the organizer row itself when no other event uses it. An event may have no manager, but it cannot take registrations until one is assigned. | Core, Desktop | Medium | Done. Manager fields on Add Event, add/edit/remove in the Managers panel, Edit Event leaves managers alone, registration blocked without a manager. |
+| 18 | Activity Log | Each desktop panel except the Dashboard shows an "Activity Log" card on the right with only the latest change for its own data: events, attendees, accounts, managers, or reviews. Every add, edit, and delete writes one row to `activity_log`, so a review submitted on the website also appears on the Reviews panel. | Core, Desktop, Web | Low | Done. |
 
 ### 5.2 Nice-to-Have Features (Stretch Goals)
 
@@ -220,7 +221,7 @@ Until the services exist, these values are sample data held in memory, and the t
                           └──────────┬───────────┘
                                      │ SQL
                              ┌───────▼────────┐
-                             │ MySQL (7 tables)│
+                             │ MySQL (8 tables)│
                              └────────────────┘
 ```
 
@@ -230,7 +231,7 @@ Until the services exist, these values are sample data held in memory, and the t
 
 **Why the site must be reached by IP:** `localhost` on a phone means the phone itself. The laptop runs the site on port 5000, and phones use `http://192.168.1.x:5000`. The address is set in `Evently.Web/Properties/launchSettings.json` (`"applicationUrl": "http://0.0.0.0:5000"`) so the app listens on all network cards, and Windows Firewall must allow it once. This is a local-network setup only; nothing is published to the internet.
 
-**Database Models (7 tables):**
+**Database Models (8 tables):**
 
 * **User**: `user_id`, `username`, `password` (BCrypt hash), `role` (ADMIN or STAFF), `is_active`.
 * **Event**: `event_id`, `name`, `venue`, `description`, `event_date`, `capacity`.
@@ -239,6 +240,7 @@ Until the services exist, these values are sample data held in memory, and the t
 * **EventOrganizer**: `event_id` + `organizer_id` (one row per organizer of an event).
 * **Ticket**: `ticket_id` (UUID used as the QR code), `attendee_id`, `event_id`, `ticket_emailed` (yes/no), `review_emailed` (yes/no), `checked_in_at` (empty until checked in), `checked_out_at` (empty until checked out).
 * **Review**: `ticket_id` (one review per ticket), `rating` (1 to 5), `comment` (optional), `submitted_at` (when the guest submitted the web form).
+* **ActivityLog**: `log_id`, `entity` (`events`, `attendees`, `users`, `organizers`, or `reviews`), `message`, `created_at` (one row per add, edit, or delete).
 
 **SQL Schema (`db/schema.sql`), four changes from today:**
 
@@ -309,6 +311,14 @@ CREATE TABLE reviews (
     submitted_at DATETIME NOT NULL,
     FOREIGN KEY (ticket_id) REFERENCES tickets(ticket_id) ON DELETE CASCADE
 );
+
+CREATE TABLE activity_log (
+    log_id     INT AUTO_INCREMENT PRIMARY KEY,
+    entity     VARCHAR(20)  NOT NULL,
+    message    VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_activity_entity (entity, log_id)
+);
 ```
 
 `db/schema.sql` holds only `CREATE TABLE` statements. `db/seed.sql` adds the demo admin (`admin` / `admin123`, change it after first sign-in) and nothing else. `setup.md` explains creating `evently_db`, importing both files, copying `db.config.example` to `db.config`, and starting both projects.
@@ -343,6 +353,7 @@ CREATE TABLE reviews (
 * **UI shell (desktop):** `MainForm` is a sidebar plus a content panel; each menu button swaps a child form into the panel (`TopLevel = false`, `Dock = Fill`). Login `Hide()`s itself and opens `MainForm` as a modal dialog, then shows itself again after logout.
 * **UI (web):** mobile-first, single column, big tap targets, Segoe UI with system fallbacks, and the same blue-and-slate palette as the desktop app. Pages must be readable in daylight at a door: large result text and no hover-only actions.
 * **Not stored on purpose:** Failed or duplicate scan attempts and import summaries are shown on screen but not saved.
+* **Activity log:** The service method that performs a change also writes the log row, so the desktop app and the website record the same events once (for example, a review submitted on the phone appears on the Reviews panel). A panel reads only `ORDER BY log_id DESC LIMIT 1` for its entity and refreshes the card whenever it reloads its grid. The card never lists history.
 
 **Known Gaps (code and doc not aligned yet):**
 
@@ -364,7 +375,7 @@ evently-project/
 ├── db.config                      (git-ignored, copied to both apps at build)
 ├── db.config.example
 ├── db/
-│   ├── schema.sql                 (7 tables, CREATE TABLE only)
+│   ├── schema.sql                 (8 tables, CREATE TABLE only)
 │   └── seed.sql                   (demo admin)
 │
 ├── Evently.Core/
@@ -381,6 +392,7 @@ evently-project/
 │       ├── QrCodeService.cs       (empty)
 │       ├── EmailService.cs        (empty: ticket and rating emails)
 │       ├── ReviewService.cs       (empty: save review, average)
+│       ├── ActivityLogService.cs  (written: write and read the latest change)
 │       └── DashboardService.cs    (empty)
 │
 ├── Evently.Desktop/

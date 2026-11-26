@@ -90,6 +90,20 @@ namespace Evently.Forms
             {
                 selectedDescriptionTextBox.Text = "";
             }
+
+            RefreshActivityLog();
+        }
+
+        private void RefreshActivityLog()
+        {
+            string latest = ActivityLogService.GetLatest("events");
+
+            if (latest == "")
+            {
+                latest = "No activity yet.";
+            }
+
+            activityLogLabel.Text = latest;
         }
 
         private void EventsDataGridView_SelectionChanged(object sender, EventArgs e)

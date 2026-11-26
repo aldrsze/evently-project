@@ -91,7 +91,7 @@ namespace Evently.Forms
 
             try
             {
-                if (!UserService.AddUser(username, password, email, firstName, lastName, birthdate, "ADMIN", true))
+                if (!UserService.AddUser(username, password, email, firstName, lastName, birthdate, "ADMIN", true, ""))
                 {
                     MessageBox.Show("That username or email is already taken.", "Sign up", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;

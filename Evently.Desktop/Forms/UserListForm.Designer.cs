@@ -30,6 +30,9 @@ namespace Evently.Forms
             this.addUserGroupBox = new System.Windows.Forms.GroupBox();
             this.guidancePanel = new System.Windows.Forms.Panel();
             this.guidanceGroupBox = new System.Windows.Forms.GroupBox();
+            this.activityLogPanel = new System.Windows.Forms.Panel();
+            this.activityLogGroupBox = new System.Windows.Forms.GroupBox();
+            this.activityLogLabel = new System.Windows.Forms.Label();
             this.usernameLabel = new System.Windows.Forms.Label();
             this.usernameTextBox = new System.Windows.Forms.TextBox();
             this.firstNameLabel = new System.Windows.Forms.Label();
@@ -58,6 +61,8 @@ namespace Evently.Forms
             this.addUserGroupBox.SuspendLayout();
             this.guidancePanel.SuspendLayout();
             this.guidanceGroupBox.SuspendLayout();
+            this.activityLogPanel.SuspendLayout();
+            this.activityLogGroupBox.SuspendLayout();
             this.actionPanel.SuspendLayout();
             this.SuspendLayout();
             // headerPanel
@@ -107,6 +112,7 @@ namespace Evently.Forms
             this.rightColumnPanel.BackColor = System.Drawing.Color.White;
             this.rightColumnPanel.Controls.Add(this.addUserWrapperPanel);
             this.rightColumnPanel.Controls.Add(this.guidancePanel);
+            this.rightColumnPanel.Controls.Add(this.activityLogPanel);
             this.rightColumnPanel.Dock = System.Windows.Forms.DockStyle.Right;
             this.rightColumnPanel.Location = new System.Drawing.Point(808, 12);
             this.rightColumnPanel.Name = "rightColumnPanel";
@@ -198,7 +204,7 @@ namespace Evently.Forms
             this.addUserWrapperPanel.Location = new System.Drawing.Point(12, 190);
             this.addUserWrapperPanel.Name = "addUserWrapperPanel";
             this.addUserWrapperPanel.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
-            this.addUserWrapperPanel.Size = new System.Drawing.Size(448, 388);
+            this.addUserWrapperPanel.Size = new System.Drawing.Size(448, 292);
             this.addUserWrapperPanel.TabIndex = 1;
             // addUserGroupBox
             this.addUserGroupBox.BackColor = System.Drawing.Color.White;
@@ -217,7 +223,7 @@ namespace Evently.Forms
             this.addUserGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.addUserGroupBox.Location = new System.Drawing.Point(0, 12);
             this.addUserGroupBox.Name = "addUserGroupBox";
-            this.addUserGroupBox.Size = new System.Drawing.Size(448, 376);
+            this.addUserGroupBox.Size = new System.Drawing.Size(448, 280);
             this.addUserGroupBox.TabIndex = 0;
             this.addUserGroupBox.TabStop = false;
             this.addUserGroupBox.Text = "Add User";
@@ -321,6 +327,37 @@ namespace Evently.Forms
             this.accountStatusGuidanceLabel.TabIndex = 3;
             this.accountStatusGuidanceLabel.Text = "Approve new signups, or deactivate accounts that should not sign in.";
             this.accountStatusGuidanceLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            // activityLogPanel
+            this.activityLogPanel.BackColor = System.Drawing.Color.White;
+            this.activityLogPanel.Controls.Add(this.activityLogGroupBox);
+            this.activityLogPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.activityLogPanel.Location = new System.Drawing.Point(12, 0);
+            this.activityLogPanel.Name = "activityLogPanel";
+            this.activityLogPanel.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.activityLogPanel.Size = new System.Drawing.Size(448, 96);
+            this.activityLogPanel.TabIndex = 4;
+            // activityLogGroupBox
+            this.activityLogGroupBox.BackColor = System.Drawing.Color.White;
+            this.activityLogGroupBox.Controls.Add(this.activityLogLabel);
+            this.activityLogGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.activityLogGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.activityLogGroupBox.Name = "activityLogGroupBox";
+            this.activityLogGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
+            this.activityLogGroupBox.Size = new System.Drawing.Size(448, 88);
+            this.activityLogGroupBox.TabIndex = 0;
+            this.activityLogGroupBox.TabStop = false;
+            this.activityLogGroupBox.Text = "Activity Log";
+            // activityLogLabel
+            this.activityLogLabel.AutoSize = false;
+            this.activityLogLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.activityLogLabel.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.activityLogLabel.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.activityLogLabel.Location = new System.Drawing.Point(8, 24);
+            this.activityLogLabel.Name = "activityLogLabel";
+            this.activityLogLabel.Size = new System.Drawing.Size(432, 56);
+            this.activityLogLabel.TabIndex = 0;
+            this.activityLogLabel.Text = "No activity yet.";
+            this.activityLogLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // actionPanel
             this.actionPanel.BackColor = System.Drawing.Color.White;
             this.actionPanel.Controls.Add(this.addButton);
@@ -409,6 +446,9 @@ namespace Evently.Forms
             this.guidancePanel.ResumeLayout(false);
             this.guidanceGroupBox.ResumeLayout(false);
             this.guidanceGroupBox.PerformLayout();
+            this.activityLogGroupBox.ResumeLayout(false);
+            this.activityLogGroupBox.PerformLayout();
+            this.activityLogPanel.ResumeLayout(false);
             this.actionPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -443,6 +483,9 @@ namespace Evently.Forms
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Panel guidancePanel;
         private System.Windows.Forms.GroupBox guidanceGroupBox;
+        private System.Windows.Forms.Panel activityLogPanel;
+        private System.Windows.Forms.GroupBox activityLogGroupBox;
+        private System.Windows.Forms.Label activityLogLabel;
         private System.Windows.Forms.Panel actionPanel;
         private System.Windows.Forms.Label accountStatusGuidanceLabel;
         private System.Windows.Forms.Button approveButton;

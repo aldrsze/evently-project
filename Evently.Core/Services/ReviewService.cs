@@ -111,9 +111,15 @@ namespace Evently.Core.Services
 
             using var conn = DatabaseConnection.GetConnection();
 
+            string attendeeName = "";
+            string eventName = "";
             string checkQuery = @"SELECT t.checked_in_at,
+                                         CONCAT(a.first_name, ' ', a.last_name) AS attendee_name,
+                                         e.name AS event_name,
                                          (SELECT COUNT(*) FROM reviews r WHERE r.ticket_id = t.ticket_id) AS has_review
                                   FROM tickets t
+                                  INNER JOIN attendees a ON t.attendee_id = a.attendee_id
+                                  INNER JOIN events e ON t.event_id = e.event_id
                                   WHERE t.ticket_id = @ticketId;";
 
             using (MySqlCommand checkCmd = new(checkQuery, conn))
@@ -134,26 +140,35 @@ namespace Evently.Core.Services
                 {
                     return false;
                 }
+
+                attendeeName = Convert.ToString(reader["attendee_name"]) ?? "";
+                eventName = Convert.ToString(reader["event_name"]) ?? "";
             }
 
             string insertQuery = @"INSERT INTO reviews (ticket_id, rating, comment, submitted_at)
                                    VALUES (@ticketId, @rating, @comment, NOW());";
 
-            using (MySqlCommand insertCmd = new(insertQuery, conn))
-            {
-                insertCmd.Parameters.AddWithValue("@ticketId", ticketId);
-                insertCmd.Parameters.AddWithValue("@rating", rating);
-                insertCmd.Parameters.AddWithValue("@comment", string.IsNullOrEmpty(comment) ? DBNull.Value : comment);
+            using MySqlCommand insertCmd = new(insertQuery, conn);
+            insertCmd.Parameters.AddWithValue("@ticketId", ticketId);
+            insertCmd.Parameters.AddWithValue("@rating", rating);
+            insertCmd.Parameters.AddWithValue("@comment", string.IsNullOrEmpty(comment) ? DBNull.Value : comment);
 
-                try
+            try
+            {
+                bool saved = insertCmd.ExecuteNonQuery() > 0;
+
+                if (saved)
                 {
-                    return insertCmd.ExecuteNonQuery() > 0;
+                    string logName = attendeeName == "" ? "an attendee" : attendeeName;
+                    ActivityLogService.Add("reviews", $"New {rating}/5 review from {logName} for event '{eventName}'.");
                 }
-                catch (MySqlException ex)
-                {
-                    if (ex.Number == 1062) { return false; }
-                    throw;
-                }
+
+                return saved;
+            }
+            catch (MySqlException ex)
+            {
+                if (ex.Number == 1062) { return false; }
+                throw;
             }
         }
     }

@@ -31,6 +31,9 @@ namespace Evently.Forms
             this.commentPreviewGroupBox = new System.Windows.Forms.GroupBox();
             this.selectedCommentTextBox = new System.Windows.Forms.TextBox();
             this.resultLabel = new System.Windows.Forms.Label();
+            this.activityLogPanel = new System.Windows.Forms.Panel();
+            this.activityLogGroupBox = new System.Windows.Forms.GroupBox();
+            this.activityLogLabel = new System.Windows.Forms.Label();
             this.headerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.rightColumnPanel.SuspendLayout();
@@ -39,6 +42,8 @@ namespace Evently.Forms
             ((System.ComponentModel.ISupportInitialize)(this.reviewsDataGridView)).BeginInit();
             this.commentPreviewPanel.SuspendLayout();
             this.commentPreviewGroupBox.SuspendLayout();
+            this.activityLogPanel.SuspendLayout();
+            this.activityLogGroupBox.SuspendLayout();
             this.SuspendLayout();
             // headerPanel
             this.headerPanel.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
@@ -86,6 +91,7 @@ namespace Evently.Forms
             // rightColumnPanel
             this.rightColumnPanel.BackColor = System.Drawing.Color.White;
             this.rightColumnPanel.Controls.Add(this.commentPreviewPanel);
+            this.rightColumnPanel.Controls.Add(this.activityLogPanel);
             this.rightColumnPanel.Dock = System.Windows.Forms.DockStyle.Right;
             this.rightColumnPanel.Location = new System.Drawing.Point(808, 52);
             this.rightColumnPanel.Name = "rightColumnPanel";
@@ -192,7 +198,7 @@ namespace Evently.Forms
             this.commentPreviewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.commentPreviewPanel.Location = new System.Drawing.Point(12, 0);
             this.commentPreviewPanel.Name = "commentPreviewPanel";
-            this.commentPreviewPanel.Size = new System.Drawing.Size(448, 592);
+            this.commentPreviewPanel.Size = new System.Drawing.Size(448, 496);
             this.commentPreviewPanel.TabIndex = 5;
             // commentPreviewGroupBox
             this.commentPreviewGroupBox.BackColor = System.Drawing.Color.White;
@@ -202,7 +208,7 @@ namespace Evently.Forms
             this.commentPreviewGroupBox.Location = new System.Drawing.Point(0, 0);
             this.commentPreviewGroupBox.Name = "commentPreviewGroupBox";
             this.commentPreviewGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
-            this.commentPreviewGroupBox.Size = new System.Drawing.Size(448, 592);
+            this.commentPreviewGroupBox.Size = new System.Drawing.Size(448, 496);
             this.commentPreviewGroupBox.TabIndex = 0;
             this.commentPreviewGroupBox.TabStop = false;
             this.commentPreviewGroupBox.Text = "Review Comment Details";
@@ -216,17 +222,48 @@ namespace Evently.Forms
             this.selectedCommentTextBox.Name = "selectedCommentTextBox";
             this.selectedCommentTextBox.ReadOnly = true;
             this.selectedCommentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.selectedCommentTextBox.Size = new System.Drawing.Size(432, 534);
+            this.selectedCommentTextBox.Size = new System.Drawing.Size(432, 438);
             this.selectedCommentTextBox.TabIndex = 0;
             // resultLabel
             this.resultLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.resultLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
-            this.resultLabel.Location = new System.Drawing.Point(8, 558);
+            this.resultLabel.Location = new System.Drawing.Point(8, 462);
             this.resultLabel.Name = "resultLabel";
             this.resultLabel.Size = new System.Drawing.Size(432, 26);
             this.resultLabel.TabIndex = 1;
             this.resultLabel.Text = "";
             this.resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // activityLogPanel
+            this.activityLogPanel.BackColor = System.Drawing.Color.White;
+            this.activityLogPanel.Controls.Add(this.activityLogGroupBox);
+            this.activityLogPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.activityLogPanel.Location = new System.Drawing.Point(12, 0);
+            this.activityLogPanel.Name = "activityLogPanel";
+            this.activityLogPanel.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.activityLogPanel.Size = new System.Drawing.Size(448, 96);
+            this.activityLogPanel.TabIndex = 6;
+            // activityLogGroupBox
+            this.activityLogGroupBox.BackColor = System.Drawing.Color.White;
+            this.activityLogGroupBox.Controls.Add(this.activityLogLabel);
+            this.activityLogGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.activityLogGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.activityLogGroupBox.Name = "activityLogGroupBox";
+            this.activityLogGroupBox.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
+            this.activityLogGroupBox.Size = new System.Drawing.Size(448, 88);
+            this.activityLogGroupBox.TabIndex = 0;
+            this.activityLogGroupBox.TabStop = false;
+            this.activityLogGroupBox.Text = "Activity Log";
+            // activityLogLabel
+            this.activityLogLabel.AutoSize = false;
+            this.activityLogLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.activityLogLabel.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.activityLogLabel.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.activityLogLabel.Location = new System.Drawing.Point(8, 24);
+            this.activityLogLabel.Name = "activityLogLabel";
+            this.activityLogLabel.Size = new System.Drawing.Size(432, 56);
+            this.activityLogLabel.TabIndex = 0;
+            this.activityLogLabel.Text = "No activity yet.";
+            this.activityLogLabel.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             // ReviewsForm
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -252,6 +289,9 @@ namespace Evently.Forms
             this.commentPreviewGroupBox.ResumeLayout(false);
             this.commentPreviewGroupBox.PerformLayout();
             this.commentPreviewPanel.ResumeLayout(false);
+            this.activityLogGroupBox.ResumeLayout(false);
+            this.activityLogGroupBox.PerformLayout();
+            this.activityLogPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -274,5 +314,8 @@ namespace Evently.Forms
         private System.Windows.Forms.GroupBox commentPreviewGroupBox;
         private System.Windows.Forms.TextBox selectedCommentTextBox;
         private System.Windows.Forms.Label resultLabel;
+        private System.Windows.Forms.Panel activityLogPanel;
+        private System.Windows.Forms.GroupBox activityLogGroupBox;
+        private System.Windows.Forms.Label activityLogLabel;
     }
 }

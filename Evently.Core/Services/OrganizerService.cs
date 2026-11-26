@@ -133,12 +133,36 @@ namespace Evently.Core.Services
                 }
             }
 
-            return LinkOrganizerToEvent(eventId, organizerId);
+            bool linked = LinkOrganizerToEvent(eventId, organizerId);
+
+            if (linked)
+            {
+                string eventName = GetEventName(eventId);
+                ActivityLogService.Add("organizers", $"Added manager '{fullName}' to event '{eventName}'.");
+            }
+
+            return linked;
+        }
+
+        // the log message names the event, so a manager line means something outside this screen
+        private static string GetEventName(int eventId)
+        {
+            using var conn = DatabaseConnection.GetConnection();
+            string query = "SELECT name FROM events WHERE event_id = @eventId;";
+            using MySqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@eventId", eventId);
+            return Convert.ToString(cmd.ExecuteScalar()) ?? "";
         }
 
         public static bool RemoveOrganizerFromEvent(int eventId, int organizerId)
         {
             using var conn = DatabaseConnection.GetConnection();
+
+            // read the name first, because the row can be deleted below
+            string nameQuery = "SELECT full_name FROM organizers WHERE organizer_id = @organizerId;";
+            using MySqlCommand nameCmd = new(nameQuery, conn);
+            nameCmd.Parameters.AddWithValue("@organizerId", organizerId);
+            string managerName = Convert.ToString(nameCmd.ExecuteScalar()) ?? "";
 
             string unlinkQuery = "DELETE FROM event_organizers WHERE event_id = @eventId AND organizer_id = @organizerId;";
             using (MySqlCommand unlinkCmd = new(unlinkQuery, conn))
@@ -160,6 +184,10 @@ namespace Evently.Core.Services
             using MySqlCommand cleanupCmd = new(cleanupQuery, conn);
             cleanupCmd.Parameters.AddWithValue("@organizerId", organizerId);
             cleanupCmd.ExecuteNonQuery();
+
+            string logName = managerName == "" ? "manager" : managerName;
+            string eventName = GetEventName(eventId);
+            ActivityLogService.Add("organizers", $"Removed manager '{logName}' from event '{eventName}'.");
 
             return true;
         }
@@ -197,6 +225,7 @@ namespace Evently.Core.Services
             try
             {
                 cmd.ExecuteNonQuery();
+                ActivityLogService.Add("organizers", $"Edited manager '{fullName}'.");
                 return true;
             }
             catch (MySqlException ex)

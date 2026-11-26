@@ -32,6 +32,19 @@ namespace Evently.Forms
         private void LoadAttendees(int eventId)
         {
             attendeesDataGridView.DataSource = TicketService.GetAttendeesByEvent(eventId);
+            RefreshActivityLog();
+        }
+
+        private void RefreshActivityLog()
+        {
+            string latest = ActivityLogService.GetLatest("attendees");
+
+            if (latest == "")
+            {
+                latest = "No activity yet.";
+            }
+
+            activityLogLabel.Text = latest;
         }
 
         private void EventComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -124,7 +137,7 @@ namespace Evently.Forms
             {
                 try
                 {
-                    if (TicketService.UpdateAttendee(dialog.AttendeeIdValue, dialog.FirstNameValue, dialog.LastNameValue, dialog.EmailValue, dialog.BirthdateValue))
+                    if (TicketService.UpdateAttendee(eventId, dialog.AttendeeIdValue, dialog.FirstNameValue, dialog.LastNameValue, dialog.EmailValue, dialog.BirthdateValue))
                     {
                         MessageBox.Show("Attendee updated.", "Attendee saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadAttendees(eventId);

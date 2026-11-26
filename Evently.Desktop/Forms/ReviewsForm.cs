@@ -34,7 +34,20 @@ namespace Evently.Forms
             int count = table.Rows.Count;
             resultLabel.Text = count == 0 ? "No reviews yet for this event." : $"{count} review(s)";
 
+            RefreshActivityLog();
             UpdateSelectedComment();
+        }
+
+        private void RefreshActivityLog()
+        {
+            string latest = ActivityLogService.GetLatest("reviews");
+
+            if (latest == "")
+            {
+                latest = "No activity yet.";
+            }
+
+            activityLogLabel.Text = latest;
         }
 
         private void ReviewsDataGridView_SelectionChanged(object sender, EventArgs e)
