@@ -26,9 +26,6 @@ namespace Evently.Forms
             System.Windows.Forms.DataVisualization.Charting.Legend barLegend = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series barSeries = new System.Windows.Forms.DataVisualization.Charting.Series();
 
-            this.headerPanel = new System.Windows.Forms.Panel();
-            this.titleLabel = new System.Windows.Forms.Label();
-            this.heroSublineLabel = new System.Windows.Forms.Label();
             this.contentPanel = new System.Windows.Forms.Panel();
             this.topPanel = new System.Windows.Forms.Panel();
             this.eventLabel = new System.Windows.Forms.Label();
@@ -87,7 +84,6 @@ namespace Evently.Forms
 
             this.dashboardTimer = new System.Windows.Forms.Timer(this.components);
 
-            this.headerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
             this.topPanel.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -108,50 +104,15 @@ namespace Evently.Forms
             this.logsGroupBox.SuspendLayout();
             this.SuspendLayout();
 
-            // headerPanel
-            this.headerPanel.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.headerPanel.Controls.Add(this.titleLabel);
-            this.headerPanel.Controls.Add(this.heroSublineLabel);
-            this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.headerPanel.Location = new System.Drawing.Point(0, 0);
-            this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Padding = new System.Windows.Forms.Padding(16, 0, 16, 0);
-            this.headerPanel.Size = new System.Drawing.Size(1184, 64);
-            this.headerPanel.TabIndex = 0;
-
-            // titleLabel
-            this.titleLabel.AutoSize = true;
-            this.titleLabel.BackColor = System.Drawing.Color.Transparent;
-            this.titleLabel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.titleLabel.ForeColor = System.Drawing.Color.White;
-            this.titleLabel.Location = new System.Drawing.Point(14, 8);
-            this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(188, 32);
-            this.titleLabel.TabIndex = 0;
-            this.titleLabel.Text = "Live Dashboard";
-            this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
-            // heroSublineLabel
-            this.heroSublineLabel.AutoSize = true;
-            this.heroSublineLabel.BackColor = System.Drawing.Color.Transparent;
-            this.heroSublineLabel.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.heroSublineLabel.ForeColor = System.Drawing.Color.FromArgb(218, 230, 245);
-            this.heroSublineLabel.Location = new System.Drawing.Point(16, 40);
-            this.heroSublineLabel.Name = "heroSublineLabel";
-            this.heroSublineLabel.Size = new System.Drawing.Size(462, 17);
-            this.heroSublineLabel.TabIndex = 1;
-            this.heroSublineLabel.Text = "Real-time attendance tracking, timeline analysis, satisfaction ratings, and activity logs.";
-            this.heroSublineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
             // contentPanel
             this.contentPanel.BackColor = System.Drawing.Color.FromArgb(245, 247, 250);
             this.contentPanel.Controls.Add(this.mainLayoutPanel);
             this.contentPanel.Controls.Add(this.topPanel);
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contentPanel.Location = new System.Drawing.Point(0, 64);
+            this.contentPanel.Location = new System.Drawing.Point(0, 0);
             this.contentPanel.Name = "contentPanel";
             this.contentPanel.Padding = new System.Windows.Forms.Padding(12, 8, 12, 12);
-            this.contentPanel.Size = new System.Drawing.Size(1184, 716);
+            this.contentPanel.Size = new System.Drawing.Size(1184, 780);
             this.contentPanel.TabIndex = 1;
 
             // topPanel
@@ -705,7 +666,6 @@ namespace Evently.Forms
             this.ClientSize = new System.Drawing.Size(1184, 780);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Controls.Add(this.contentPanel);
-            this.Controls.Add(this.headerPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.MaximizeBox = true;
             this.MinimumSize = new System.Drawing.Size(1024, 700);
@@ -714,8 +674,6 @@ namespace Evently.Forms
             this.Text = "Live Dashboard";
             this.WindowState = System.Windows.Forms.FormWindowState.Normal;
 
-            this.headerPanel.ResumeLayout(false);
-            this.headerPanel.PerformLayout();
             this.contentPanel.ResumeLayout(false);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
@@ -742,9 +700,6 @@ namespace Evently.Forms
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.Panel headerPanel;
-        private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Label heroSublineLabel;
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Label eventLabel;

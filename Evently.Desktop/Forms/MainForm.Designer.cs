@@ -104,11 +104,11 @@ namespace Evently.Forms
             // menuPanel
             this.menuPanel.AutoScroll = true;
             this.menuPanel.BackColor = System.Drawing.Color.FromArgb(249, 249, 249);
+            this.menuPanel.Controls.Add(this.dashboardButton);
             this.menuPanel.Controls.Add(this.eventsButton);
             this.menuPanel.Controls.Add(this.attendeesButton);
             this.menuPanel.Controls.Add(this.managersButton);
             this.menuPanel.Controls.Add(this.reviewsButton);
-            this.menuPanel.Controls.Add(this.dashboardButton);
             this.menuPanel.Controls.Add(this.usersButton);
             this.menuPanel.Controls.Add(this.currentUserLabel);
             this.menuPanel.Controls.Add(this.logoutButton);
@@ -126,56 +126,56 @@ namespace Evently.Forms
             this.menuPanel.TabIndex = 0;
             this.menuPanel.WrapContents = false;
             // eventsButton
-            this.eventsButton.Location = new System.Drawing.Point(3, 4);
+            this.eventsButton.Location = new System.Drawing.Point(3, 52);
             this.eventsButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.eventsButton.Name = "eventsButton";
             this.eventsButton.Size = new System.Drawing.Size(200, 40);
-            this.eventsButton.TabIndex = 0;
+            this.eventsButton.TabIndex = 1;
             this.eventsButton.Text = "&Events";
             this.eventsButton.UseVisualStyleBackColor = true;
             this.eventsButton.Click += new System.EventHandler(this.EventsButton_Click);
             // attendeesButton
-            this.attendeesButton.Location = new System.Drawing.Point(3, 52);
+            this.attendeesButton.Location = new System.Drawing.Point(3, 100);
             this.attendeesButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.attendeesButton.Name = "attendeesButton";
             this.attendeesButton.Size = new System.Drawing.Size(200, 40);
-            this.attendeesButton.TabIndex = 1;
+            this.attendeesButton.TabIndex = 2;
             this.attendeesButton.Text = "At&tendees";
             this.attendeesButton.UseVisualStyleBackColor = true;
             this.attendeesButton.Click += new System.EventHandler(this.AttendeesButton_Click);
             // managersButton
-            this.managersButton.Location = new System.Drawing.Point(3, 100);
+            this.managersButton.Location = new System.Drawing.Point(3, 148);
             this.managersButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.managersButton.Name = "managersButton";
             this.managersButton.Size = new System.Drawing.Size(200, 40);
-            this.managersButton.TabIndex = 2;
+            this.managersButton.TabIndex = 3;
             this.managersButton.Text = "Ma&nagers";
             this.managersButton.UseVisualStyleBackColor = true;
             this.managersButton.Click += new System.EventHandler(this.ManagersButton_Click);
             // reviewsButton
-            this.reviewsButton.Location = new System.Drawing.Point(3, 148);
+            this.reviewsButton.Location = new System.Drawing.Point(3, 196);
             this.reviewsButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.reviewsButton.Name = "reviewsButton";
             this.reviewsButton.Size = new System.Drawing.Size(200, 40);
-            this.reviewsButton.TabIndex = 3;
+            this.reviewsButton.TabIndex = 4;
             this.reviewsButton.Text = "&Reviews";
             this.reviewsButton.UseVisualStyleBackColor = true;
             this.reviewsButton.Click += new System.EventHandler(this.ReviewsButton_Click);
             // dashboardButton
-            this.dashboardButton.Location = new System.Drawing.Point(3, 244);
+            this.dashboardButton.Location = new System.Drawing.Point(3, 4);
             this.dashboardButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dashboardButton.Name = "dashboardButton";
             this.dashboardButton.Size = new System.Drawing.Size(200, 40);
-            this.dashboardButton.TabIndex = 5;
+            this.dashboardButton.TabIndex = 0;
             this.dashboardButton.Text = "&Live Dashboard";
             this.dashboardButton.UseVisualStyleBackColor = true;
             this.dashboardButton.Click += new System.EventHandler(this.DashboardButton_Click);
             // usersButton
-            this.usersButton.Location = new System.Drawing.Point(3, 292);
+            this.usersButton.Location = new System.Drawing.Point(3, 244);
             this.usersButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.usersButton.Name = "usersButton";
             this.usersButton.Size = new System.Drawing.Size(200, 40);
-            this.usersButton.TabIndex = 6;
+            this.usersButton.TabIndex = 5;
             this.usersButton.Text = "&Manage Users";
             this.usersButton.UseVisualStyleBackColor = true;
             this.usersButton.Click += new System.EventHandler(this.UsersButton_Click);
