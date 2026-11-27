@@ -41,6 +41,13 @@
                             <dt>Venue</dt>
                             <dd>@ev.Venue</dd>
                         </div>
+                        @if (!string.IsNullOrEmpty(ev.ManagerName))
+                        {
+                            <div>
+                                <dt>Organizer</dt>
+                                <dd>@ev.ManagerName @(!string.IsNullOrEmpty(ev.ManagerEmail) ? $"({ev.ManagerEmail})" : "")</dd>
+                            </div>
+                        }
                     </dl>
                     <p>@ev.Description</p>
                     @if (ev.IsRegistrationOpen && ev.RemainingCapacity > 0)

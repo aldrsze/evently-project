@@ -17,6 +17,16 @@ public class IndexModel : PageModel
         {
             int eventId = Convert.ToInt32(row["event_id"]);
 
+            string managerName = "";
+            string managerEmail = "";
+            DataTable managersTable = OrganizerService.GetOrganizersByEvent(eventId);
+            if (managersTable.Rows.Count > 0)
+            {
+                DataRow mRow = managersTable.Rows[0];
+                managerName = mRow["full_name"].ToString() ?? "";
+                managerEmail = mRow["email"].ToString() ?? "";
+            }
+
             UpcomingEvents.Add(new EventCard
             {
                 EventId = eventId,
@@ -26,7 +36,9 @@ public class IndexModel : PageModel
                 EventDate = DateTime.TryParse(row["event_date"].ToString(), out DateTime dt) ? dt : DateTime.Now,
                 Capacity = Convert.ToInt32(row["capacity"]),
                 RemainingCapacity = EventService.GetRemainingCapacity(eventId),
-                IsRegistrationOpen = EventService.IsRegistrationOpen(eventId)
+                IsRegistrationOpen = EventService.IsRegistrationOpen(eventId),
+                ManagerName = managerName,
+                ManagerEmail = managerEmail
             });
         }
     }
@@ -41,5 +53,7 @@ public class IndexModel : PageModel
         public int Capacity { get; set; }
         public int RemainingCapacity { get; set; }
         public bool IsRegistrationOpen { get; set; }
+        public string ManagerName { get; set; } = string.Empty;
+        public string ManagerEmail { get; set; } = string.Empty;
     }
 }
