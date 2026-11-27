@@ -44,9 +44,16 @@ public class RegisterModel : PageModel
         {
             SelectedEvent = AvailableEvents.Find(e => e.EventId == EventId.Value);
 
-            if (SelectedEvent == null && !EventService.IsRegistrationOpen(EventId.Value))
+            if (SelectedEvent == null)
             {
-                ErrorMessage = "Registration for this event has closed.";
+                if (!EventService.IsRegistrationOpen(EventId.Value))
+                {
+                    ErrorMessage = "Registration for this event has closed.";
+                }
+                else if (EventService.GetRemainingCapacity(EventId.Value) <= 0)
+                {
+                    ErrorMessage = "This event has reached full capacity.";
+                }
             }
         }
     }
@@ -74,6 +81,12 @@ public class RegisterModel : PageModel
         if (!EventService.IsRegistrationOpen(EventId.Value))
         {
             ErrorMessage = "Registration for this event has closed.";
+            return Page();
+        }
+
+        if (EventService.GetRemainingCapacity(EventId.Value) <= 0)
+        {
+            ErrorMessage = "This event has reached full capacity.";
             return Page();
         }
 
@@ -111,6 +124,11 @@ public class RegisterModel : PageModel
             }
 
             if (!EventService.IsRegistrationOpen(eventId))
+            {
+                continue;
+            }
+
+            if (EventService.GetRemainingCapacity(eventId) <= 0)
             {
                 continue;
             }

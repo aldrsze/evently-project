@@ -55,6 +55,12 @@ namespace Evently.Core.Services
                 return false;
             }
 
+            // cannot register once event reaches capacity
+            if (EventService.GetRemainingCapacity(eventId) <= 0)
+            {
+                return false;
+            }
+
             using var conn = DatabaseConnection.GetConnection();
 
             int attendeeId = 0;
