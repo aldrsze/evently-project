@@ -69,6 +69,7 @@ namespace Evently.Forms
             // Upper Charts Row
             this.upperChartsLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.timelineGroupBox = new System.Windows.Forms.GroupBox();
+            this.timelineHelperLabel = new System.Windows.Forms.Label();
             this.timelineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.timelineNavPanel = new System.Windows.Forms.Panel();
             this.prevNavButton = new System.Windows.Forms.Button();
@@ -77,11 +78,13 @@ namespace Evently.Forms
             this.resetFilterButton = new System.Windows.Forms.Button();
 
             this.doughnutGroupBox = new System.Windows.Forms.GroupBox();
+            this.doughnutHelperLabel = new System.Windows.Forms.Label();
             this.attendanceDoughnutChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
 
             // Lower Row
             this.lowerLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ratingsGroupBox = new System.Windows.Forms.GroupBox();
+            this.ratingsHelperLabel = new System.Windows.Forms.Label();
             this.ratingsBarChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
 
             this.logsGroupBox = new System.Windows.Forms.GroupBox();
@@ -451,9 +454,10 @@ namespace Evently.Forms
             this.upperChartsLayoutPanel.Size = new System.Drawing.Size(1160, 279);
             this.upperChartsLayoutPanel.TabIndex = 1;
 
-            // timelineGroupBox (Vertical Bar Chart with navigation on bottom)
+            // timelineGroupBox
             this.timelineGroupBox.BackColor = System.Drawing.Color.White;
             this.timelineGroupBox.Controls.Add(this.timelineChart);
+            this.timelineGroupBox.Controls.Add(this.timelineHelperLabel);
             this.timelineGroupBox.Controls.Add(this.timelineNavPanel);
             this.timelineGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timelineGroupBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
@@ -465,7 +469,19 @@ namespace Evently.Forms
             this.timelineGroupBox.Size = new System.Drawing.Size(634, 275);
             this.timelineGroupBox.TabIndex = 0;
             this.timelineGroupBox.TabStop = false;
-            this.timelineGroupBox.Text = "Check-Ins Volume (Vertical Bar Chart)";
+            this.timelineGroupBox.Text = "Check-In Timeline";
+
+            // timelineHelperLabel
+            this.timelineHelperLabel.AutoSize = false;
+            this.timelineHelperLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.timelineHelperLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.timelineHelperLabel.ForeColor = System.Drawing.Color.FromArgb(120, 120, 120);
+            this.timelineHelperLabel.Location = new System.Drawing.Point(6, 22);
+            this.timelineHelperLabel.Name = "timelineHelperLabel";
+            this.timelineHelperLabel.Size = new System.Drawing.Size(622, 18);
+            this.timelineHelperLabel.TabIndex = 2;
+            this.timelineHelperLabel.Text = "Hourly attendee check-ins to monitor peak arrival times and venue flow";
+            this.timelineHelperLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
             // timelineChart
             columnChartArea.AxisX.Interval = 1D;
@@ -565,9 +581,10 @@ namespace Evently.Forms
             this.resetFilterButton.UseVisualStyleBackColor = true;
             this.resetFilterButton.Click += new System.EventHandler(this.ResetFilterButton_Click);
 
-            // doughnutGroupBox (Doughnut Chart)
+            // doughnutGroupBox
             this.doughnutGroupBox.BackColor = System.Drawing.Color.White;
             this.doughnutGroupBox.Controls.Add(this.attendanceDoughnutChart);
+            this.doughnutGroupBox.Controls.Add(this.doughnutHelperLabel);
             this.doughnutGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.doughnutGroupBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.doughnutGroupBox.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
@@ -578,7 +595,19 @@ namespace Evently.Forms
             this.doughnutGroupBox.Size = new System.Drawing.Size(518, 275);
             this.doughnutGroupBox.TabIndex = 1;
             this.doughnutGroupBox.TabStop = false;
-            this.doughnutGroupBox.Text = "Attendance Status (Doughnut Chart)";
+            this.doughnutGroupBox.Text = "Attendance Breakdown";
+
+            // doughnutHelperLabel
+            this.doughnutHelperLabel.AutoSize = false;
+            this.doughnutHelperLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.doughnutHelperLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.doughnutHelperLabel.ForeColor = System.Drawing.Color.FromArgb(120, 120, 120);
+            this.doughnutHelperLabel.Location = new System.Drawing.Point(6, 22);
+            this.doughnutHelperLabel.Name = "doughnutHelperLabel";
+            this.doughnutHelperLabel.Size = new System.Drawing.Size(506, 18);
+            this.doughnutHelperLabel.TabIndex = 1;
+            this.doughnutHelperLabel.Text = "Live guest distribution: inside venue, checked out, and not yet arrived";
+            this.doughnutHelperLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
             // attendanceDoughnutChart
             doughnutChartArea.BackColor = System.Drawing.Color.White;
@@ -616,9 +645,10 @@ namespace Evently.Forms
             this.lowerLayoutPanel.Size = new System.Drawing.Size(1160, 285);
             this.lowerLayoutPanel.TabIndex = 2;
 
-            // ratingsGroupBox (Horizontal Bar Chart)
+            // ratingsGroupBox
             this.ratingsGroupBox.BackColor = System.Drawing.Color.White;
             this.ratingsGroupBox.Controls.Add(this.ratingsBarChart);
+            this.ratingsGroupBox.Controls.Add(this.ratingsHelperLabel);
             this.ratingsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ratingsGroupBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.ratingsGroupBox.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
@@ -629,7 +659,19 @@ namespace Evently.Forms
             this.ratingsGroupBox.Size = new System.Drawing.Size(483, 281);
             this.ratingsGroupBox.TabIndex = 0;
             this.ratingsGroupBox.TabStop = false;
-            this.ratingsGroupBox.Text = "Review Ratings (Horizontal Bar Chart)";
+            this.ratingsGroupBox.Text = "Rating Distribution";
+
+            // ratingsHelperLabel
+            this.ratingsHelperLabel.AutoSize = false;
+            this.ratingsHelperLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ratingsHelperLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.ratingsHelperLabel.ForeColor = System.Drawing.Color.FromArgb(120, 120, 120);
+            this.ratingsHelperLabel.Location = new System.Drawing.Point(6, 22);
+            this.ratingsHelperLabel.Name = "ratingsHelperLabel";
+            this.ratingsHelperLabel.Size = new System.Drawing.Size(471, 18);
+            this.ratingsHelperLabel.TabIndex = 1;
+            this.ratingsHelperLabel.Text = "Total verified reviews categorized across 1 to 5 star ratings";
+            this.ratingsHelperLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
             // ratingsBarChart
             barChartArea.AxisX.Interval = 1D;
@@ -678,7 +720,7 @@ namespace Evently.Forms
             this.logsGroupBox.Size = new System.Drawing.Size(669, 281);
             this.logsGroupBox.TabIndex = 1;
             this.logsGroupBox.TabStop = false;
-            this.logsGroupBox.Text = "Live System & Activity Logs";
+            this.logsGroupBox.Text = "Live Event Activity Feed";
 
             // logsHeaderLabel
             this.logsHeaderLabel.BackColor = System.Drawing.Color.FromArgb(240, 244, 250);
@@ -793,6 +835,7 @@ namespace Evently.Forms
 
         private System.Windows.Forms.TableLayoutPanel upperChartsLayoutPanel;
         private System.Windows.Forms.GroupBox timelineGroupBox;
+        private System.Windows.Forms.Label timelineHelperLabel;
         private System.Windows.Forms.DataVisualization.Charting.Chart timelineChart;
         private System.Windows.Forms.Panel timelineNavPanel;
         private System.Windows.Forms.Button prevNavButton;
@@ -801,10 +844,12 @@ namespace Evently.Forms
         private System.Windows.Forms.Button resetFilterButton;
 
         private System.Windows.Forms.GroupBox doughnutGroupBox;
+        private System.Windows.Forms.Label doughnutHelperLabel;
         private System.Windows.Forms.DataVisualization.Charting.Chart attendanceDoughnutChart;
 
         private System.Windows.Forms.TableLayoutPanel lowerLayoutPanel;
         private System.Windows.Forms.GroupBox ratingsGroupBox;
+        private System.Windows.Forms.Label ratingsHelperLabel;
         private System.Windows.Forms.DataVisualization.Charting.Chart ratingsBarChart;
 
         private System.Windows.Forms.GroupBox logsGroupBox;
