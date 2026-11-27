@@ -41,6 +41,11 @@ public class RegisterModel : PageModel
         if (EventId.HasValue)
         {
             SelectedEvent = AvailableEvents.Find(e => e.EventId == EventId.Value);
+
+            if (SelectedEvent == null && !EventService.IsRegistrationOpen(EventId.Value))
+            {
+                ErrorMessage = "Registration for this event has closed.";
+            }
         }
     }
 
@@ -61,6 +66,12 @@ public class RegisterModel : PageModel
         if (!OrganizerService.EventHasManager(EventId.Value))
         {
             ErrorMessage = "This event is not open for registration yet. It has no manager assigned.";
+            return Page();
+        }
+
+        if (!EventService.IsRegistrationOpen(EventId.Value))
+        {
+            ErrorMessage = "Registration for this event has closed.";
             return Page();
         }
 
@@ -107,8 +118,13 @@ public class RegisterModel : PageModel
         {
             int eventId = Convert.ToInt32(row["event_id"]);
 
-            // an event with no manager cannot take registrations, so leave it out
+            // an event with no manager or closed registration cannot take attendees
             if (!OrganizerService.EventHasManager(eventId))
+            {
+                continue;
+            }
+
+            if (!EventService.IsRegistrationOpen(eventId))
             {
                 continue;
             }

@@ -15,14 +15,17 @@ public class IndexModel : PageModel
         DataTable table = EventService.GetEvent();
         foreach (DataRow row in table.Rows)
         {
+            int eventId = Convert.ToInt32(row["event_id"]);
+
             UpcomingEvents.Add(new EventCard
             {
-                EventId = Convert.ToInt32(row["event_id"]),
+                EventId = eventId,
                 Name = row["name"].ToString() ?? "",
                 Venue = row["venue"].ToString() ?? "",
                 Description = row["description"].ToString() ?? "",
                 EventDate = DateTime.TryParse(row["event_date"].ToString(), out DateTime dt) ? dt : DateTime.Now,
-                Capacity = Convert.ToInt32(row["capacity"])
+                Capacity = Convert.ToInt32(row["capacity"]),
+                IsRegistrationOpen = EventService.IsRegistrationOpen(eventId)
             });
         }
     }
@@ -35,5 +38,6 @@ public class IndexModel : PageModel
         public string Description { get; set; } = string.Empty;
         public DateTime EventDate { get; set; }
         public int Capacity { get; set; }
+        public bool IsRegistrationOpen { get; set; }
     }
 }

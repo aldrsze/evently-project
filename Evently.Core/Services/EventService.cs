@@ -19,12 +19,12 @@ namespace Evently.Core.Services
         }
 
         // returns the new event_id, or 0 when the insert was refused
-        public static int AddEvent(string name, string venue, string description, DateTime date, int capacity)
+        public static int AddEvent(string name, string venue, string description, DateTime date, int capacity, DateTime? registrationDeadline)
         {
             using var conn = DatabaseConnection.GetConnection();
-            string query = @"INSERT INTO events(name, venue, description, event_date, capacity)
+            string query = @"INSERT INTO events(name, venue, description, event_date, capacity, registration_deadline)
                              VALUES
-                             (@name, @venue, @description, @event_date, @capacity);
+                             (@name, @venue, @description, @event_date, @capacity, @registration_deadline);
                              SELECT LAST_INSERT_ID();"; // retrieves the last id
             using MySqlCommand cmd = new(query, conn);
             cmd.Parameters.AddWithValue("@name", name);
@@ -32,6 +32,7 @@ namespace Evently.Core.Services
             cmd.Parameters.AddWithValue("@description", description);
             cmd.Parameters.AddWithValue("@event_date", date);
             cmd.Parameters.AddWithValue("@capacity", capacity);
+            cmd.Parameters.AddWithValue("@registration_deadline", DeadlineParameterValue(registrationDeadline));
 
             try
             {
@@ -82,7 +83,7 @@ namespace Evently.Core.Services
             return deleted;
         }
 
-        public static bool UpdateEvent(int eventId, string name, string venue, string description, DateTime date, int capacity)
+        public static bool UpdateEvent(int eventId, string name, string venue, string description, DateTime date, int capacity, DateTime? registrationDeadline)
         {
             using var conn = DatabaseConnection.GetConnection();
 
@@ -97,7 +98,8 @@ namespace Evently.Core.Services
                                  venue = @venue,
                                  description = @description,
                                  event_date = @event_date,
-                                 capacity = @capacity
+                                 capacity = @capacity,
+                                 registration_deadline = @registration_deadline
                              WHERE event_id = @eventId";
 
             using MySqlCommand cmd = new(query, conn);
@@ -106,6 +108,7 @@ namespace Evently.Core.Services
             cmd.Parameters.AddWithValue("@description", description);
             cmd.Parameters.AddWithValue("@event_date", date);
             cmd.Parameters.AddWithValue("@capacity", capacity);
+            cmd.Parameters.AddWithValue("@registration_deadline", DeadlineParameterValue(registrationDeadline));
             cmd.Parameters.AddWithValue("@eventId", eventId);
 
             try
@@ -122,6 +125,33 @@ namespace Evently.Core.Services
                 if (ex.Number == 1406) { return false; }
                 throw;
             }
+        }
+
+        // earlier of the deadline and the event start; no deadline means the event start
+        public static bool IsRegistrationOpen(int eventId)
+        {
+            using var conn = DatabaseConnection.GetConnection();
+            string query = @"SELECT LEAST(COALESCE(registration_deadline, event_date), event_date)
+                             FROM events WHERE event_id = @eventId;";
+            using MySqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@eventId", eventId);
+            object? result = cmd.ExecuteScalar();
+
+            if (result == null) { return false; } // no such event
+
+            DateTime cutoff = Convert.ToDateTime(result);
+            return DateTime.Now < cutoff;
+        }
+
+        // an empty deadline is stored as NULL, not as year 0001
+        private static object DeadlineParameterValue(DateTime? registrationDeadline)
+        {
+            if (registrationDeadline.HasValue)
+            {
+                return registrationDeadline.Value;
+            }
+
+            return DBNull.Value;
         }
     }
 }

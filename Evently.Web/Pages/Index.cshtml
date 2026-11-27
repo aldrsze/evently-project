@@ -8,7 +8,7 @@
     <p class="eyebrow">Campus events</p>
     <h1>Discover campus events</h1>
     <p class="lead">Browse upcoming student organization events, register online, and receive your digital QR ticket.</p>
-    <p class="intro-note">Registration stays open while seats remain.</p>
+    <p class="intro-note">Registration closes at the event deadline (or start time) and when seats run out.</p>
 </section>
 
 <section class="section-block">
@@ -43,7 +43,14 @@
                         </div>
                     </dl>
                     <p>@ev.Description</p>
-                    <a asp-page="/Registration/Register" asp-route-eventId="@ev.EventId" class="button primary">Register now</a>
+                    @if (ev.IsRegistrationOpen)
+                    {
+                        <a asp-page="/Registration/Register" asp-route-eventId="@ev.EventId" class="button primary">Register now</a>
+                    }
+                    else
+                    {
+                        <span class="capacity">Registration closed</span>
+                    }
                 </article>
             }
         </div>
