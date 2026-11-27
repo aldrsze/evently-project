@@ -21,6 +21,13 @@ namespace Evently.Core.Services
             string[] lines = File.ReadAllLines(configPath);
             string smtpEmail = DatabaseConnection.ReadValue(lines, "SmtpEmail");
             string smtpPassword = DatabaseConnection.ReadValue(lines, "SmtpPassword");
+            string webBaseUrl = DatabaseConnection.ReadValue(lines, "WebBaseUrl");
+            if (string.IsNullOrWhiteSpace(webBaseUrl))
+            {
+                webBaseUrl = "http://localhost:5000";
+            }
+            webBaseUrl = webBaseUrl.TrimEnd('/');
+            string ticketUrl = $"{webBaseUrl}/Ticket/{ticketId}";
 
             if (smtpEmail.Length == 0 || smtpPassword.Length == 0)
             {
@@ -38,7 +45,7 @@ namespace Evently.Core.Services
 
                 var builder = new BodyBuilder
                 {
-                    TextBody = $"Hi {attendeeName},\n\nHere is your ticket for {eventName}.\nVenue: {venue}\nDate: {eventDate:MMMM d, yyyy h:mm tt}\nTicket ID: {ticketId}\n\nPlease present the attached QR code at the door."
+                    TextBody = $"Hi {attendeeName},\n\nYour registration for {eventName} has been approved!\n\nVenue: {venue}\nDate: {eventDate:MMMM d, yyyy h:mm tt}\nTicket ID: {ticketId}\n\nView your digital ticket:\n{ticketUrl}\n\nPlease present your digital ticket link or the attached QR code at the entrance."
                 };
                 builder.Attachments.Add("ticket_qr.png", qrBytes, new ContentType("image", "png"));
                 message.Body = builder.ToMessageBody();

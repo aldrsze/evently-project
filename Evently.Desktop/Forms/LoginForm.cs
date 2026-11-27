@@ -125,8 +125,15 @@ namespace Evently.Forms
                         return;
                     }
 
+                    string role = AuthService.GetRole(identifier) ?? "";
+                    if (role != "ADMIN")
+                    {
+                        MessageBox.Show("Staff accounts can only sign in on the website scanner.", "Access denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     string actualUsername = AuthService.GetUsername(identifier) ?? identifier;
-                    Session.SignIn(actualUsername, AuthService.GetRole(identifier) ?? "");
+                    Session.SignIn(actualUsername, role);
                     MessageBox.Show("You are signed in. Opening Evently now.", "Signed in", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     usernameTextBox.Text = "";
                     passwordTextBox.Text = "";

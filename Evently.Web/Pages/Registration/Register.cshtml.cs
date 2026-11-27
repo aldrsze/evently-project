@@ -26,6 +26,8 @@ public class RegisterModel : PageModel
 
     public string? ErrorMessage { get; set; }
 
+    public bool IsSubmitted { get; set; }
+
     public EventItem? SelectedEvent { get; set; }
 
     public List<EventItem> AvailableEvents { get; set; } = new();
@@ -42,9 +44,16 @@ public class RegisterModel : PageModel
         {
             SelectedEvent = AvailableEvents.Find(e => e.EventId == EventId.Value);
 
-            if (SelectedEvent == null && !EventService.IsRegistrationOpen(EventId.Value))
+            if (SelectedEvent == null)
             {
-                ErrorMessage = "Registration for this event has closed.";
+                if (!EventService.IsRegistrationOpen(EventId.Value))
+                {
+                    ErrorMessage = "Registration for this event has closed.";
+                }
+                else if (EventService.GetRemainingCapacity(EventId.Value) <= 0)
+                {
+                    ErrorMessage = "This event has reached full capacity.";
+                }
             }
         }
     }
@@ -75,6 +84,12 @@ public class RegisterModel : PageModel
             return Page();
         }
 
+        if (EventService.GetRemainingCapacity(EventId.Value) <= 0)
+        {
+            ErrorMessage = "This event has reached full capacity.";
+            return Page();
+        }
+
         if (string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(Email))
         {
             ErrorMessage = "First name, last name, and email are required.";
@@ -90,24 +105,8 @@ public class RegisterModel : PageModel
             return Page();
         }
 
-        // Fetch the generated ticket ID to redirect directly to the ticket page
-        DataTable attendeesTable = TicketService.GetAttendeesByEvent(EventId.Value);
-        string? ticketId = null;
-        foreach (DataRow row in attendeesTable.Rows)
-        {
-            if (string.Equals(row["email"].ToString(), Email.Trim(), StringComparison.OrdinalIgnoreCase))
-            {
-                ticketId = row["ticket_id"].ToString();
-                break;
-            }
-        }
-
-        if (!string.IsNullOrEmpty(ticketId))
-        {
-            return RedirectToPage("/Tickets/Ticket", new { ticketId });
-        }
-
-        return RedirectToPage("/Index");
+        IsSubmitted = true;
+        return Page();
     }
 
     private void LoadEvents()
@@ -125,6 +124,11 @@ public class RegisterModel : PageModel
             }
 
             if (!EventService.IsRegistrationOpen(eventId))
+            {
+                continue;
+            }
+
+            if (EventService.GetRemainingCapacity(eventId) <= 0)
             {
                 continue;
             }

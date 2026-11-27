@@ -94,28 +94,28 @@ Checking people in by hand is slow and creates bottlenecks at the door. Organize
 
 ### 5.1 Core Features (Must-Have)
 
-Status reflects what is in the repository today, which is still the single-project desktop app. The split in section 6 is step 0 of the build progress table.
+Status reflects what is in the repository today.
 
 **Where:** `Desktop` = Windows Forms app, `Web` = ASP.NET Core site, `Core` = shared library used by both.
 
 | # | Feature | Description | Where | Priority | Status |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Login & Roles | Users sign in with a username and password (hashed). Two roles: Administrator (desktop plus website) and Staff (website scan page only). The desktop app refuses Staff. A demo administrator is created by `db/seed.sql` (`admin` / `admin123`). | Desktop, Web | High | Desktop login done. Web staff login not started. |
+| 1 | Login & Roles | Users sign in with a username and password (hashed). Two roles: Administrator (desktop plus website) and Staff (website scan page only). The desktop app refuses Staff. A demo administrator is created by `db/seed.sql` (`admin` / `admin123`). | Desktop, Web | High | Done. Desktop refuses Staff role. Web uses cookie auth (signup forces STAFF). |
 | 2 | User Accounts | Administrators can add, edit, deactivate, and reactivate staff or admin accounts. Usernames are unique, passwords need at least 8 characters, the last active admin and your own account are protected, and you cannot change your own role. | Desktop | Medium | Done. |
-| 3 | Event Management | Admin can create, edit, and delete events with a name, venue, date and time, description, review link text, maximum guest limit, and an optional registration deadline. The deadline is empty (NULL) when registration should close at the event start, and it cannot be later than the event date. | Desktop | High | Screen built. Save, edit, and delete are not wired. |
-| 4 | Guest Self-Registration | A guest opens the site on their phone, picks an open event, types first name, last name, email, and birthdate, and is registered. A full event, a past registration deadline, or an event that has already started is refused, and a known email is reused without creating a second attendee row. | Web | High | Not started. |
+| 3 | Event Management | Admin can create, edit, and delete events with a name, venue, date and time, description, review link text, maximum guest limit, and an optional registration deadline. The deadline is empty (NULL) when registration should close at the event start, and it cannot be later than the event date. | Desktop | High | Done. CRUD wired, web home page lists events with status filters (upcoming, open, full, ended). Deleting an event cascade-deletes tickets and cleans up orphan attendees. |
+| 4 | Guest Self-Registration | A guest opens the site on their phone, picks an open event, types first name, last name, email, and birthdate, and is registered. A full event, a past registration deadline, or an event that has already started is refused, and a known email is reused without creating a second attendee row. | Web | High | Done. Registration shows "pending review" notice; ticket is visible only after admin approval (`ticket_emailed`). Capacity enforced on web. |
 | 5 | Manual Registration | Admin registers a walk-in by typing first name, last name, email, and birthdate into the desktop app, for the selected event. | Desktop | High | Done (full CRUD wired). |
-| 6 | CSV Import | Admin imports `first_name`, `last_name`, `email`, `birthdate` rows from a CSV file into a selected event, with duplicate handling, capacity and registration-deadline enforcement, and a result summary. | Desktop, Core | High | Button only. |
+| 6 | CSV Import | Admin imports `first_name`, `last_name`, `email`, `birthdate` rows from a CSV file into a selected event, with duplicate handling, capacity and registration-deadline enforcement, and a result summary. | Desktop, Core | High | Done. `CsvService.ImportAttendeesFromCsv` with summary (imported/duplicates/invalid/over-capacity). |
 | 7 | QR Ticket Creation | The system generates a unique UUID for each ticket and builds a QR image from it. | Core | High | Done (`QrCodeService`). |
-| 8 | Ticket Page | Right after registering, the guest sees their QR ticket, event name, venue, and date on the website, and can open the same page again later from a saved link. | Web | High | Not started. |
-| 9 | Email Tickets | Admin clicks "Send Tickets" and the desktop app emails the QR image to every attendee who has not been emailed yet. | Desktop, Core | High | Done (`EmailService` + Send Tickets). |
-| 10 | Phone Scan Check-In | Staff open the scan page on their phone, sign in, allow the camera, and scan tickets. This is the only scanner in the system. There is no event picker: the ticket already knows its event. The page shows a full-width green or red result with the guest's name and that event's inside count. | Web | High | Not started. |
-| 11 | Check-Out (Unique Feature) | Scanning a checked-in ticket again checks the guest out, so the system always knows who is inside the venue right now. | Web, Core | High | Not written. |
-| 12 | Ticket Checking Rules | The system rejects fake codes, blocks repeat check-ins, and blocks scans for tickets that are already checked out. | Core | High | Not written. |
-| 13 | Rating Request Email | Admin clicks "Send Review Request" on the desktop app, and every checked-in guest gets an email with their personal rating link. | Desktop, Core | High | Screen built. Email and "already sent" tracking not implemented. |
-| 14 | Rating Form | The guest opens the link on their phone, picks 1 to 5, optionally writes a comment, and submits. The review is saved only for a checked-in ticket that has no review yet. | Web | High | Not started. |
-| 15 | Live Dashboard | A screen with an event selector, metrics, a doughnut chart, a check-ins-over-time chart, and a recent check-ins list (section 5.4). | Desktop | High | Layout, charts, and 5-second timer done with sample data. Real queries not written. |
-| 16 | Attendance Export (CSV) | Admin can export an event's attendee list (first name, last name, birthdate, email, check-in time, check-out time, rating, comment) as a CSV file. | Desktop, Core | High | Button only. |
+| 8 | Ticket Page | Right after registering, the guest sees their QR ticket, event name, venue, and date on the website, and can open the same page again later from a saved link. | Web | High | Done. `/Ticket/{ticket_id}` shows QR (if approved), event details, venue, date. `/FindTicket` lets guests look up by ticket ID. |
+| 9 | Email Tickets | Admin clicks "Send Tickets" and the desktop app emails the QR image to every attendee who has not been emailed yet. | Desktop, Core | High | Done (`EmailService` + Send Tickets). Email includes direct link to web ticket page. |
+| 10 | Phone Scan Check-In | Staff open the scan page on their phone, sign in, allow the camera, and scan tickets. This is the only scanner in the system. There is no event picker: the ticket already knows its event. The page shows a full-width green or red result with the guest's name and that event's inside count. | Web | High | Done. `html5-qrcode` camera scanner, back-camera preferred on mobile, JSON API endpoint, 3-second cooldown, manual fallback. |
+| 11 | Check-Out (Unique Feature) | Scanning a checked-in ticket again checks the guest out, so the system always knows who is inside the venue right now. | Web, Core | High | Done. Auto-detected: first scan checks in, second scan checks out. |
+| 12 | Ticket Checking Rules | The system rejects fake codes, blocks repeat check-ins, and blocks scans for tickets that are already checked out. | Core | High | Done. `ProcessScan` rejects unknown UUIDs, unapproved tickets, and already-checked-out tickets. |
+| 13 | Rating Request Email | Admin clicks "Send Review Request" on the desktop app, and every checked-in guest gets an email with their personal rating link. | Desktop, Core | High | Done. `EmailService.SendReviewRequestEmail` with `review_emailed` tracking. Single and batch send buttons on AttendeesForm. |
+| 14 | Rating Form | The guest opens the link on their phone, picks 1 to 5, optionally writes a comment, and submits. The review is saved only for a checked-in ticket that has no review yet. | Web | High | Done. `/Review/{ticket_id}` with 1–5 radio, comment, check-in and one-per-ticket validation. |
+| 15 | Live Dashboard | A screen with an event selector, metrics, a doughnut chart, a check-ins-over-time chart, and a recent check-ins list (section 5.4). | Desktop | High | Done. Real `DashboardService` queries, 5 KPI cards, doughnut chart, bar chart with time filter, ratings chart, comprehensive log list. Auto-refreshes every 5 seconds. |
+| 16 | Attendance Export (CSV) | Admin can export an event's attendee list (first name, last name, birthdate, email, check-in time, check-out time, rating, comment) as a CSV file. | Desktop, Core | High | Done. `CsvService.ExportAttendanceToCsv` with SaveFileDialog. |
 | 17 | Event Organizers | The schema stores organizers and links them to events through `event_organizers`, so one event can list several organizer contacts. A manager is typed when the event is created; after that, the Managers panel adds, edits, and removes them. The same email cannot be added twice to one event, and an email belongs to only one organizer. Removing a manager unlinks them from the event, and deletes the organizer row itself when no other event uses it. An event may have no manager, but it cannot take registrations until one is assigned. | Core, Desktop | Medium | Done. Manager fields on Add Event, add/edit/remove in the Managers panel, Edit Event leaves managers alone, registration blocked without a manager. |
 | 18 | Activity Log | Each desktop panel except the Dashboard shows an "Activity Log" card on the right with only the latest change for its own data: events, attendees, accounts, managers, or reviews. Every add, edit, and delete writes one row to `activity_log`, so a review submitted on the website also appears on the Reviews panel. | Core, Desktop, Web | Low | Done. |
 
@@ -129,6 +129,17 @@ Status reflects what is in the repository today, which is still the single-proje
 | 4 | Dashboard Display Mode | A full-screen, large-type dashboard for a projector. |
 | 5 | Registration Poster QR | The desktop app generates a QR that opens the web registration page for one event, ready to print on a poster. |
 | 6 | Add to Calendar | The ticket page offers an `.ics` download for the event date. |
+
+**Nice-to-Have Status:**
+
+| # | Feature | Status |
+| --- | --- | --- |
+| 1 | Sound Alerts | Done. Web Audio API generates ascending beep (check-in), descending tone (check-out), double-buzz (error). |
+| 2 | Badge Printing | Not started. |
+| 3 | Announcement Email | Not started. |
+| 4 | Dashboard Display Mode | Not started. |
+| 5 | Registration Poster QR | Not started. |
+| 6 | Add to Calendar | Not started. |
 
 ### 5.3 User Stories
 
@@ -435,17 +446,17 @@ evently-project/
 
 | # | Area | State | Next work |
 | --- | --- | --- | --- |
-| 0 | Solution split | Not started | Move the current project to `Evently.Desktop/`, add `Evently.Core` as a class library, move `Helpers` and `Services` into Core, fix the `Forms\*Form.cs` path and `db.config` copy, confirm the desktop app still builds and logs in. One commit. |
-| 1 | Web project | Done | `Evently.Web` (Razor Pages) builds, references Core, listens on `0.0.0.0:5000`, and serves a placeholder home page on the LAN. Template Bootstrap/jQuery removed on purpose; pages get added as their services land. |
-| 2 | Schema changes | Not started | Edit `db/schema.sql`: drop `events.review_form_url`, add `tickets.review_emailed` and `reviews.submitted_at`, split `attendees.full_name` into `first_name` and `last_name`, add `attendees.birthdate`. Apply by hand to the running database. |
-| 3 | Events | Screen only | `EventService` create/edit/delete + desktop grid binding, plus the upcoming-events query for the web home page. |
-| 4 | Registration | Screen only | `TicketService` register (transaction + capacity + registration deadline + duplicate email + manager required), used by `/Register`, the desktop walk-in form, and the CSV importer. |
-| 5 | QR tickets | Not started | `QrCodeService` (Core, returns PNG bytes), `/Ticket` page, `EmailService` + "Send Tickets" with a sent/failed summary. |
-| 6 | Check-in / check-out | Not started | `TicketService` scan rules with the 3-second cooldown, `/Scan` page with `html5-qrcode`, result plus that event's inside count in one call. |
-| 7 | Reviews | Screen only | `/Review` page, `ReviewService.Save` with the checked-in and one-per-ticket checks, "Send Review Request" email using `review_emailed`. |
-| 8 | Dashboard | Mock data | Replace sample data with `DashboardService` queries, including average rating and response rate. |
-| 9 | Organizers | Done | Manager is captured on the Add Event form; the Managers panel adds, edits, and removes managers (an email cannot be reused by a second manager); removing a manager's last event deletes the organizer row; `TicketService.AddAttendee` refuses events with no manager. |
-| 10 | Cleanup | Not started | Delete the root `Evently.csproj` and stale build folders once both apps build from the solution. |
+| 0 | Solution split | Done | Three-project solution (`Evently.Core`, `Evently.Desktop`, `Evently.Web`) building from `Evently.sln`. |
+| 1 | Web project | Done | Razor Pages on `0.0.0.0:5000`, references Core, custom CSS, no Bootstrap/jQuery. |
+| 2 | Schema changes | Done | `review_form_url` dropped, `review_emailed`, `submitted_at`, `first_name`/`last_name`, `birthdate` applied. |
+| 3 | Events | Done | `EventService` CRUD wired on desktop. Web home page lists events with status filters (upcoming, open, full, ended). Orphan attendee cleanup on delete. |
+| 4 | Registration | Done | `TicketService.AddAttendee` with capacity, deadline, duplicate, and manager checks. Used by `/Register` (web), desktop walk-in, and CSV import. Pending-review flow on web. |
+| 5 | QR tickets | Done | `QrCodeService` generates PNG. `/Ticket/{id}` page, `/FindTicket` lookup. `EmailService.SendTicketEmail` with web link. |
+| 6 | Check-in / check-out | Done | Auto-detect scan logic in `ProcessScan`. `/Scan` page with `html5-qrcode` camera, JSON API, 3-second cooldown, Web Audio sound effects, manual fallback. |
+| 7 | Reviews | Done | `/Review/{ticket_id}` with 1-5 rating, comment, check-in and one-per-ticket validation. `ReviewService.SubmitReview`. `EmailService.SendReviewRequestEmail` with `review_emailed` tracking. |
+| 8 | Dashboard | Done | `DashboardService` real queries. 5 KPI cards, doughnut chart, bar chart with time filter, ratings chart, comprehensive log. 5-second auto-refresh. |
+| 9 | Organizers | Done | Manager on Add Event, Managers panel CRUD, orphan cleanup, registration blocked without a manager. Web event cards show manager details. |
+| 10 | Cleanup | Done | Root `Evently.csproj` and stale root build folders are removed. |
 
 ---
 

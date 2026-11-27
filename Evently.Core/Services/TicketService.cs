@@ -55,6 +55,12 @@ namespace Evently.Core.Services
                 return false;
             }
 
+            // cannot register once event reaches capacity
+            if (EventService.GetRemainingCapacity(eventId) <= 0)
+            {
+                return false;
+            }
+
             using var conn = DatabaseConnection.GetConnection();
 
             int attendeeId = 0;
@@ -231,6 +237,7 @@ namespace Evently.Core.Services
             using var conn = DatabaseConnection.GetConnection();
             string query = @"SELECT 
                                 t.ticket_id,
+                                t.ticket_emailed,
                                 t.checked_in_at,
                                 t.checked_out_at,
                                 a.email,

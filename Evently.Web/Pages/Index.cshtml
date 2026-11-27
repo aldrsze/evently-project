@@ -1,51 +1,124 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Upcoming events";
+    ViewData["Title"] = "Events";
 }
 
 <section class="intro">
-    <p class="eyebrow">Campus events</p>
-    <h1>Discover campus events</h1>
+    <p class="eyebrow">Evently</p>
+    <h1>Discover events</h1>
     <p class="lead">Browse upcoming student organization events, register online, and receive your digital QR ticket.</p>
     <p class="intro-note">Registration closes at the event deadline (or start time) and when seats run out.</p>
 </section>
 
 <section class="section-block">
-    <div class="section-heading">
-        <h2>Upcoming events</h2>
-        <p>@Model.UpcomingEvents.Count scheduled</p>
+    <div class="section-heading" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h2>Events</h2>
+            <p>Showing @Model.UpcomingEvents.Count events</p>
+        </div>
+
+        <nav class="filter-tabs" aria-label="Filter events" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <a asp-page="/Index" asp-route-filter="upcoming" class="button secondary @(Model.CurrentFilter == "upcoming" ? "active-filter" : "")" style="min-height: 36px; padding: 6px 14px; font-size: 13px; @(Model.CurrentFilter == "upcoming" ? "background: var(--blue); color: #fff; border-color: var(--blue);" : "")">
+                Upcoming (@Model.CountUpcoming)
+            </a>
+            <a asp-page="/Index" asp-route-filter="open" class="button secondary @(Model.CurrentFilter == "open" ? "active-filter" : "")" style="min-height: 36px; padding: 6px 14px; font-size: 13px; @(Model.CurrentFilter == "open" ? "background: var(--blue); color: #fff; border-color: var(--blue);" : "")">
+                Open (@Model.CountOpen)
+            </a>
+            <a asp-page="/Index" asp-route-filter="full" class="button secondary @(Model.CurrentFilter == "full" ? "active-filter" : "")" style="min-height: 36px; padding: 6px 14px; font-size: 13px; @(Model.CurrentFilter == "full" ? "background: var(--blue); color: #fff; border-color: var(--blue);" : "")">
+                Full (@Model.CountFull)
+            </a>
+            <a asp-page="/Index" asp-route-filter="ended" class="button secondary @(Model.CurrentFilter == "ended" ? "active-filter" : "")" style="min-height: 36px; padding: 6px 14px; font-size: 13px; @(Model.CurrentFilter == "ended" ? "background: var(--blue); color: #fff; border-color: var(--blue);" : "")">
+                Ended (@Model.CountEnded)
+            </a>
+            <a asp-page="/Index" asp-route-filter="all" class="button secondary @(Model.CurrentFilter == "all" ? "active-filter" : "")" style="min-height: 36px; padding: 6px 14px; font-size: 13px; @(Model.CurrentFilter == "all" ? "background: var(--blue); color: #fff; border-color: var(--blue);" : "")">
+                All (@Model.CountAll)
+            </a>
+        </nav>
     </div>
 
     @if (Model.UpcomingEvents.Count == 0)
     {
-        <p class="empty-state">No events scheduled right now. Check back soon!</p>
+        <div class="form-card" style="text-align: center; padding: 3rem 1.5rem; margin-top: 1.5rem;">
+            <p class="lead" style="color: var(--muted); margin: 0;">No events match the selected filter.</p>
+            <div style="margin-top: 1rem;">
+                <a asp-page="/Index" asp-route-filter="upcoming" class="button secondary">View upcoming events</a>
+            </div>
+        </div>
     }
     else
     {
-        <div class="event-list">
+        <div class="event-list" style="margin-top: 1.5rem;">
             @foreach (var ev in Model.UpcomingEvents)
             {
                 <article class="event-card">
                     <div class="event-card-top">
-                        <span class="sample-tag">Campus event</span>
-                        <span class="capacity">@ev.Capacity seats</span>
+                        @if (ev.IsEnded)
+                        {
+                            <span class="sample-tag" style="background: #f1f5f9; color: #64748b;">Ended</span>
+                        }
+                        else if (ev.IsFull)
+                        {
+                            <span class="sample-tag" style="background: #fee2e2; color: #991b1b;">Event Full</span>
+                        }
+                        else if (ev.IsOpen)
+                        {
+                            <span class="sample-tag" style="background: #dcfce7; color: #166534;">Registration Open</span>
+                        }
+                        else
+                        {
+                            <span class="sample-tag" style="background: #fef3c7; color: #92400e;">Registration Closed</span>
+                        }
+
+                        <span class="capacity">
+                            @if (ev.IsEnded)
+                            {
+                                <span>Event concluded</span>
+                            }
+                            else if (ev.RemainingCapacity == 0)
+                            {
+                                <span>Full (0 seats left)</span>
+                            }
+                            else
+                            {
+                                <span>@ev.RemainingCapacity of @ev.Capacity seats left</span>
+                            }
+                        </span>
                     </div>
+
                     <h2>@ev.Name</h2>
+
                     <dl class="event-meta">
                         <div>
-                            <dt>Date</dt>
+                            <dt>Date & time</dt>
                             <dd>@ev.EventDate.ToString("MMMM d, yyyy  h:mm tt")</dd>
                         </div>
                         <div>
                             <dt>Venue</dt>
                             <dd>@ev.Venue</dd>
                         </div>
+                        @if (!string.IsNullOrEmpty(ev.ManagerName))
+                        {
+                            <div>
+                                <dt>Organizer</dt>
+                                <dd>@ev.ManagerName @(!string.IsNullOrEmpty(ev.ManagerEmail) ? $"({ev.ManagerEmail})" : "")</dd>
+                            </div>
+                        }
                     </dl>
+
                     <p>@ev.Description</p>
-                    @if (ev.IsRegistrationOpen)
+
+                    @if (ev.IsOpen)
                     {
                         <a asp-page="/Registration/Register" asp-route-eventId="@ev.EventId" class="button primary">Register now</a>
+                    }
+                    else if (ev.IsEnded)
+                    {
+                        <span class="capacity" style="color: var(--muted);">Event ended</span>
+                    }
+                    else if (ev.IsFull)
+                    {
+                        <span class="capacity" style="color: #991b1b; font-weight: 600;">At capacity</span>
                     }
                     else
                     {

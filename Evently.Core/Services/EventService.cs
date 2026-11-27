@@ -77,6 +77,10 @@ namespace Evently.Core.Services
 
             if (deleted)
             {
+                string cleanupQuery = "DELETE FROM attendees WHERE attendee_id NOT IN (SELECT attendee_id FROM tickets);";
+                using MySqlCommand cleanupCmd = new(cleanupQuery, conn);
+                cleanupCmd.ExecuteNonQuery();
+
                 ActivityLogService.Add("events", $"Deleted event '{eventName}'.");
             }
 
@@ -141,6 +145,20 @@ namespace Evently.Core.Services
 
             DateTime cutoff = Convert.ToDateTime(result);
             return DateTime.Now < cutoff;
+        }
+
+        public static int GetRemainingCapacity(int eventId)
+        {
+            using var conn = DatabaseConnection.GetConnection();
+            string query = @"SELECT GREATEST(0, e.capacity - COUNT(t.ticket_id))
+                             FROM events e
+                             LEFT JOIN tickets t ON e.event_id = t.event_id
+                             WHERE e.event_id = @eventId
+                             GROUP BY e.event_id, e.capacity;";
+            using MySqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@eventId", eventId);
+            object? result = cmd.ExecuteScalar();
+            return result != null ? Convert.ToInt32(result) : 0;
         }
 
         // an empty deadline is stored as NULL, not as year 0001
