@@ -36,6 +36,7 @@ Run these in **Command Prompt** (not PowerShell, it can't do `<`):
 ```cmd
 mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS evently_db"
 mysql -u root -p evently_db < db\schema.sql
+mysql -u root -p evently_db < db\sample_data.sql
 ```
 
 Enter your MySQL password when asked. There are no default accounts in the schema.

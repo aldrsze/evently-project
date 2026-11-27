@@ -63,7 +63,7 @@ namespace Evently.Forms
             int reviewCount = Convert.ToInt32(stats["review_count"]);
             double averageRating = Convert.ToDouble(stats["average_rating"]);
 
-            UpdateKpiCards(capacity, registered, currentlyInside, checkedOut, totalCheckedIn, notArrived, reviewCount, averageRating);
+            UpdateKpiCards(eventId, capacity, registered, currentlyInside, checkedOut, totalCheckedIn, notArrived, reviewCount, averageRating);
             BindTimelineChart(eventId);
             BindAttendanceDoughnutChart(currentlyInside, checkedOut, notArrived);
             BindRatingsBarChart(eventId);
@@ -72,7 +72,7 @@ namespace Evently.Forms
             lastUpdatedLabel.Text = $"Last updated: {DateTime.Now:hh:mm:ss tt}";
         }
 
-        private void UpdateKpiCards(int capacity, int registered, int inside, int checkedOut, int totalCheckedIn, int notArrived, int reviewCount, double avgRating)
+        private void UpdateKpiCards(int eventId, int capacity, int registered, int inside, int checkedOut, int totalCheckedIn, int notArrived, int reviewCount, double avgRating)
         {
             // Card 1: Capacity & Registered
             double regPercent = capacity > 0 ? (double)registered / capacity : 0.0;
@@ -94,6 +94,21 @@ namespace Evently.Forms
             double responsePercent = totalCheckedIn > 0 ? (double)reviewCount / totalCheckedIn : 0.0;
             ratingValueLabel.Text = reviewCount > 0 ? $"{avgRating:F1} / 5.0" : "- / 5.0";
             ratingSubLabel.Text = $"{reviewCount} reviews ({responsePercent:P0} response)";
+
+            // Card 5: Registration Status
+            bool isRegOpen = EventService.IsRegistrationOpen(eventId);
+            if (isRegOpen)
+            {
+                registrationValueLabel.Text = "OPEN";
+                registrationValueLabel.ForeColor = Color.FromArgb(34, 139, 34);
+                registrationSubLabel.Text = registered >= capacity && capacity > 0 ? "Event is full" : "Accepting attendees";
+            }
+            else
+            {
+                registrationValueLabel.Text = "CLOSED";
+                registrationValueLabel.ForeColor = Color.FromArgb(192, 0, 0);
+                registrationSubLabel.Text = "Registration closed";
+            }
         }
 
         private void BindAttendanceDoughnutChart(int inside, int checkedOut, int notArrived)

@@ -26,6 +26,8 @@ namespace Evently.Forms
             this.capacityNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.descriptionLabel = new System.Windows.Forms.Label();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
+            this.deadlineLabel = new System.Windows.Forms.Label();
+            this.registrationDeadlinePicker = new System.Windows.Forms.DateTimePicker();
             this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.capacityNumericUpDown)).BeginInit();
@@ -102,23 +104,38 @@ namespace Evently.Forms
             this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.descriptionTextBox.Size = new System.Drawing.Size(240, 90);
             this.descriptionTextBox.TabIndex = 9;
+            // deadlineLabel
+            this.deadlineLabel.AutoSize = true;
+            this.deadlineLabel.Location = new System.Drawing.Point(24, 284);
+            this.deadlineLabel.Name = "deadlineLabel";
+            this.deadlineLabel.TabIndex = 10;
+            this.deadlineLabel.Text = "Registration deadline:";
+            // registrationDeadlinePicker
+            this.registrationDeadlinePicker.Checked = false;
+            this.registrationDeadlinePicker.CustomFormat = "MMM d, yyyy  h:mm tt";
+            this.registrationDeadlinePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.registrationDeadlinePicker.Location = new System.Drawing.Point(180, 281);
+            this.registrationDeadlinePicker.Name = "registrationDeadlinePicker";
+            this.registrationDeadlinePicker.ShowCheckBox = true;
+            this.registrationDeadlinePicker.Size = new System.Drawing.Size(200, 23);
+            this.registrationDeadlinePicker.TabIndex = 11;
             // saveButton
             this.saveButton.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
             this.saveButton.FlatAppearance.BorderSize = 0;
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveButton.ForeColor = System.Drawing.Color.White;
-            this.saveButton.Location = new System.Drawing.Point(210, 300);
+            this.saveButton.Location = new System.Drawing.Point(210, 330);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(80, 30);
-            this.saveButton.TabIndex = 10;
+            this.saveButton.TabIndex = 12;
             this.saveButton.Text = "&Save";
             this.saveButton.UseVisualStyleBackColor = false;
             this.saveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // cancelButton
-            this.cancelButton.Location = new System.Drawing.Point(300, 300);
+            this.cancelButton.Location = new System.Drawing.Point(300, 330);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(80, 30);
-            this.cancelButton.TabIndex = 11;
+            this.cancelButton.TabIndex = 13;
             this.cancelButton.Text = "&Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
@@ -128,7 +145,7 @@ namespace Evently.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(404, 348);
+            this.ClientSize = new System.Drawing.Size(404, 378);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.venueLabel);
@@ -139,6 +156,8 @@ namespace Evently.Forms
             this.Controls.Add(this.capacityNumericUpDown);
             this.Controls.Add(this.descriptionLabel);
             this.Controls.Add(this.descriptionTextBox);
+            this.Controls.Add(this.deadlineLabel);
+            this.Controls.Add(this.registrationDeadlinePicker);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.cancelButton);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -164,6 +183,8 @@ namespace Evently.Forms
         private System.Windows.Forms.NumericUpDown capacityNumericUpDown;
         private System.Windows.Forms.Label descriptionLabel;
         private System.Windows.Forms.TextBox descriptionTextBox;
+        private System.Windows.Forms.Label deadlineLabel;
+        private System.Windows.Forms.DateTimePicker registrationDeadlinePicker;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button cancelButton;
     }

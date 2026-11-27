@@ -10,7 +10,7 @@ namespace Evently.Forms
         }
 
         // used by Edit: fills the fields with the selected event
-        public EventEditForm(int eventId, string name, string venue, string description, DateTime eventDate, int capacity)
+        public EventEditForm(int eventId, string name, string venue, string description, DateTime eventDate, int capacity, DateTime? registrationDeadline)
         {
             InitializeComponent();
             this.eventId = eventId;
@@ -19,6 +19,16 @@ namespace Evently.Forms
             descriptionTextBox.Text = description;
             eventDatePicker.Value = eventDate;
             capacityNumericUpDown.Value = capacity;
+
+            if (registrationDeadline.HasValue)
+            {
+                registrationDeadlinePicker.Value = registrationDeadline.Value;
+                registrationDeadlinePicker.Checked = true;
+            }
+            else
+            {
+                registrationDeadlinePicker.Checked = false;
+            }
         }
 
         // the id the caller passed in, so an update knows which row to change
@@ -53,11 +63,31 @@ namespace Evently.Forms
             get { return (int)capacityNumericUpDown.Value; }
         }
 
+        // empty box means registration closes at the event start
+        public DateTime? RegistrationDeadlineValue
+        {
+            get
+            {
+                if (registrationDeadlinePicker.Checked)
+                {
+                    return registrationDeadlinePicker.Value;
+                }
+
+                return null;
+            }
+        }
+
         private void SaveButton_Click(object sender, EventArgs e)
         {
             if (nameTextBox.Text.Trim() == "")
             {
                 MessageBox.Show("Enter an event name.", "Event", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (registrationDeadlinePicker.Checked && registrationDeadlinePicker.Value > eventDatePicker.Value)
+            {
+                MessageBox.Show("The registration deadline cannot be after the event date.", "Event", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

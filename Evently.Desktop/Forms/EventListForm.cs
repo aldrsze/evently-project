@@ -124,6 +124,18 @@ namespace Evently.Forms
             string venue = venueTextBox.Text.Trim();
             DateTime date = eventDatePicker.Value;
             int capacity =  (int) capacityNumericUpDown.Value;
+            DateTime? deadline = null;
+            if (registrationDeadlinePicker.Checked)
+            {
+                deadline = registrationDeadlinePicker.Value;
+            }
+
+            if (deadline.HasValue && deadline.Value > date)
+            {
+                MessageBox.Show("The registration deadline cannot be after the event date.", "Add event", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             string desc = descriptionTextBox.Text;
 
             string managerName = managerNameTextBox.Text.Trim();
@@ -147,7 +159,7 @@ namespace Evently.Forms
 
             try
             {
-                int newEventId = EventService.AddEvent(name, venue, desc, date, capacity);
+                int newEventId = EventService.AddEvent(name, venue, desc, date, capacity, deadline);
                 if (newEventId == 0)
                 {
                     MessageBox.Show("The event could not be saved. Check the capacity and the field lengths.", "Save failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -168,6 +180,7 @@ namespace Evently.Forms
                 venueTextBox.Clear();
                 eventDatePicker.Value = DateTime.Now;
                 capacityNumericUpDown.Value = 100;
+                registrationDeadlinePicker.Checked = false;
                 descriptionTextBox.Clear();
                 managerNameTextBox.Clear();
                 managerEmailComboBox.Text = "";
@@ -199,12 +212,19 @@ namespace Evently.Forms
             int capacity = Convert.ToInt32(eventsDataGridView.CurrentRow.Cells[4].Value);
             string description = Convert.ToString(eventsDataGridView.CurrentRow.Cells[5].Value) ?? "";
 
-            using EventEditForm dialog = new(eventId, name, venue, description, eventDate, capacity);
+            DateTime? registrationDeadline = null;
+            object? deadlineValue = eventsDataGridView.CurrentRow.Cells["registrationDeadlineColumn"].Value;
+            if (deadlineValue != null && deadlineValue != DBNull.Value)
+            {
+                registrationDeadline = Convert.ToDateTime(deadlineValue);
+            }
+
+            using EventEditForm dialog = new(eventId, name, venue, description, eventDate, capacity, registrationDeadline);
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 try
                 {
-                    if (EventService.UpdateEvent(dialog.EventIdValue, dialog.NameValue, dialog.VenueValue, dialog.DescriptionValue, dialog.EventDateValue, dialog.CapacityValue))
+                    if (EventService.UpdateEvent(dialog.EventIdValue, dialog.NameValue, dialog.VenueValue, dialog.DescriptionValue, dialog.EventDateValue, dialog.CapacityValue, dialog.RegistrationDeadlineValue))
                     {
                         MessageBox.Show("Event updated.", "Event saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadEvents();

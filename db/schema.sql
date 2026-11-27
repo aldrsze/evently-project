@@ -17,7 +17,8 @@ CREATE TABLE events (
     venue           VARCHAR(100),
     description     TEXT,
     event_date      DATETIME NOT NULL,
-    capacity        INT NOT NULL CHECK (capacity > 0)
+    capacity        INT NOT NULL CHECK (capacity > 0),
+    registration_deadline DATETIME NULL
 );
 
 CREATE TABLE attendees (

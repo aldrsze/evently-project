@@ -26,6 +26,7 @@ namespace Evently.Forms
             this.dateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.capacityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.registrationDeadlineColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionPreviewPanel = new System.Windows.Forms.Panel();
             this.descriptionPreviewGroupBox = new System.Windows.Forms.GroupBox();
             this.selectedDescriptionTextBox = new System.Windows.Forms.TextBox();
@@ -53,6 +54,8 @@ namespace Evently.Forms
             this.managerOrganizationLabel = new System.Windows.Forms.Label();
             this.managerOrganizationTextBox = new System.Windows.Forms.TextBox();
             this.managerHelperLabel = new System.Windows.Forms.Label();
+            this.deadlineLabel = new System.Windows.Forms.Label();
+            this.registrationDeadlinePicker = new System.Windows.Forms.DateTimePicker();
             this.addButton = new System.Windows.Forms.Button();
             this.actionPanel = new System.Windows.Forms.Panel();
             this.helperLabel = new System.Windows.Forms.Label();
@@ -157,7 +160,8 @@ namespace Evently.Forms
             this.venueColumn,
             this.dateColumn,
             this.capacityColumn,
-            this.descriptionColumn});
+            this.descriptionColumn,
+            this.registrationDeadlineColumn});
             this.eventsDataGridView.DefaultCellStyle.BackColor = System.Drawing.Color.White;
             this.eventsDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
             this.eventsDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
@@ -206,11 +210,19 @@ namespace Evently.Forms
             this.capacityColumn.ReadOnly = true;
             this.capacityColumn.DataPropertyName = "capacity";
             // descriptionColumn
-            this.descriptionColumn.FillWeight = 110F;
+            this.descriptionColumn.FillWeight = 100F;
             this.descriptionColumn.HeaderText = "Description";
             this.descriptionColumn.Name = "descriptionColumn";
             this.descriptionColumn.ReadOnly = true;
             this.descriptionColumn.DataPropertyName = "description";
+            // registrationDeadlineColumn
+            this.registrationDeadlineColumn.DataPropertyName = "registration_deadline";
+            this.registrationDeadlineColumn.DefaultCellStyle.Format = "MMM d, yyyy  h:mm tt";
+            this.registrationDeadlineColumn.DefaultCellStyle.NullValue = "No deadline";
+            this.registrationDeadlineColumn.FillWeight = 95F;
+            this.registrationDeadlineColumn.HeaderText = "Deadline";
+            this.registrationDeadlineColumn.Name = "registrationDeadlineColumn";
+            this.registrationDeadlineColumn.ReadOnly = true;
             // descriptionPreviewPanel
             this.descriptionPreviewPanel.BackColor = System.Drawing.Color.White;
             this.descriptionPreviewPanel.Controls.Add(this.descriptionPreviewGroupBox);
@@ -304,6 +316,8 @@ namespace Evently.Forms
             this.addEventGroupBox.Controls.Add(this.managerOrganizationLabel);
             this.addEventGroupBox.Controls.Add(this.managerOrganizationTextBox);
             this.addEventGroupBox.Controls.Add(this.managerHelperLabel);
+            this.addEventGroupBox.Controls.Add(this.deadlineLabel);
+            this.addEventGroupBox.Controls.Add(this.registrationDeadlinePicker);
             this.addEventGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.addEventGroupBox.Location = new System.Drawing.Point(0, 12);
             this.addEventGroupBox.Name = "addEventGroupBox";
@@ -436,12 +450,27 @@ namespace Evently.Forms
             this.managerHelperLabel.AutoSize = true;
             this.managerHelperLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.managerHelperLabel.ForeColor = System.Drawing.Color.FromArgb(95, 95, 95);
-            this.managerHelperLabel.Location = new System.Drawing.Point(12, 204);
+            this.managerHelperLabel.Location = new System.Drawing.Point(12, 240);
             this.managerHelperLabel.MaximumSize = new System.Drawing.Size(420, 0);
             this.managerHelperLabel.Name = "managerHelperLabel";
             this.managerHelperLabel.Size = new System.Drawing.Size(430, 15);
-            this.managerHelperLabel.TabIndex = 18;
-            this.managerHelperLabel.Text = "Optional. An event needs a manager before attendees can register for it.";
+            this.managerHelperLabel.TabIndex = 21;
+            this.managerHelperLabel.Text = "A manager is optional, but registration needs one. No deadline = closes at event start.";
+            // deadlineLabel
+            this.deadlineLabel.AutoSize = true;
+            this.deadlineLabel.Location = new System.Drawing.Point(12, 212);
+            this.deadlineLabel.Name = "deadlineLabel";
+            this.deadlineLabel.TabIndex = 19;
+            this.deadlineLabel.Text = "Registration deadline:";
+            // registrationDeadlinePicker
+            this.registrationDeadlinePicker.Checked = false;
+            this.registrationDeadlinePicker.CustomFormat = "MMM d, yyyy  h:mm tt";
+            this.registrationDeadlinePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.registrationDeadlinePicker.Location = new System.Drawing.Point(160, 206);
+            this.registrationDeadlinePicker.Name = "registrationDeadlinePicker";
+            this.registrationDeadlinePicker.ShowCheckBox = true;
+            this.registrationDeadlinePicker.Size = new System.Drawing.Size(200, 27);
+            this.registrationDeadlinePicker.TabIndex = 20;
             // actionPanel
             this.actionPanel.BackColor = System.Drawing.Color.White;
             this.actionPanel.Controls.Add(this.helperLabel);
@@ -542,6 +571,7 @@ namespace Evently.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn dateColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn capacityColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn descriptionColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn registrationDeadlineColumn;
         private System.Windows.Forms.Panel descriptionPreviewPanel;
         private System.Windows.Forms.GroupBox descriptionPreviewGroupBox;
         private System.Windows.Forms.TextBox selectedDescriptionTextBox;
@@ -569,6 +599,8 @@ namespace Evently.Forms
         private System.Windows.Forms.Label managerOrganizationLabel;
         private System.Windows.Forms.TextBox managerOrganizationTextBox;
         private System.Windows.Forms.Label managerHelperLabel;
+        private System.Windows.Forms.Label deadlineLabel;
+        private System.Windows.Forms.DateTimePicker registrationDeadlinePicker;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Panel actionPanel;
         private System.Windows.Forms.Label helperLabel;

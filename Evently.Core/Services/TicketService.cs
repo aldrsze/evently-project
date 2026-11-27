@@ -49,6 +49,12 @@ namespace Evently.Core.Services
                 return false;
             }
 
+            // a passed cutoff (deadline or event start) closes registration everywhere
+            if (!EventService.IsRegistrationOpen(eventId))
+            {
+                return false;
+            }
+
             using var conn = DatabaseConnection.GetConnection();
 
             int attendeeId = 0;

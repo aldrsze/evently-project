@@ -58,7 +58,7 @@ Checking people in by hand is slow and creates bottlenecks at the door. Organize
 * An administrator can create an event in under 2 minutes, and a guest can register for it on their phone in under 1 minute.
 * A QR ticket exists for every registered attendee, including self-registered ones, and is visible on their ticket page.
 * A phone scan on the website checks a ticket in and updates the count in about 1 second.
-* The system always blocks: (1) using the same ticket to check in twice, (2) registering more attendees than the event's guest limit, from any of the three entry points, and (3) the same email registering twice for one event.
+* The system always blocks: (1) using the same ticket to check in twice, (2) registering more attendees than the event's guest limit, from any of the three entry points, (3) registering after an event's cutoff (its deadline, or the event start when no deadline is set), from any of the three entry points, and (4) the same email registering twice for one event.
 * A CSV of up to 100 attendees can be imported in one step, with a summary (imported / skipped).
 * An admin can email the rating link to every checked-in guest in one click.
 * A guest's rating is saved only if their ticket was checked in and has no review yet, and the site refuses a second submission for the same ticket.
@@ -102,10 +102,10 @@ Status reflects what is in the repository today, which is still the single-proje
 | --- | --- | --- | --- | --- | --- |
 | 1 | Login & Roles | Users sign in with a username and password (hashed). Two roles: Administrator (desktop plus website) and Staff (website scan page only). The desktop app refuses Staff. A demo administrator is created by `db/seed.sql` (`admin` / `admin123`). | Desktop, Web | High | Desktop login done. Web staff login not started. |
 | 2 | User Accounts | Administrators can add, edit, deactivate, and reactivate staff or admin accounts. Usernames are unique, passwords need at least 8 characters, the last active admin and your own account are protected, and you cannot change your own role. | Desktop | Medium | Done. |
-| 3 | Event Management | Admin can create, edit, and delete events with a name, venue, date and time, description, review link text, and maximum guest limit. | Desktop | High | Screen built. Save, edit, and delete are not wired. |
-| 4 | Guest Self-Registration | A guest opens the site on their phone, picks an open event, types first name, last name, email, and birthdate, and is registered. A full event is refused, and a known email is reused without creating a second attendee row. | Web | High | Not started. |
+| 3 | Event Management | Admin can create, edit, and delete events with a name, venue, date and time, description, review link text, maximum guest limit, and an optional registration deadline. The deadline is empty (NULL) when registration should close at the event start, and it cannot be later than the event date. | Desktop | High | Screen built. Save, edit, and delete are not wired. |
+| 4 | Guest Self-Registration | A guest opens the site on their phone, picks an open event, types first name, last name, email, and birthdate, and is registered. A full event, a past registration deadline, or an event that has already started is refused, and a known email is reused without creating a second attendee row. | Web | High | Not started. |
 | 5 | Manual Registration | Admin registers a walk-in by typing first name, last name, email, and birthdate into the desktop app, for the selected event. | Desktop | High | Done (full CRUD wired). |
-| 6 | CSV Import | Admin imports `first_name`, `last_name`, `email`, `birthdate` rows from a CSV file into a selected event, with duplicate handling, capacity enforcement, and a result summary. | Desktop, Core | High | Button only. |
+| 6 | CSV Import | Admin imports `first_name`, `last_name`, `email`, `birthdate` rows from a CSV file into a selected event, with duplicate handling, capacity and registration-deadline enforcement, and a result summary. | Desktop, Core | High | Button only. |
 | 7 | QR Ticket Creation | The system generates a unique UUID for each ticket and builds a QR image from it. | Core | High | Done (`QrCodeService`). |
 | 8 | Ticket Page | Right after registering, the guest sees their QR ticket, event name, venue, and date on the website, and can open the same page again later from a saved link. | Web | High | Not started. |
 | 9 | Email Tickets | Admin clicks "Send Tickets" and the desktop app emails the QR image to every attendee who has not been emailed yet. | Desktop, Core | High | Done (`EmailService` + Send Tickets). |
@@ -234,7 +234,7 @@ Until the services exist, these values are sample data held in memory, and the t
 **Database Models (8 tables):**
 
 * **User**: `user_id`, `username`, `password` (BCrypt hash), `role` (ADMIN or STAFF), `is_active`.
-* **Event**: `event_id`, `name`, `venue`, `description`, `event_date`, `capacity`.
+* **Event**: `event_id`, `name`, `venue`, `description`, `event_date`, `capacity`, `registration_deadline` (empty means registration closes at the event start).
 * **Attendee**: `attendee_id`, `first_name`, `last_name`, `email` (unique across the whole app), `birthdate` (optional date of birth).
 * **Organizer**: `organizer_id`, `full_name`, `email` (unique), `phone`, `organization`.
 * **EventOrganizer**: `event_id` + `organizer_id` (one row per organizer of an event).
@@ -264,7 +264,8 @@ CREATE TABLE events (
     venue           VARCHAR(100),
     description     TEXT,
     event_date      DATETIME NOT NULL,
-    capacity        INT NOT NULL CHECK (capacity > 0)
+    capacity        INT NOT NULL CHECK (capacity > 0),
+    registration_deadline DATETIME NULL
 );
 
 CREATE TABLE attendees (
@@ -332,11 +333,11 @@ CREATE TABLE activity_log (
 
 **Design Notes & Constraints:**
 
-* **One rule location:** capacity, duplicate email, and ticket-state checks live in `Evently.Core` only. The web page, the desktop form, and the CSV importer all call the same method, so they cannot disagree.
+* **One rule location:** capacity, registration deadline, duplicate email, and ticket-state checks live in `Evently.Core` only. The web page, the desktop form, and the CSV importer all call the same method, so they cannot disagree.
 * **Passwords:** Minimum length of 8 (`UserService.MinPasswordLength`), hashed with BCrypt, never logged or saved as plain text.
 * **Session:** Desktop: after a successful login, `Session.SignIn` stores the username and role for the rest of the run, and the main window can only be closed with Log out. Web: `AddAuthentication` with a cookie; `/Scan` requires the STAFF or ADMIN role, `/Register`, `/Ticket`, and `/Review` are public.
-* **Registration flow (shared):** Look up the email in `attendees`. If it exists, reuse that row; otherwise insert the attendee. Then insert a ticket for the event. Both steps run in one transaction with the capacity check, so two phones registering the last slot at the same moment cannot both succeed.
-* **Self-registration page:** `/Register` lists only events that have not happened yet and are not full. A direct link `/Register?eventId=3` opens the form for one event, which is what a poster QR points to. The page asks for first name, last name, email, and birthdate; no account, no password.
+* **Registration flow (shared):** Refuse when the event has no manager or registration has closed. The cutoff is `registration_deadline`, capped at `event_date`; when the deadline is NULL, the cutoff is `event_date`, so registration always stops at the event start. Then look up the email in `attendees`. If it exists, reuse that row; otherwise insert the attendee. Then insert a ticket for the event. Both steps run in one transaction with the capacity check, so two phones registering the last slot at the same moment cannot both succeed.
+* **Self-registration page:** `/Register` offers only events whose registration is still open. A direct link `/Register?eventId=3` opens the form for one event, which is what a poster QR points to. A closed event shows "Registration for this event has closed." The home page still lists closed events, but shows "Registration closed" instead of a register button. The page asks for first name, last name, email, and birthdate; no account, no password.
 * **Ticket page:** `/Ticket/{ticket_id}` shows the QR image, the event name, venue, and date. The UUID in the URL is the ticket, so the link works while the site runs. Guests are told to screenshot it.
 * **Ticket states (worked out from columns, not stored):**
   * `checked_in_at` empty: **Registered** (not arrived).
@@ -438,7 +439,7 @@ evently-project/
 | 1 | Web project | Done | `Evently.Web` (Razor Pages) builds, references Core, listens on `0.0.0.0:5000`, and serves a placeholder home page on the LAN. Template Bootstrap/jQuery removed on purpose; pages get added as their services land. |
 | 2 | Schema changes | Not started | Edit `db/schema.sql`: drop `events.review_form_url`, add `tickets.review_emailed` and `reviews.submitted_at`, split `attendees.full_name` into `first_name` and `last_name`, add `attendees.birthdate`. Apply by hand to the running database. |
 | 3 | Events | Screen only | `EventService` create/edit/delete + desktop grid binding, plus the upcoming-events query for the web home page. |
-| 4 | Registration | Screen only | `TicketService` register (transaction + capacity + duplicate email + manager required), used by `/Register`, the desktop walk-in form, and the CSV importer. |
+| 4 | Registration | Screen only | `TicketService` register (transaction + capacity + registration deadline + duplicate email + manager required), used by `/Register`, the desktop walk-in form, and the CSV importer. |
 | 5 | QR tickets | Not started | `QrCodeService` (Core, returns PNG bytes), `/Ticket` page, `EmailService` + "Send Tickets" with a sent/failed summary. |
 | 6 | Check-in / check-out | Not started | `TicketService` scan rules with the 3-second cooldown, `/Scan` page with `html5-qrcode`, result plus that event's inside count in one call. |
 | 7 | Reviews | Screen only | `/Review` page, `ReviewService.Save` with the checked-in and one-per-ticket checks, "Send Review Request" email using `review_emailed`. |
@@ -462,10 +463,10 @@ evently-project/
 
 **3. Creating an Event (Admin, Desktop)**
 * The admin clicks "Create" on the Events screen.
-* They enter the name, venue, description, date and time, and maximum number of guests (e.g., 200), then save.
+* They enter the name, venue, description, date and time, maximum number of guests (e.g., 200), and optionally tick the registration deadline, then save. Leaving the deadline unchecked closes registration when the event starts; a deadline after the event date is refused.
 
 **4. Registering Attendees**
-* **Self-registration (guest, phone):** The guest opens the site link (or the poster QR for one event), picks the event, types first name, last name, email, and birthdate, and taps Register. If the event is full or their email is already registered for that event, the page says so in plain words and nothing is saved.
+* **Self-registration (guest, phone):** The guest opens the site link (or the poster QR for one event), picks the event, types first name, last name, email, and birthdate, and taps Register. If the event is full, registration has closed, or their email is already registered for that event, the page says so in plain words and nothing is saved.
 * **Walk-in (admin, desktop):** The admin opens "Attendees," selects the event, types first name, last name, email, and birthdate, and clicks "Add."
 * **CSV (admin, desktop):** The admin clicks "Import CSV" and chooses a file with `first_name`, `last_name`, `email`, and `birthdate` columns. The app imports valid rows until the event is full and shows a summary: "48 imported, 3 duplicates skipped, 2 invalid, 0 over capacity."
 
@@ -520,6 +521,9 @@ evently-project/
   * Register the same email for a second event and confirm the attendee row is reused.
   * Fill an event with self-registrations and confirm the form refuses the next one and the event drops off the home page list.
   * Register a walk-in in the desktop app and a CSV batch into the same event, and confirm all three paths respect one shared capacity limit.
+  * Set an event's registration deadline in the past, then confirm the website, the desktop walk-in form, and the CSV importer all refuse new attendees.
+  * Leave the deadline unchecked and confirm registration is accepted before the event start and refused once the event start time passes.
+  * Try to save a deadline later than the event date in Add Event and Edit Event and confirm both refuse it.
   * Try two browsers submitting the last slot at once and confirm only one ticket is created.
   * Register with the birthdate left empty and confirm it saves as NULL, then register with a birthdate and confirm the date is stored unchanged.
 

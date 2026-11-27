@@ -32,7 +32,29 @@ namespace Evently.Forms
         private void LoadAttendees(int eventId)
         {
             attendeesDataGridView.DataSource = TicketService.GetAttendeesByEvent(eventId);
+            UpdateAddAttendeeState(eventId);
             RefreshActivityLog();
+        }
+
+        // once registration closes, a walk-in cannot be added to this event
+        private void UpdateAddAttendeeState(int eventId)
+        {
+            bool open = EventService.IsRegistrationOpen(eventId);
+
+            firstNameTextBox.Enabled = open;
+            lastNameTextBox.Enabled = open;
+            emailTextBox.Enabled = open;
+            birthdateDateTimePicker.Enabled = open;
+            addAttendeeButton.Enabled = open;
+
+            if (open)
+            {
+                emailHelperLabel.Text = "Tickets with unique QR codes are sent to this address";
+            }
+            else
+            {
+                emailHelperLabel.Text = "Registration is closed for this event.";
+            }
         }
 
         private void RefreshActivityLog()
@@ -66,6 +88,12 @@ namespace Evently.Forms
             if (!OrganizerService.EventHasManager(eventId))
             {
                 MessageBox.Show("This event has no manager. Assign a manager before registering attendees.", "No Manager", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!EventService.IsRegistrationOpen(eventId))
+            {
+                MessageBox.Show("Registration for this event has closed.", "Registration Closed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -204,6 +232,12 @@ namespace Evently.Forms
             if (!OrganizerService.EventHasManager(eventId))
             {
                 MessageBox.Show("This event has no manager. Assign a manager before importing attendees.", "No Manager", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!EventService.IsRegistrationOpen(eventId))
+            {
+                MessageBox.Show("Registration for this event has closed.", "Registration Closed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
