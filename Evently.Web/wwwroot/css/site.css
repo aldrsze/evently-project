@@ -5,16 +5,16 @@
 :root {
   font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   color: #0f172a;
-  background: #f8fafc;
+  background: #f0f4f8;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   font-size: 16px;
-  --blue: #2563eb;
-  --deep: #1e40af;
+  --blue: #2b579a;
+  --deep: #1e3f73;
   --slate: #334155;
   --muted: #64748b;
-  --line: #e2e8f0;
-  --surface: #fff;
+  --line: #dbe3ee;
+  --surface: #ffffff;
   --green: #16a34a;
   --amber: #d97706;
   --red: #dc2626;
@@ -58,13 +58,17 @@ button:disabled {
 }
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
   height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
   padding: 0 max(20px, calc((100vw - 1080px)/2));
   background: #fff;
+  border-top: 3px solid var(--blue);
   border-bottom: 1px solid var(--line);
 }
 
@@ -78,17 +82,6 @@ button:disabled {
   color: #1e3a8a;
 }
 
-.mark {
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  border-radius: 9px;
-  background: var(--blue);
-  color: #fff;
-  font-weight: 800;
-}
-
 .site-header nav {
   display: flex;
   align-items: center;
@@ -97,10 +90,66 @@ button:disabled {
   font-size: 14px;
 }
 
+.user-menu {
+  position: relative;
+}
+
 .user-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-weight: 600;
   color: var(--blue);
   font-size: 14px;
+  cursor: pointer;
+  list-style: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #eff6ff;
+}
+
+.user-badge::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--blue);
+  transition: transform .15s;
+}
+
+.user-menu[open] .user-badge::after {
+  transform: rotate(180deg);
+}
+
+.user-badge::-webkit-details-marker {
+  display: none;
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  min-width: 120px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, .08);
+  padding: 6px;
+  z-index: 40;
+}
+
+.user-dropdown a {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--slate);
+}
+
+.user-dropdown a:hover {
+  background: #f0f4f8;
+  color: var(--blue);
 }
 
 .site-header nav a:hover, .back-link:hover {
@@ -358,12 +407,13 @@ main.page-wrap {
 .field input, .field select, .field textarea {
   display: block;
   width: 100%;
-  min-height: 46px;
+  min-height: 48px;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
-  padding: 10px 12px;
+  padding: 11px 12px;
   background: #fff;
   color: #0f172a;
+  font-size: 16px;
 }
 
 .field textarea {
@@ -757,17 +807,31 @@ main.page-wrap {
 
 @media (max-width: 600px) {
   .site-header {
-    height: 58px;
-    padding: 0 16px;
+    height: auto;
+    min-height: 54px;
+    padding: 8px 14px;
+    flex-wrap: wrap;
+    gap: 6px;
   }
 
   .site-header nav {
-    gap: 12px;
-    font-size: 12px;
+    width: 100%;
+    gap: 14px;
+    font-size: 13px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
 
-  .site-header nav a {
+  .site-header nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-header nav a,
+  .site-header nav .user-badge {
     white-space: nowrap;
+    flex-shrink: 0;
+    padding: 6px 0;
   }
 
   .wordmark {
@@ -821,9 +885,32 @@ main.page-wrap {
   }
 
   .section-heading {
-    align-items: flex-start;
+    align-items: flex-start !important;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
+    text-align: left;
+  }
+
+  .event-card .button {
+    width: 100%;
+  }
+
+  .filter-tabs {
+    width: 100%;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .filter-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-tabs a {
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .ticket-info div {

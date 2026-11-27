@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Evently</title>
+    <link rel="icon" type="image/svg+xml" href="~/images/evently-logo.svg" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
@@ -11,7 +12,6 @@
 
     <header class="site-header">
         <a class="wordmark" asp-page="/Index" aria-label="Evently home">
-            <span class="mark" aria-hidden="true">E</span>
             <span>Evently</span>
         </a>
         <nav aria-label="Main navigation">
@@ -20,8 +20,12 @@
             @if (User.Identity?.IsAuthenticated == true)
             {
                 <a asp-page="/CheckIn/Scan">Scanner</a>
-                <span class="user-badge">@User.Identity.Name</span>
-                <a asp-page="/Auth/Logout">Sign out</a>
+                <details class="user-menu">
+                    <summary class="user-badge">@User.Identity.Name</summary>
+                    <div class="user-dropdown">
+                        <a asp-page="/Auth/Logout">Sign out</a>
+                    </div>
+                </details>
             }
             else
             {
@@ -35,8 +39,8 @@
     </main>
 
     <footer class="site-footer">
-        <span>Evently · Event registration and attendance</span>
-        <span>Campus events · Digital QR tickets</span>
+        <span>Evently — Event registration and attendance</span>
+        <span>Digital QR tickets</span>
     </footer>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
