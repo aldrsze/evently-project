@@ -143,6 +143,20 @@ namespace Evently.Core.Services
             return DateTime.Now < cutoff;
         }
 
+        public static int GetRemainingCapacity(int eventId)
+        {
+            using var conn = DatabaseConnection.GetConnection();
+            string query = @"SELECT GREATEST(0, e.capacity - COUNT(t.ticket_id))
+                             FROM events e
+                             LEFT JOIN tickets t ON e.event_id = t.event_id
+                             WHERE e.event_id = @eventId
+                             GROUP BY e.event_id, e.capacity;";
+            using MySqlCommand cmd = new(query, conn);
+            cmd.Parameters.AddWithValue("@eventId", eventId);
+            object? result = cmd.ExecuteScalar();
+            return result != null ? Convert.ToInt32(result) : 0;
+        }
+
         // an empty deadline is stored as NULL, not as year 0001
         private static object DeadlineParameterValue(DateTime? registrationDeadline)
         {

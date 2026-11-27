@@ -25,6 +25,7 @@ public class IndexModel : PageModel
                 Description = row["description"].ToString() ?? "",
                 EventDate = DateTime.TryParse(row["event_date"].ToString(), out DateTime dt) ? dt : DateTime.Now,
                 Capacity = Convert.ToInt32(row["capacity"]),
+                RemainingCapacity = EventService.GetRemainingCapacity(eventId),
                 IsRegistrationOpen = EventService.IsRegistrationOpen(eventId)
             });
         }
@@ -38,6 +39,7 @@ public class IndexModel : PageModel
         public string Description { get; set; } = string.Empty;
         public DateTime EventDate { get; set; }
         public int Capacity { get; set; }
+        public int RemainingCapacity { get; set; }
         public bool IsRegistrationOpen { get; set; }
     }
 }

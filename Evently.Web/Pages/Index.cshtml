@@ -29,7 +29,7 @@
                 <article class="event-card">
                     <div class="event-card-top">
                         <span class="sample-tag">Campus event</span>
-                        <span class="capacity">@ev.Capacity seats</span>
+                        <span class="capacity">@(ev.RemainingCapacity == 0 ? "Full (0 seats left)" : $"{ev.RemainingCapacity} of {ev.Capacity} seats left")</span>
                     </div>
                     <h2>@ev.Name</h2>
                     <dl class="event-meta">
@@ -43,13 +43,17 @@
                         </div>
                     </dl>
                     <p>@ev.Description</p>
-                    @if (ev.IsRegistrationOpen)
+                    @if (ev.IsRegistrationOpen && ev.RemainingCapacity > 0)
                     {
                         <a asp-page="/Registration/Register" asp-route-eventId="@ev.EventId" class="button primary">Register now</a>
                     }
-                    else
+                    else if (!ev.IsRegistrationOpen)
                     {
                         <span class="capacity">Registration closed</span>
+                    }
+                    else
+                    {
+                        <span class="capacity">Event full</span>
                     }
                 </article>
             }
