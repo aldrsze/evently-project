@@ -140,11 +140,11 @@ namespace Evently.Forms
             this.reviewsDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.reviewsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.reviewsDataGridView.ColumnHeadersDefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.reviewsDataGridView.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.reviewsDataGridView.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(240, 244, 248);
             this.reviewsDataGridView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.reviewsDataGridView.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
-            this.reviewsDataGridView.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.reviewsDataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.reviewsDataGridView.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.reviewsDataGridView.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(240, 244, 248);
+            this.reviewsDataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
             this.reviewsDataGridView.ColumnHeadersHeight = 36;
             this.reviewsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.reviewsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -153,8 +153,8 @@ namespace Evently.Forms
             this.commentColumn,
             this.submittedAtColumn});
             this.reviewsDataGridView.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            this.reviewsDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.reviewsDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.reviewsDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(218, 230, 245);
+            this.reviewsDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(25, 25, 25);
             this.reviewsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reviewsDataGridView.EnableHeadersVisualStyles = false;
             this.reviewsDataGridView.GridColor = System.Drawing.Color.FromArgb(224, 224, 224);
