@@ -7,30 +7,230 @@
 <section class="scan-page">
     <p class="eyebrow">Staff QR scanner</p>
     <h1>Door check-in &amp; scanner</h1>
-    <p class="scan-guidance">Scan an attendee QR ticket or enter the ticket ID manually.</p>
+    <p class="scan-guidance">Point the camera at an attendee's QR ticket. The scan auto-detects check-in or check-out.</p>
 
+    <!-- live scan result (JS fills this) -->
+    <div id="scanResult" class="scan-result" style="display:none" role="status">
+        <strong id="resultTitle"></strong>
+        <span id="resultMessage"></span>
+    </div>
+
+    <!-- server-rendered results for manual form post -->
     @if (!string.IsNullOrEmpty(Model.SuccessMessage))
     {
         <div class="scan-result success" role="status">
-            <strong>Success</strong>
+            <strong>Checked in</strong>
             <span>@Model.SuccessMessage</span>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.WarningMessage))
+    {
+        <div class="scan-result warning" role="status">
+            <strong>Checked out</strong>
+            <span>@Model.WarningMessage</span>
         </div>
     }
     @if (!string.IsNullOrEmpty(Model.ErrorMessage))
     {
         <div class="scan-result danger" role="alert">
-            <strong>Invalid ticket</strong>
+            <strong>Error</strong>
             <span>@Model.ErrorMessage</span>
         </div>
     }
 
-    <form method="post" class="form-card">
-        <div class="field">
-            <label for="ticketId">Ticket ID (scan / enter)</label>
-            <input type="text" id="ticketId" name="TicketId" value="@Model.TicketId" placeholder="e.g. 11111111-0001-4000-8000-000000000001" autofocus required />
-        </div>
+    <!-- camera feed -->
+    <div class="scan-shell">
+        <div id="qr-reader"></div>
+    </div>
 
-        <button type="submit" name="Action" value="checkin" class="button primary full">Check in (entry)</button>
-        <button type="submit" name="Action" value="checkout" class="button secondary full">Check out (exit)</button>
-    </form>
+    <!-- manual fallback -->
+    <details>
+        <summary style="cursor:pointer; font-size:13px; color:var(--muted); margin-bottom:10px;">
+            Enter ticket ID manually
+        </summary>
+        <form method="post" class="form-card" style="margin-top:0;">
+            <div class="field">
+                <label for="ticketId">Ticket ID</label>
+                <input type="text" id="ticketId" name="TicketId" value="@Model.TicketId"
+                       placeholder="e.g. 11111111-0001-4000-8000-000000000001" required />
+            </div>
+            <button type="submit" class="button primary full">Scan ticket</button>
+        </form>
+    </details>
 </section>
+
+@section Scripts {
+    <script src="~/lib/html5-qrcode.min.js"></script>
+    <script>
+        // --- sound effects using Web Audio API (no files needed) ---
+        var audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioCtx;
+        }
+
+        // pleasant ascending two-tone beep for success
+        function playSuccessSound() {
+            var ctx = getAudioContext();
+            var now = ctx.currentTime;
+
+            var osc1 = ctx.createOscillator();
+            var gain1 = ctx.createGain();
+            osc1.type = "sine";
+            osc1.frequency.value = 880;
+            gain1.gain.setValueAtTime(0.3, now);
+            gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+            osc1.connect(gain1);
+            gain1.connect(ctx.destination);
+            osc1.start(now);
+            osc1.stop(now + 0.15);
+
+            var osc2 = ctx.createOscillator();
+            var gain2 = ctx.createGain();
+            osc2.type = "sine";
+            osc2.frequency.value = 1320;
+            gain2.gain.setValueAtTime(0.3, now + 0.12);
+            gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start(now + 0.12);
+            osc2.stop(now + 0.35);
+        }
+
+        // short descending buzz for warning (check-out)
+        function playWarningSound() {
+            var ctx = getAudioContext();
+            var now = ctx.currentTime;
+
+            var osc = ctx.createOscillator();
+            var gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(660, now);
+            osc.frequency.linearRampToValueAtTime(440, now + 0.25);
+            gain.gain.setValueAtTime(0.25, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.3);
+        }
+
+        // harsh double-beep for error
+        function playErrorSound() {
+            var ctx = getAudioContext();
+            var now = ctx.currentTime;
+
+            for (var i = 0; i < 2; i++) {
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                osc.type = "square";
+                osc.frequency.value = 300;
+                var start = now + i * 0.18;
+                gain.gain.setValueAtTime(0.2, start);
+                gain.gain.exponentialRampToValueAtTime(0.01, start + 0.12);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(start);
+                osc.stop(start + 0.12);
+            }
+        }
+
+        // --- scan result display ---
+        var resultBox = document.getElementById("scanResult");
+        var resultTitle = document.getElementById("resultTitle");
+        var resultMessage = document.getElementById("resultMessage");
+
+        function showResult(status, title, message) {
+            // remove old status classes
+            resultBox.classList.remove("success", "warning", "danger");
+
+            if (status === "success") {
+                resultBox.classList.add("success");
+                playSuccessSound();
+            } else if (status === "warning") {
+                resultBox.classList.add("warning");
+                playWarningSound();
+            } else {
+                resultBox.classList.add("danger");
+                playErrorSound();
+            }
+
+            resultTitle.textContent = title;
+            resultMessage.textContent = message;
+            resultBox.style.display = "grid";
+        }
+
+        // --- QR scanner ---
+        var lastScannedCode = "";
+        var lastScanTime = 0;
+        var COOLDOWN_MS = 3000; // ignore same code for 3 seconds
+        var scanning = false;
+
+        // the token is in the page's cookies (asp.net anti-forgery)
+        var antiForgeryToken = "";
+        var tokenMeta = document.querySelector('input[name="__RequestVerificationToken"]');
+        if (tokenMeta) {
+            antiForgeryToken = tokenMeta.value;
+        }
+
+        function handleScan(decodedText) {
+            var now = Date.now();
+
+            // 3-second cooldown for the same code
+            if (decodedText === lastScannedCode && (now - lastScanTime) < COOLDOWN_MS) {
+                return;
+            }
+
+            lastScannedCode = decodedText;
+            lastScanTime = now;
+
+            // call the JSON endpoint
+            fetch("/Scan?handler=Api", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "RequestVerificationToken": antiForgeryToken
+                },
+                body: JSON.stringify({ ticketId: decodedText })
+            })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                var title = "Checked in";
+                if (data.status === "warning") { title = "Checked out"; }
+                if (data.status === "error") { title = "Error"; }
+                showResult(data.status, title, data.message);
+            })
+            .catch(function () {
+                showResult("error", "Error", "Network error. Try again.");
+            });
+        }
+
+        // start the camera scanner
+        var html5QrCode = new Html5Qrcode("qr-reader");
+
+        // prefer back camera on phones, any camera on desktop
+        var cameraConfig = { facingMode: "environment" };
+
+        html5QrCode.start(
+            cameraConfig,
+            {
+                fps: 10,
+                qrbox: function (viewfinderWidth, viewfinderHeight) {
+                    // square box that fits the viewport, capped at 250px
+                    var side = Math.min(viewfinderWidth, viewfinderHeight, 250);
+                    return { width: side, height: side };
+                }
+            },
+            handleScan
+        ).catch(function (err) {
+            // camera denied or not available — show manual entry instead
+            document.querySelector("details").open = true;
+            document.getElementById("qr-reader").innerHTML =
+                '<p style="color:#94a3b8; text-align:center; padding:40px 16px; font-size:14px;">' +
+                'Camera not available.<br>Use the manual entry below.</p>';
+        });
+    </script>
+}
