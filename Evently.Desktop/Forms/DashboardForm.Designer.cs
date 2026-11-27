@@ -60,6 +60,12 @@ namespace Evently.Forms
             this.ratingValueLabel = new System.Windows.Forms.Label();
             this.ratingSubLabel = new System.Windows.Forms.Label();
 
+            // Card 5: Registration Status
+            this.registrationCardPanel = new System.Windows.Forms.Panel();
+            this.registrationTitleLabel = new System.Windows.Forms.Label();
+            this.registrationValueLabel = new System.Windows.Forms.Label();
+            this.registrationSubLabel = new System.Windows.Forms.Label();
+
             // Upper Charts Row
             this.upperChartsLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.timelineGroupBox = new System.Windows.Forms.GroupBox();
@@ -92,6 +98,7 @@ namespace Evently.Forms
             this.insideCardPanel.SuspendLayout();
             this.checkedInCardPanel.SuspendLayout();
             this.ratingCardPanel.SuspendLayout();
+            this.registrationCardPanel.SuspendLayout();
             this.upperChartsLayoutPanel.SuspendLayout();
             this.timelineGroupBox.SuspendLayout();
             this.timelineNavPanel.SuspendLayout();
@@ -176,15 +183,17 @@ namespace Evently.Forms
             this.mainLayoutPanel.TabIndex = 1;
 
             // kpiCardsLayoutPanel
-            this.kpiCardsLayoutPanel.ColumnCount = 4;
-            this.kpiCardsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.kpiCardsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.kpiCardsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.kpiCardsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.kpiCardsLayoutPanel.ColumnCount = 5;
+            this.kpiCardsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.kpiCardsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.kpiCardsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.kpiCardsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.kpiCardsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.kpiCardsLayoutPanel.Controls.Add(this.capacityCardPanel, 0, 0);
             this.kpiCardsLayoutPanel.Controls.Add(this.insideCardPanel, 1, 0);
             this.kpiCardsLayoutPanel.Controls.Add(this.checkedInCardPanel, 2, 0);
             this.kpiCardsLayoutPanel.Controls.Add(this.ratingCardPanel, 3, 0);
+            this.kpiCardsLayoutPanel.Controls.Add(this.registrationCardPanel, 4, 0);
             this.kpiCardsLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kpiCardsLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.kpiCardsLayoutPanel.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
@@ -381,6 +390,51 @@ namespace Evently.Forms
             this.ratingSubLabel.Size = new System.Drawing.Size(155, 15);
             this.ratingSubLabel.TabIndex = 2;
             this.ratingSubLabel.Text = "0 reviews (0% response)";
+
+            // registrationCardPanel
+            this.registrationCardPanel.BackColor = System.Drawing.Color.White;
+            this.registrationCardPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.registrationCardPanel.Controls.Add(this.registrationSubLabel);
+            this.registrationCardPanel.Controls.Add(this.registrationValueLabel);
+            this.registrationCardPanel.Controls.Add(this.registrationTitleLabel);
+            this.registrationCardPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.registrationCardPanel.Location = new System.Drawing.Point(930, 2);
+            this.registrationCardPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.registrationCardPanel.Name = "registrationCardPanel";
+            this.registrationCardPanel.Padding = new System.Windows.Forms.Padding(8, 6, 8, 6);
+            this.registrationCardPanel.Size = new System.Drawing.Size(228, 78);
+            this.registrationCardPanel.TabIndex = 4;
+
+            // registrationTitleLabel
+            this.registrationTitleLabel.AutoSize = true;
+            this.registrationTitleLabel.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
+            this.registrationTitleLabel.ForeColor = System.Drawing.Color.FromArgb(100, 100, 100);
+            this.registrationTitleLabel.Location = new System.Drawing.Point(8, 6);
+            this.registrationTitleLabel.Name = "registrationTitleLabel";
+            this.registrationTitleLabel.Size = new System.Drawing.Size(130, 13);
+            this.registrationTitleLabel.TabIndex = 0;
+            this.registrationTitleLabel.Text = "REGISTRATION STATUS";
+
+            // registrationValueLabel
+            this.registrationValueLabel.AutoSize = true;
+            this.registrationValueLabel.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.registrationValueLabel.ForeColor = System.Drawing.Color.FromArgb(34, 139, 34);
+            this.registrationValueLabel.Location = new System.Drawing.Point(7, 21);
+            this.registrationValueLabel.Name = "registrationValueLabel";
+            this.registrationValueLabel.Size = new System.Drawing.Size(65, 30);
+            this.registrationValueLabel.TabIndex = 1;
+            this.registrationValueLabel.Text = "OPEN";
+
+            // registrationSubLabel
+            this.registrationSubLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            this.registrationSubLabel.AutoSize = true;
+            this.registrationSubLabel.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.registrationSubLabel.ForeColor = System.Drawing.Color.FromArgb(80, 80, 80);
+            this.registrationSubLabel.Location = new System.Drawing.Point(8, 52);
+            this.registrationSubLabel.Name = "registrationSubLabel";
+            this.registrationSubLabel.Size = new System.Drawing.Size(110, 15);
+            this.registrationSubLabel.TabIndex = 2;
+            this.registrationSubLabel.Text = "Accepting attendees";
 
             // upperChartsLayoutPanel
             this.upperChartsLayoutPanel.ColumnCount = 2;
@@ -687,6 +741,8 @@ namespace Evently.Forms
             this.checkedInCardPanel.PerformLayout();
             this.ratingCardPanel.ResumeLayout(false);
             this.ratingCardPanel.PerformLayout();
+            this.registrationCardPanel.ResumeLayout(false);
+            this.registrationCardPanel.PerformLayout();
             this.upperChartsLayoutPanel.ResumeLayout(false);
             this.timelineGroupBox.ResumeLayout(false);
             this.timelineNavPanel.ResumeLayout(false);
@@ -729,6 +785,11 @@ namespace Evently.Forms
         private System.Windows.Forms.Label ratingTitleLabel;
         private System.Windows.Forms.Label ratingValueLabel;
         private System.Windows.Forms.Label ratingSubLabel;
+
+        private System.Windows.Forms.Panel registrationCardPanel;
+        private System.Windows.Forms.Label registrationTitleLabel;
+        private System.Windows.Forms.Label registrationValueLabel;
+        private System.Windows.Forms.Label registrationSubLabel;
 
         private System.Windows.Forms.TableLayoutPanel upperChartsLayoutPanel;
         private System.Windows.Forms.GroupBox timelineGroupBox;
