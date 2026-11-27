@@ -77,6 +77,10 @@ namespace Evently.Core.Services
 
             if (deleted)
             {
+                string cleanupQuery = "DELETE FROM attendees WHERE attendee_id NOT IN (SELECT attendee_id FROM tickets);";
+                using MySqlCommand cleanupCmd = new(cleanupQuery, conn);
+                cleanupCmd.ExecuteNonQuery();
+
                 ActivityLogService.Add("events", $"Deleted event '{eventName}'.");
             }
 
