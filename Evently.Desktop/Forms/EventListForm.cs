@@ -205,12 +205,12 @@ namespace Evently.Forms
                 return;
             }
 
-            int eventId = Convert.ToInt32(eventsDataGridView.CurrentRow.Cells[0].Value);
-            string name = Convert.ToString(eventsDataGridView.CurrentRow.Cells[1].Value) ?? "";
-            string venue = Convert.ToString(eventsDataGridView.CurrentRow.Cells[2].Value) ?? "";
-            DateTime eventDate = Convert.ToDateTime(eventsDataGridView.CurrentRow.Cells[3].Value);
-            int capacity = Convert.ToInt32(eventsDataGridView.CurrentRow.Cells[4].Value);
-            string description = Convert.ToString(eventsDataGridView.CurrentRow.Cells[5].Value) ?? "";
+            int eventId = Convert.ToInt32(eventsDataGridView.CurrentRow.Cells["eventIdColumn"].Value);
+            string name = Convert.ToString(eventsDataGridView.CurrentRow.Cells["eventNameColumn"].Value) ?? "";
+            string venue = Convert.ToString(eventsDataGridView.CurrentRow.Cells["venueColumn"].Value) ?? "";
+            DateTime eventDate = Convert.ToDateTime(eventsDataGridView.CurrentRow.Cells["dateColumn"].Value);
+            int capacity = Convert.ToInt32(eventsDataGridView.CurrentRow.Cells["capacityColumn"].Value);
+            string description = Convert.ToString(eventsDataGridView.CurrentRow.Cells["descriptionColumn"].Value) ?? "";
 
             DateTime? registrationDeadline = null;
             object? deadlineValue = eventsDataGridView.CurrentRow.Cells["registrationDeadlineColumn"].Value;
@@ -249,8 +249,8 @@ namespace Evently.Forms
                 return;
             }
 
-            int eventId = Convert.ToInt32(eventsDataGridView.CurrentRow.Cells[0].Value);
-            string eventName = Convert.ToString(eventsDataGridView.CurrentRow.Cells[1].Value) ?? "";
+            int eventId = Convert.ToInt32(eventsDataGridView.CurrentRow.Cells["eventIdColumn"].Value);
+            string eventName = Convert.ToString(eventsDataGridView.CurrentRow.Cells["eventNameColumn"].Value) ?? "";
 
             DialogResult answer = MessageBox.Show("Are you sure you want delete " + eventName + "?", "Delete event", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (answer != DialogResult.Yes) { return; }

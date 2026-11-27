@@ -24,6 +24,7 @@ namespace Evently.Forms
             this.eventNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.venueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.capacityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.registrationDeadlineColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -159,6 +160,7 @@ namespace Evently.Forms
             this.eventNameColumn,
             this.venueColumn,
             this.dateColumn,
+            this.timeColumn,
             this.capacityColumn,
             this.descriptionColumn,
             this.registrationDeadlineColumn});
@@ -197,12 +199,19 @@ namespace Evently.Forms
             this.venueColumn.ReadOnly = true;
             this.venueColumn.DataPropertyName = "venue";
             // dateColumn
-            this.dateColumn.DefaultCellStyle.Format = "MMM d, yyyy  h:mm tt";
-            this.dateColumn.FillWeight = 70F;
+            this.dateColumn.DataPropertyName = "event_date";
+            this.dateColumn.DefaultCellStyle.Format = "MMM d, yyyy";
+            this.dateColumn.FillWeight = 55F;
             this.dateColumn.HeaderText = "Date";
             this.dateColumn.Name = "dateColumn";
             this.dateColumn.ReadOnly = true;
-            this.dateColumn.DataPropertyName = "event_date";
+            // timeColumn
+            this.timeColumn.DataPropertyName = "event_date";
+            this.timeColumn.DefaultCellStyle.Format = "h:mm tt";
+            this.timeColumn.FillWeight = 45F;
+            this.timeColumn.HeaderText = "Time";
+            this.timeColumn.Name = "timeColumn";
+            this.timeColumn.ReadOnly = true;
             // capacityColumn
             this.capacityColumn.FillWeight = 40F;
             this.capacityColumn.HeaderText = "Capacity";
@@ -569,6 +578,7 @@ namespace Evently.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn eventNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn venueColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dateColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn capacityColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn descriptionColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn registrationDeadlineColumn;
