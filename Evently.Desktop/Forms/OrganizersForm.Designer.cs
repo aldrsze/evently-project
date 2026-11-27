@@ -156,11 +156,11 @@ namespace Evently.Forms
             this.organizersDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.organizersDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.organizersDataGridView.ColumnHeadersDefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.organizersDataGridView.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.organizersDataGridView.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(240, 244, 248);
             this.organizersDataGridView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.organizersDataGridView.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
-            this.organizersDataGridView.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.organizersDataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.organizersDataGridView.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.organizersDataGridView.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(240, 244, 248);
+            this.organizersDataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
             this.organizersDataGridView.ColumnHeadersHeight = 36;
             this.organizersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.organizersDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -170,8 +170,8 @@ namespace Evently.Forms
             this.phoneColumn,
             this.organizationColumn});
             this.organizersDataGridView.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            this.organizersDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.organizersDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.organizersDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(218, 230, 245);
+            this.organizersDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(25, 25, 25);
             this.organizersDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.organizersDataGridView.EnableHeadersVisualStyles = false;
             this.organizersDataGridView.GridColor = System.Drawing.Color.FromArgb(224, 224, 224);

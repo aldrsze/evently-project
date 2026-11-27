@@ -168,11 +168,11 @@ namespace Evently.Forms
             this.attendeesDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.attendeesDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.attendeesDataGridView.ColumnHeadersDefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.attendeesDataGridView.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.attendeesDataGridView.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(240, 244, 248);
             this.attendeesDataGridView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.attendeesDataGridView.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
-            this.attendeesDataGridView.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.attendeesDataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.attendeesDataGridView.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.attendeesDataGridView.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(240, 244, 248);
+            this.attendeesDataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
             this.attendeesDataGridView.ColumnHeadersHeight = 36;
             this.attendeesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.attendeesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -188,8 +188,8 @@ namespace Evently.Forms
             this.ticketEmailedColumn,
             this.reviewEmailedColumn});
             this.attendeesDataGridView.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            this.attendeesDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.attendeesDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.attendeesDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(218, 230, 245);
+            this.attendeesDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(25, 25, 25);
             this.attendeesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.attendeesDataGridView.EnableHeadersVisualStyles = false;
             this.attendeesDataGridView.GridColor = System.Drawing.Color.FromArgb(224, 224, 224);

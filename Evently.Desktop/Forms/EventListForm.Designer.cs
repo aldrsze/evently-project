@@ -24,6 +24,7 @@ namespace Evently.Forms
             this.eventNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.venueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.capacityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.registrationDeadlineColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -147,11 +148,11 @@ namespace Evently.Forms
             this.eventsDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.eventsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.eventsDataGridView.ColumnHeadersDefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.eventsDataGridView.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.eventsDataGridView.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(240, 244, 248);
             this.eventsDataGridView.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.eventsDataGridView.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
-            this.eventsDataGridView.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.eventsDataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.eventsDataGridView.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
+            this.eventsDataGridView.ColumnHeadersDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(240, 244, 248);
+            this.eventsDataGridView.ColumnHeadersDefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(43, 87, 154);
             this.eventsDataGridView.ColumnHeadersHeight = 36;
             this.eventsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.eventsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -159,12 +160,13 @@ namespace Evently.Forms
             this.eventNameColumn,
             this.venueColumn,
             this.dateColumn,
+            this.timeColumn,
             this.capacityColumn,
             this.descriptionColumn,
             this.registrationDeadlineColumn});
             this.eventsDataGridView.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            this.eventsDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(43, 87, 154);
-            this.eventsDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.eventsDataGridView.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(218, 230, 245);
+            this.eventsDataGridView.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(25, 25, 25);
             this.eventsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.eventsDataGridView.EnableHeadersVisualStyles = false;
             this.eventsDataGridView.GridColor = System.Drawing.Color.FromArgb(224, 224, 224);
@@ -197,12 +199,19 @@ namespace Evently.Forms
             this.venueColumn.ReadOnly = true;
             this.venueColumn.DataPropertyName = "venue";
             // dateColumn
-            this.dateColumn.DefaultCellStyle.Format = "MMM d, yyyy  h:mm tt";
-            this.dateColumn.FillWeight = 70F;
+            this.dateColumn.DataPropertyName = "event_date";
+            this.dateColumn.DefaultCellStyle.Format = "MMM d, yyyy";
+            this.dateColumn.FillWeight = 55F;
             this.dateColumn.HeaderText = "Date";
             this.dateColumn.Name = "dateColumn";
             this.dateColumn.ReadOnly = true;
-            this.dateColumn.DataPropertyName = "event_date";
+            // timeColumn
+            this.timeColumn.DataPropertyName = "event_date";
+            this.timeColumn.DefaultCellStyle.Format = "h:mm tt";
+            this.timeColumn.FillWeight = 45F;
+            this.timeColumn.HeaderText = "Time";
+            this.timeColumn.Name = "timeColumn";
+            this.timeColumn.ReadOnly = true;
             // capacityColumn
             this.capacityColumn.FillWeight = 40F;
             this.capacityColumn.HeaderText = "Capacity";
@@ -569,6 +578,7 @@ namespace Evently.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn eventNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn venueColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dateColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn capacityColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn descriptionColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn registrationDeadlineColumn;
