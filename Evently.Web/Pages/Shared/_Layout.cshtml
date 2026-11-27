@@ -16,6 +16,7 @@
         </a>
         <nav aria-label="Main navigation">
             <a asp-page="/Registration/Register">Guest registration</a>
+            <a asp-page="/Tickets/FindTicket">Find ticket</a>
             @if (User.Identity?.IsAuthenticated == true)
             {
                 <a asp-page="/CheckIn/Scan">Scanner</a>

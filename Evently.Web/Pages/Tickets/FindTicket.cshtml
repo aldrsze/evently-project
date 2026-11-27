@@ -1,0 +1,94 @@
+@page "/FindTicket"
+@model Evently.Web.Pages.Tickets.FindTicketModel
+@{
+    ViewData["Title"] = "Find your ticket";
+}
+
+<section class="narrow-page">
+    <a class="back-link" asp-page="/Index">← Upcoming events</a>
+    <p class="eyebrow">Ticket lookup</p>
+    <h1>Find your event ticket</h1>
+    <p class="lead">Enter your Ticket ID below to view your event details and QR entry code.</p>
+
+    <form method="post" class="form-card" style="margin-bottom: 2rem;">
+        <div class="field">
+            <label for="ticketIdInput">Ticket ID (UUID)</label>
+            <input type="text" id="ticketIdInput" name="TicketIdInput" value="@Model.TicketIdInput" placeholder="e.g. 550e8400-e29b-41d4-a716-446655440000" required maxlength="50" />
+            <p class="form-note">Your 36-character ticket identifier from your registration.</p>
+        </div>
+        <button type="submit" class="button primary full">View ticket details</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="error-panel" role="alert" style="margin-bottom: 1.5rem;">
+            <p>@Model.ErrorMessage</p>
+        </div>
+    }
+
+    @if (Model.HasSearched && Model.IsFound)
+    {
+        @if (!Model.IsApproved)
+        {
+            <div class="form-card" style="text-align: center; padding: 2rem 1.5rem; border-left: 4px solid var(--amber);">
+                <span class="sample-tag" style="background: #fef3c7; color: #92400e;">Pending Approval</span>
+                <h2 style="margin-top: 1rem;">@Model.EventName</h2>
+                <p class="lead" style="margin: 0.5rem 0;">Your registration is currently under review by the event organizer.</p>
+                <dl class="event-meta" style="max-width: 400px; margin: 1.5rem auto; text-align: left;">
+                    <div>
+                        <dt>Guest</dt>
+                        <dd>@Model.AttendeeName</dd>
+                    </div>
+                    <div>
+                        <dt>Event date & time</dt>
+                        <dd>@Model.EventDate?.ToString("MMMM d, yyyy  h:mm tt")</dd>
+                    </div>
+                    <div>
+                        <dt>Venue</dt>
+                        <dd>@Model.Venue</dd>
+                    </div>
+                </dl>
+                <p style="color: var(--muted); font-size: 0.9rem;">Your QR entry ticket will be generated and emailed once your registration has been approved.</p>
+            </div>
+        }
+        else
+        {
+            <article class="ticket-card">
+                <div class="ticket-heading">
+                    <span class="sample-tag">@(Model.IsCheckedIn ? "Checked in" : "Approved ticket")</span>
+                    <h2>@Model.EventName</h2>
+                </div>
+
+                <div class="qr-frame">
+                    @if (!string.IsNullOrEmpty(Model.QrCodeBase64))
+                    {
+                        <img src="data:image/png;base64,@Model.QrCodeBase64" alt="Ticket QR Code" />
+                    }
+                </div>
+
+                <p class="ticket-id">Ticket ID <code>@Model.TicketId</code></p>
+
+                <div class="ticket-info">
+                    <div>
+                        <span>Guest</span>
+                        <strong>@Model.AttendeeName</strong>
+                    </div>
+                    <div>
+                        <span>Email</span>
+                        <strong>@Model.Email</strong>
+                    </div>
+                    <div>
+                        <span>Venue</span>
+                        <strong>@Model.Venue</strong>
+                    </div>
+                    <div>
+                        <span>Event date & time</span>
+                        <strong>@Model.EventDate?.ToString("MMMM d, yyyy  h:mm tt")</strong>
+                    </div>
+                </div>
+
+                <p class="save-instruction">Present this QR code at the entrance for admission.</p>
+            </article>
+        }
+    }
+</section>
