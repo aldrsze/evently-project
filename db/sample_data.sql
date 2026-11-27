@@ -20,11 +20,11 @@ INSERT INTO users (username, password, email, first_name, last_name, birthdate, 
 ('staff2', '$2a$11$Zq5hVFTuuSmfdyUiCX9M7.CpLHM7iTkdmGHRGRKlpLYbJU6aZ8LVq', 'staff2@evently.local', 'Staff', 'Two', NULL, 'STAFF', TRUE, TRUE);
 
 -- QCU Campus Organization Events
-INSERT INTO events (event_id, name, venue, description, event_date, capacity) VALUES
-(1, 'QCU TechFest 2026: Code for the Community', 'San Bartolome Campus Auditorium', 'Annual tech conference hosted by the Association of Computer Studies Students (ACSS) featuring AI and web talks.', DATE_ADD(NOW(), INTERVAL 2 HOUR), 150),
-(2, 'JPCS Hackathon: AI Para sa Bayan', 'Belmonte Hall Tech Lab 204', 'Hands-on coding challenge and project building organized by the Junior Philippine Computer Society (JPCS - QCU).', DATE_ADD(CURDATE(), INTERVAL 4 DAY) + INTERVAL 9 HOUR, 25),
-(3, 'QCU Freshmen Leadership Summit', 'QCU Gymnasium', 'University-wide student leadership orientation and club recruitment hosted by the Supreme Student Council (SSC).', DATE_ADD(CURDATE(), INTERVAL -4 DAY) + INTERVAL 8 HOUR, 200),
-(4, 'Peer Facilitators Mental Health & Wellness Assembly', 'Auditorium Audio-Visual Room', 'Interactive workshop on student well-being and campus life resilience organized by QCU Peer Circle.', DATE_ADD(CURDATE(), INTERVAL 10 DAY) + INTERVAL 13 HOUR, 50);
+INSERT INTO events (event_id, name, venue, description, event_date, capacity, registration_deadline) VALUES
+(1, 'QCU TechFest 2026: Code for the Community', 'San Bartolome Campus Auditorium', 'Annual tech conference hosted by the Association of Computer Studies Students (ACSS) featuring AI and web talks.', DATE_ADD(NOW(), INTERVAL 2 HOUR), 150, DATE_ADD(NOW(), INTERVAL 1 HOUR)),
+(2, 'JPCS Hackathon: AI Para sa Bayan', 'Belmonte Hall Tech Lab 204', 'Hands-on coding challenge and project building organized by the Junior Philippine Computer Society (JPCS - QCU).', DATE_ADD(CURDATE(), INTERVAL 4 DAY) + INTERVAL 9 HOUR, 25, DATE_ADD(CURDATE(), INTERVAL 3 DAY) + INTERVAL 9 HOUR),
+(3, 'QCU Freshmen Leadership Summit', 'QCU Gymnasium', 'University-wide student leadership orientation and club recruitment hosted by the Supreme Student Council (SSC).', DATE_ADD(CURDATE(), INTERVAL -4 DAY) + INTERVAL 8 HOUR, 200, DATE_ADD(CURDATE(), INTERVAL -5 DAY) + INTERVAL 8 HOUR),
+(4, 'Peer Facilitators Mental Health & Wellness Assembly', 'Auditorium Audio-Visual Room', 'Interactive workshop on student well-being and campus life resilience organized by QCU Peer Circle.', DATE_ADD(CURDATE(), INTERVAL 10 DAY) + INTERVAL 13 HOUR, 50, NULL);
 
 -- QCU Student Organization Leaders & Event Managers
 INSERT INTO organizers (organizer_id, full_name, email, phone, organization) VALUES
