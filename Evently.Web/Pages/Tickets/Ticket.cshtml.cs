@@ -39,6 +39,13 @@ public class TicketModel : PageModel
 
         IsCheckedIn = row["checked_in_at"] != DBNull.Value;
 
+        bool isEmailed = row["ticket_emailed"] != DBNull.Value && Convert.ToBoolean(row["ticket_emailed"]);
+        if (!isEmailed)
+        {
+            ErrorMessage = "Your registration is currently pending organizer review. Your ticket will be emailed to you once approved.";
+            return;
+        }
+
         byte[] qrBytes = QrCodeService.GenerateTicketQrPng(ticketId);
         QrCodeBase64 = Convert.ToBase64String(qrBytes);
     }
